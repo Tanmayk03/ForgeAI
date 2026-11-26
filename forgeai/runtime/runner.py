@@ -10,6 +10,10 @@ Answering a question has four stages:
   2. GATE       code-only evidence check. No matching chunk, or chunks that
                 cover too little of the question  -> refuse WITHOUT calling the model.
                 (Skipped for agents with tools: a tool may supply the evidence.)
+  2b. TOOLS     small models rarely decide to call tools by themselves, so:
+                csv_lookup and current_date are run automatically by the runner;
+                calculator and weather_api are chosen in a short planning call
+                whose answer must be one name from a fixed list (or "none").
   3. GENERATE   ask the model for JSON {answer, sources, refused, refusal_reason,
                 tool_name, tool_input}, retrying once if the reply is unusable.
                 If it asks for a tool, the runner runs it (only if agent.json
@@ -24,6 +28,7 @@ refusals: they are raised to the caller. An outage is not an answer, and the
 Auditor must never score it as a correct refusal.
 """
 
+import json
 import time
 from collections.abc import Callable
 from pathlib import Path
@@ -37,7 +42,8 @@ from forgeai.runtime import evidence
 from forgeai.runtime.agent_schema import AgentDefinition, load_agent_definition
 from forgeai.runtime.output_parser import parse_model_output
 from forgeai.runtime.prompt_builder import (
-    PromptSource, build_retry_note, build_system_prompt, build_user_prompt,
+    AUTO_TOOLS, PLANNED_TOOLS, PromptSource, build_planner_prompt, build_retry_note,
+    build_system_prompt, build_user_prompt, planner_schema,
 )
 from forgeai.runtime.response import AgentResponse, ModelOutput, RetrievedChunkInfo, RunTrace, ToolCallRecord
 from forgeai.tools.base import ToolContext
@@ -116,6 +122,50 @@ class AgentRunner:
             prompt = user_prompt + build_retry_note(reason)
         return None, reason
 
+    def _add_tool_result(self, name, tool_input, requested_by, sources, trace) -> None:
+        """Run a tool and add its result as the next numbered source."""
+        result = run_tool(name, tool_input, self.tool_context, self.agent.tools)
+        trace.tool_calls.append(ToolCallRecord(
+            source_number=len(sources) + 1, requested_by=requested_by, name=result.name,
+            tool_input=result.tool_input, ok=result.ok, output=result.output,
+        ))
+        sources.append(PromptSource(
+            f"tool:{result.name}:{len(trace.tool_calls)}",
+            f"tool {result.name}, input: {result.tool_input or '(none)'}",
+            result.output,
+        ))
+
+    def _run_auto_tools(self, question, sources, trace) -> None:
+        """Run the cheap tools that need no model decision."""
+        if "csv_lookup" in self.agent.tools:
+            self._add_tool_result("csv_lookup", question, "runner", sources, trace)
+            if not trace.tool_calls[-1].ok or trace.tool_calls[-1].output.startswith("No rows match"):
+                sources.pop()  # nothing useful found; don't show the model an empty result
+        if "current_date" in self.agent.tools:
+            self._add_tool_result("current_date", "", "runner", sources, trace)
+
+    def _run_planner(self, question, sources, trace) -> None:
+        """Short model call: which of calculator / weather_api (or none) is needed?"""
+        planned = [t for t in self.agent.tools if t in PLANNED_TOOLS]
+        if not planned:
+            return
+        trace.model_called = True
+        trace.model_attempts += 1
+        raw = self.llm_fn(
+            prompt=build_planner_prompt(question, sources, planned),
+            system="You choose tools. Reply with JSON only.",
+            json_schema=planner_schema(planned),
+        )
+        trace.raw_model_outputs.append(raw)
+        try:
+            plan = json.loads(raw)
+            name, tool_input = str(plan["tool_name"]).strip(), str(plan.get("tool_input", "")).strip()
+        except (ValueError, KeyError, TypeError):
+            trace.warnings.append("tool planner reply unusable; continuing without a planned tool")
+            return
+        if name and name != "none":
+            self._add_tool_result(name, tool_input, "planner", sources, trace)
+
     # --------------------------------------------------------------------- main
 
     def ask(self, question: str) -> AgentResponse:
@@ -163,6 +213,8 @@ class AgentRunner:
                 PromptSource(r.chunk.chunk_id, f"{r.chunk.doc_name}, page {r.chunk.page}", r.chunk.text)
                 for r in results
             ]
+            self._run_auto_tools(question, sources, trace)
+            self._run_planner(question, sources, trace)
             while True:
                 user_prompt = build_user_prompt(question, sources)
                 trace.estimated_prompt_tokens = evidence.estimate_tokens(self.system_prompt + user_prompt)
@@ -172,20 +224,11 @@ class AgentRunner:
                     return self._refusal(trace, f"The model's reply could not be used ({reason}).")
                 if not output.tool_name:
                     break
-                if len(trace.tool_calls) >= config.MAX_TOOL_CALLS:
+                model_calls = sum(1 for c in trace.tool_calls if c.requested_by == "model")
+                if model_calls >= config.MAX_TOOL_CALLS:
                     trace.decision = "refused_tool_limit"
                     return self._refusal(trace, f"Stopped after {config.MAX_TOOL_CALLS} tool calls.")
-                result = run_tool(output.tool_name, output.tool_input, self.tool_context, self.agent.tools)
-                number = len(sources) + 1
-                trace.tool_calls.append(ToolCallRecord(
-                    source_number=number, name=result.name, tool_input=result.tool_input,
-                    ok=result.ok, output=result.output,
-                ))
-                sources.append(PromptSource(
-                    f"tool:{result.name}:{len(trace.tool_calls)}",
-                    f"tool {result.name}, input: {result.tool_input or '(none)'}",
-                    result.output,
-                ))
+                self._add_tool_result(output.tool_name, output.tool_input, "model", sources, trace)
 
             if trace.estimated_prompt_tokens > 0.8 * config.NUM_CTX:
                 trace.warnings.append(

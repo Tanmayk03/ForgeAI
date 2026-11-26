@@ -1,0 +1,12 @@
+Decide whether a tool is needed to answer the QUESTION, given the SOURCES.
+
+TOOLS:
+$tools
+
+Rules:
+- Choose a tool only if the SOURCES do not already contain the answer.
+- Use "calculator" for ANY arithmetic, even simple. tool_input is the expression, using numbers from the SOURCES, e.g. 145 * 4
+- Use "weather_api" only for weather questions. tool_input is the place name.
+- Otherwise choose "none" with an empty tool_input.
+
+Reply with JSON only: {"tool_name": "...", "tool_input": "..."}

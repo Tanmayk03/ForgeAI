@@ -58,6 +58,10 @@ class ToolCallRecord(BaseModel):
     """One tool call, as recorded in the trace."""
 
     source_number: int = Field(description="Number the result was shown under, e.g. [4]")
+    requested_by: Literal["runner", "planner", "model"] = Field(
+        description="runner = run automatically; planner = chosen in the tool-planning step; "
+        "model = asked for while answering"
+    )
     name: str
     tool_input: str
     ok: bool

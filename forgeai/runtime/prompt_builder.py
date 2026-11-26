@@ -22,6 +22,12 @@ from forgeai.runtime.agent_schema import AgentDefinition
 from forgeai.tools.registry import TOOLS
 
 SYSTEM_TEMPLATE_PATH = config.PROMPTS_DIR / "runner_system.txt"
+PLANNER_TEMPLATE_PATH = config.PROMPTS_DIR / "tool_planner.txt"
+
+# Tools the runner runs by itself (cheap, no model decision needed) and tools
+# the model must choose in the planning step (they need an input it writes).
+AUTO_TOOLS = ("csv_lookup", "current_date")
+PLANNED_TOOLS = ("calculator", "weather_api")
 
 
 @dataclass
@@ -61,6 +67,25 @@ def build_system_prompt(agent: AgentDefinition) -> str:
         max_answer_words=agent.output_contract.max_answer_words,
         tools_section=build_tools_section(agent.tools),
     ).strip()
+
+
+def build_planner_prompt(question: str, sources: list[PromptSource], tool_names: list[str]) -> str:
+    """Prompt for the short 'which tool?' step (one tool name from a fixed list)."""
+    tools = "\n".join(f"- {n}: {TOOLS[n].description} tool_input: {TOOLS[n].input_hint}." for n in tool_names)
+    rules = Template(PLANNER_TEMPLATE_PATH.read_text(encoding="utf-8")).substitute(tools=tools)
+    return rules.strip() + "\n\n" + build_user_prompt(question, sources)
+
+
+def planner_schema(tool_names: list[str]) -> dict:
+    """JSON schema that only allows the given tool names or 'none'."""
+    return {
+        "type": "object",
+        "properties": {
+            "tool_name": {"type": "string", "enum": [*tool_names, "none"]},
+            "tool_input": {"type": "string"},
+        },
+        "required": ["tool_name", "tool_input"],
+    }
 
 
 def build_user_prompt(question: str, sources: list[PromptSource]) -> str:
