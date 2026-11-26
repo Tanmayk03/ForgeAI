@@ -1,0 +1,12 @@
+Write the opening instructions for an AI assistant, in 2 to 4 sentences, addressed to the assistant ("You are ...").
+
+PURPOSE: $purpose
+AUDIENCE: $audience
+TONE: $tone
+SCOPE: $scope
+
+Say who the assistant is, who it helps, and how it should sound.
+Do not add rules about sources, refusals or output format (those are added separately).
+Do not invent facts, names or numbers.
+
+Reply with JSON only: {"system_instructions": "..."}
