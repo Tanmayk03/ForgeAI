@@ -29,6 +29,7 @@ Auditor must never score it as a correct refusal.
 """
 
 import json
+import re
 import time
 from collections.abc import Callable
 from pathlib import Path
@@ -52,6 +53,9 @@ from forgeai.tools.registry import run_tool
 # Type of the function used to call the model. Normally llm_client.generate;
 # tests pass a fake with the same signature so they run without Ollama.
 LLMFunction = Callable[..., str]
+
+# An arithmetic operator between numbers: "145 * 4" yes, "145.00" no.
+ARITHMETIC = re.compile(r"[\d)]\s*(\*\*|[-+*/%])\s*[\d(.]")
 
 
 class AgentLoadError(Exception):
@@ -163,6 +167,9 @@ class AgentRunner:
         except (ValueError, KeyError, TypeError):
             trace.warnings.append("tool planner reply unusable; continuing without a planned tool")
             return
+        if name == "calculator" and not ARITHMETIC.search(tool_input):
+            trace.warnings.append(f"planner chose calculator with no calculation ({tool_input!r}); skipped")
+            return
         if name and name != "none":
             self._add_tool_result(name, tool_input, "planner", sources, trace)
 
@@ -215,8 +222,9 @@ class AgentRunner:
             ]
             self._run_auto_tools(question, sources, trace)
             self._run_planner(question, sources, trace)
+            note = ""
             while True:
-                user_prompt = build_user_prompt(question, sources)
+                user_prompt = build_user_prompt(question, sources) + note
                 trace.estimated_prompt_tokens = evidence.estimate_tokens(self.system_prompt + user_prompt)
                 output, reason = self._call_model(user_prompt, trace)
                 if output is None:
@@ -228,6 +236,15 @@ class AgentRunner:
                 if model_calls >= config.MAX_TOOL_CALLS:
                     trace.decision = "refused_tool_limit"
                     return self._refusal(trace, f"Stopped after {config.MAX_TOOL_CALLS} tool calls.")
+                duplicate = next((c for c in trace.tool_calls
+                                  if c.name == output.tool_name and c.tool_input == output.tool_input), None)
+                if duplicate:
+                    # Don't run the same call twice: point the model at the existing result.
+                    trace.tool_calls.append(duplicate.model_copy(update={"requested_by": "model"}))
+                    trace.warnings.append(f"repeated tool call {output.tool_name}({output.tool_input!r}) not re-run")
+                    note = (f"\n\nThe result of {output.tool_name} is already source [{duplicate.source_number}]. "
+                            "Answer now using the SOURCES.")
+                    continue
                 self._add_tool_result(output.tool_name, output.tool_input, "model", sources, trace)
 
             if trace.estimated_prompt_tokens > 0.8 * config.NUM_CTX:

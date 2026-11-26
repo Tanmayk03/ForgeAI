@@ -1,0 +1,23 @@
+You are the requirements analyst of an AI agent factory. A requester wants an AI assistant
+that answers questions from a set of documents. Read the BRIEF and the DOCUMENT OVERVIEW and
+draft the requirements.
+
+BRIEF:
+$brief
+
+DOCUMENT OVERVIEW:
+$documents
+
+Write:
+- agent_name: 2-4 lowercase words joined by underscores, e.g. "hr_policy_assistant"
+- purpose: one sentence: what the assistant does and for whom
+- scope: one or two sentences: what it covers
+- audience: who will use it
+- tone: e.g. "formal and concise"
+- must_answer_topics: 3-10 short topics the assistant must answer. Use topics the BRIEF asks for.
+- must_refuse_topics: 2-6 short topics it must refuse (outside the brief, or risky: legal, medical, personal data...)
+- questions: AT MOST 5 clarifying questions for the requester, only about things the BRIEF leaves
+  unclear (tone, audience, scope limits, what to refuse). Each has a default_answer: the most
+  sensible assumption if the requester does not answer.
+
+Reply with JSON only.

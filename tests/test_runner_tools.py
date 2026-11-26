@@ -146,3 +146,21 @@ class TestAutoCsvLookup(unittest.TestCase):
         self.assertFalse(response.refused, response.refusal_reason)
         self.assertIn("unit_price_usd=145.00", fake.calls[0]["prompt"])   # planner saw the CSV row
         self.assertEqual([c.requested_by for c in response.trace.tool_calls], ["runner", "planner"])
+
+
+class TestToolSpeedFixes(unittest.TestCase):
+    def test_planner_calculator_without_operator_is_skipped(self):
+        # Real Qwen planned calculator("145.00") for a simple lookup.
+        fake = FakeLLM(plan("calculator", "145.00"), answer("The unit price is 145.00 USD.", [1]))
+        response = runner(fake, ["csv_lookup", "calculator"]).ask("What is the unit price of the fuel injector nozzle?")
+        self.assertEqual([c.name for c in response.trace.tool_calls], ["csv_lookup"])
+        self.assertTrue(any("no calculation" in w for w in response.trace.warnings))
+        self.assertFalse(response.refused, response.refusal_reason)
+
+    def test_repeated_tool_call_is_not_rerun(self):
+        q = "What is the unit price of the fuel injector nozzle?"
+        fake = FakeLLM(plan(), tool_call("csv_lookup", q), answer("145.00 USD.", [1]))
+        response = runner(fake, ["csv_lookup", "calculator"]).ask(q)
+        self.assertFalse(response.refused, response.refusal_reason)
+        self.assertIn("already source [1]", fake.calls[2]["prompt"])
+        self.assertEqual(sum(1 for c in response.trace.tool_calls if c.name == "csv_lookup"), 2)  # auto + repeat record
