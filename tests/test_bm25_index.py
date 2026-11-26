@@ -27,6 +27,11 @@ class TestBM25Index(unittest.TestCase):
         self.assertEqual(index.search("hotel")[0].chunk.chunk_index, 2)
         self.assertEqual(index.search("sick leave")[0].chunk.chunk_index, 1)
 
+    def test_idf_ranks_rare_words_higher(self):
+        index = BM25Index([chunk(0, "leave days annual"), chunk(1, "leave days sick")])
+        self.assertGreater(index.idf("sick"), index.idf("leave"))
+        self.assertEqual(index.idf("unknownword"), 0.0)
+
     def test_unrelated_query_finds_nothing(self):
         index = BM25Index([chunk(0, "Mars has two moons.")])
         self.assertEqual(index.search("weather in Mumbai"), [])

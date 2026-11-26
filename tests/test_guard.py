@@ -63,7 +63,10 @@ class TestGuard(unittest.TestCase):
         self.assertNotIn("'legal advice'", text)
         self.assertIn("UNSUPPORTED by the documents", text)
         self.assertIn("pension scheme", text)
-        self.assertIn("not in any must-answer topic", text)                       # e.g. sick, travel
+        self.assertIn("not in any must-answer topic", text)
+        keywords = [w for w in req.guard_warnings if "not in any must-answer topic" in w][0]
+        self.assertIn("sick", keywords)          # distinctive word is reported
+        self.assertNotIn(" per", keywords)       # generic word is not
 
     def test_save_updates_requirements_and_writes_report(self):
         req = run_guard(requirements(["annual leave"]), llm_fn=FakeLLM())

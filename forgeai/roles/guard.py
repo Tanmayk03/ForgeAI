@@ -19,6 +19,7 @@ turns them into refusal topics, so the agent never "answers" a documentation gap
 """
 
 import json
+from collections import Counter
 from collections.abc import Callable
 from pathlib import Path
 from string import Template
@@ -34,6 +35,7 @@ from forgeai.retrieval.loader import load_documents, read_text_file
 from forgeai.roles.requirements import Requirements, TopicSupport
 
 TOP_K = 3
+KEYWORDS_PER_DOC = 5   # distinctive keywords reported per document
 QUOTE_MATCH = 0.8      # share of the quote's words that must appear in the chunks
 
 
@@ -115,8 +117,19 @@ def run_guard(
         if hits:
             warnings.append(f"refuse topic '{topic}' appears in the documents ({', '.join(hits[:3])}); "
                             "questions the documents answer may be wrongly refused")
+    # Distinctive words per document: frequent in the document AND found in few chunks
+    # (score = count x idf), so "sick" ranks above words like "days" that appear everywhere.
     answered_words = {t for topic in requirements.must_answer_topics for t in tokenize(topic)}
-    uncovered = [k for d in requirements.documents for k in d.keywords[:5] if k not in answered_words]
+    uncovered = []
+    if index:
+        per_doc: dict[str, Counter] = {}
+        for c in chunks:
+            per_doc.setdefault(c.doc_name, Counter()).update(
+                t for t in tokenize(c.text) if len(t) > 2 and not t.isdigit() and t not in answered_words
+            )
+        for counts in per_doc.values():
+            ranked = sorted(counts, key=lambda t: -counts[t] * index.idf(t))
+            uncovered.extend(ranked[:KEYWORDS_PER_DOC])
     if uncovered:
         warnings.append("documents also cover keywords not in any must-answer topic: "
                         + ", ".join(dict.fromkeys(uncovered)))

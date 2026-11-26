@@ -73,6 +73,10 @@ class BM25Index:
         # rank_bm25 fails if every chunk is empty after tokenising; guard with a placeholder token.
         self._bm25 = _PositiveIdfBM25([tokens or ["_empty_"] for tokens in tokenized])
 
+    def idf(self, term: str) -> float:
+        """How distinctive a word is: high if it appears in few chunks, 0 if in none."""
+        return float(self._bm25.idf.get(term, 0.0))
+
     def search(self, query: str, top_k: int | None = None) -> list[SearchResult]:
         """
         Return up to `top_k` chunks that best match `query`, best first.
