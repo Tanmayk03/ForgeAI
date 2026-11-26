@@ -9,8 +9,11 @@ between the agent and the Auditor).
 Case types (targets for a 24-case set):
   answerable    12  model writes questions from one passage; key facts must be
                     copied from that passage (checked in code)
-  multi_doc      3  question needing facts from two passages of different documents;
-                    if the model fails, code combines two questions from different documents
+  multi_doc      3  code combines two accepted questions from DIFFERENT documents into one;
+                    the answer must contain both facts. (Qwen 1.5B, asked to write such
+                    questions, wrote single-document questions with unrelated answer keys.
+                    Limitation: this tests answers spanning two documents, not reasoning
+                    across them.)
   ambiguous      3  informal / vague rewrites of accepted answerable questions
   out_of_scope   6+ refuse-topic questions, guard-unsupported topics, and
                     unrelated questions (checked: the documents barely mention them)
@@ -92,12 +95,6 @@ class _QA(BaseModel):
 
 class _QAList(BaseModel):
     cases: list[_QA]
-
-
-class _MultiDoc(BaseModel):
-    question: str
-    facts_from_a: list[str]
-    facts_from_b: list[str]
 
 
 class _Rewrites(BaseModel):
@@ -245,35 +242,7 @@ class _Builder:
                     self.add("answerable", qa.question, "answer", facts,
                              self.docs_with_facts(facts, chunks) or [chunk.doc_name], chunk.text, origin)
 
-    # -- multi-document
-    def multi_doc(self, chunks: list[Chunk]):
-        docs = sorted({c.doc_name for c in chunks})
-        if len(docs) < 2:
-            self.notes.append("only one text document: no multi-document cases possible")
-            return
-        pairs = [(a, b) for i, a in enumerate(chunks) for b in chunks[i + 1:] if a.doc_name != b.doc_name]
-        # Prefer pairs that share distinctive words (more natural combined questions).
-        pairs.sort(key=lambda p: -len(set(tokenize(p[0].text)) & set(tokenize(p[1].text))))
-        for a, b in pairs[: TARGETS["multi_doc"] * 2]:
-            if sum(c.type == "multi_doc" for c in self.cases) >= TARGETS["multi_doc"]:
-                return
-            origin = f"passages {a.chunk_id} + {b.chunk_id}"
-            out = self.ask(self.prompt("auditor_multidoc.txt", doc_a=a.doc_name, passage_a=a.text,
-                                       doc_b=b.doc_name, passage_b=b.text), _MultiDoc, origin)
-            if not out:
-                continue
-            fa = [strengthen_fact(f.strip(), a.text) for f in out.facts_from_a if f.strip()]
-            fb = [strengthen_fact(f.strip(), b.text) for f in out.facts_from_b if f.strip()]
-            reason = ("needs a fact from each passage" if not fa or not fb else
-                      check_answerable(out.question, fa, [a.text], self.cases) or
-                      check_answerable(out.question, fb, [b.text], self.cases))
-            if reason:
-                self.reject(out.question, reason, origin)
-                continue
-            self.add("multi_doc", out.question, "answer", fa + fb, sorted({a.doc_name, b.doc_name}),
-                     a.text + "\n\n" + b.text, origin)
-
-    # -- multi-document fallback (code-built)
+    # -- multi-document (code-built)
     def combined_multi_doc(self):
         """Join two accepted questions from different documents into one question needing both."""
         need = TARGETS["multi_doc"] - sum(c.type == "multi_doc" for c in self.cases)
@@ -385,7 +354,6 @@ def generate_evals(req: Requirements, llm_fn: Callable[..., str] | None = None,
 
     if chunks:
         b.answerable(chunks)
-        b.multi_doc(chunks)
         b.combined_multi_doc()
     b.csv_rows(loaded, chunks)
     b.ambiguous()

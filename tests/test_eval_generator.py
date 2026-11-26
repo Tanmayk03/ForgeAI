@@ -50,9 +50,6 @@ class ScriptedLLM:
 
     def __call__(self, prompt, system=None, json_schema=None, **kw):
         self.calls.append(prompt)
-        if "needs TWO passages" in prompt:
-            return json.dumps({"question": "Can I claim hotel costs while on annual leave?",
-                               "facts_from_a": ["24 working days"], "facts_from_b": ["INR 6,000 per night"]})
         if "Rewrite each question" in prompt:
             n = prompt.count("\n- ")
             return json.dumps({"rewrites": ["hey how many days off do i get pls"] + [f"quick q number {i} about stuff here" for i in range(n - 1)]})
@@ -104,24 +101,14 @@ class TestStrengthenFact(unittest.TestCase):
         self.assertEqual(strengthen_fact("medical certificate", self.P), "medical certificate")
 
 
-class BadMultiDocLLM(ScriptedLLM):
-    def __call__(self, prompt, **kw):
-        if "needs TWO passages" in prompt:
-            self.calls.append(prompt)
-            return json.dumps({"question": "How many sick days do employees get per year?",
-                               "facts_from_a": ["3. Sick leave. Employees receive 12 days of paid sick leave per year now."],
-                               "facts_from_b": []})
-        return super().__call__(prompt, **kw)
-
-
 class TestCombinedMultiDoc(unittest.TestCase):
-    def test_fallback_combines_questions_from_two_documents(self):
-        evals, rejected = generate_evals(req(), llm_fn=BadMultiDocLLM())
+    def test_multi_doc_cases_combine_two_documents(self):
+        evals, _ = generate_evals(req(), llm_fn=ScriptedLLM())
         multi = [c for c in evals.cases if c.type == "multi_doc"]
         self.assertEqual(len(multi), 3)
         self.assertTrue(all(c.origin.startswith("combined") for c in multi))
         self.assertTrue(all(len(c.expected_docs) == 2 for c in multi))
-        self.assertTrue(any("needs a fact from each passage" in r.reason for r in rejected))
+        self.assertTrue(all(", and " in c.question for c in multi))
 
 
 class TestGenerateEvals(unittest.TestCase):
@@ -153,6 +140,7 @@ class TestGenerateEvals(unittest.TestCase):
     def test_multi_doc_and_expected_docs(self):
         m = self.by_type["multi_doc"][0]
         self.assertEqual(m.expected_docs, ["leave_policy.pdf", "travel_policy.md"])
+        self.assertEqual(len(m.key_facts), 2)
         a = [c for c in self.by_type["answerable"] if "INR 6,000 per night" in c.key_facts][0]
         self.assertEqual(a.expected_docs, ["travel_policy.md"])
 

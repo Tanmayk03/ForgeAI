@@ -1,0 +1,12 @@
+You check one fact in an answer. Do not judge style or length.
+
+ANSWER:
+$answer
+
+FACT: $fact
+
+Does the ANSWER state this FACT (same meaning, possibly different words)?
+If yes, copy the exact part of the ANSWER that states it into "quote".
+If no, give an empty quote.
+
+Reply with JSON only: {"states_fact": true or false, "quote": "..."}
