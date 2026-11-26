@@ -12,11 +12,6 @@ from pydantic import BaseModel, ConfigDict, Field
 REQUIREMENTS_VERSION = "1.0"
 
 
-class ClarifyingQuestion(BaseModel):
-    question: str
-    default_answer: str = Field(description="Assumption used if the requester gives no answer")
-
-
 class Clarification(BaseModel):
     question: str
     answer: str
@@ -45,10 +40,6 @@ class RequirementFields(BaseModel):
     tone: str
     must_answer_topics: list[str]
     must_refuse_topics: list[str]
-
-
-class DraftRequirements(RequirementFields):
-    questions: list[ClarifyingQuestion] = Field(default_factory=list)
 
 
 class Requirements(RequirementFields):

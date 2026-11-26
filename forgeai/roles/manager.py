@@ -3,14 +3,18 @@ manager.py - the Manager role: brief + document folder -> requirements.json.
 
 Steps:
   1. INVENTORY  (code)  list the documents with a short preview and keywords
-  2. DRAFT      (LLM)   draft requirements + at most 5 clarifying questions,
-                        each with a default answer
-  3. ASK        (CLI)   ask the requester; an empty answer, or --auto mode,
-                        uses the default and records it as "assumed"
-  4. FINALIZE   (LLM)   update the draft with the requester's answers
-                        (skipped when every answer was assumed)
-  5. CLEAN UP   (code)  enforce limits, remove duplicates and contradictions,
+  2. DRAFT      (LLM)   draft the requirement fields from the brief + documents
+  3. ASK        (CLI)   a fixed interview of 5 design questions (INTERVIEW below);
+                        the draft value is each question's default. An answer
+                        replaces that field directly in code. An empty answer, or
+                        --auto mode, keeps the default and records it as "assumed".
+  4. CLEAN UP   (code)  enforce limits, remove duplicates and contradictions,
                         and record every fix in `notes`
+
+Why a fixed interview? Asked to invent clarifying questions, Qwen 1.5B wrote
+questions an END USER would ask the finished assistant (and answered them).
+Fixed design questions with model-drafted defaults are reliable, need one
+model call instead of two, and still stay within the 5-question limit.
 
 The Manager never sees an agent definition or test; it only writes the spec.
 """
@@ -27,11 +31,17 @@ from forgeai.llm_json import generate_json
 from forgeai.retrieval.bm25_index import tokenize
 from forgeai.retrieval.loader import load_documents, read_text_file
 from forgeai.retrieval.models import LoadResult
-from forgeai.roles.requirements import (
-    Clarification, DocumentSummary, DraftRequirements, RequirementFields, Requirements,
-)
+from forgeai.roles.requirements import Clarification, DocumentSummary, RequirementFields, Requirements
 
-MAX_QUESTIONS = 5          # assignment limit
+# (field, question). At most 5 questions: the assignment's limit.
+INTERVIEW = [
+    ("audience", "Who will use this assistant?"),
+    ("tone", "What tone should it use?"),
+    ("must_answer_topics", "Which topics MUST it answer? (comma-separated)"),
+    ("must_refuse_topics", "Which topics must it REFUSE? (comma-separated)"),
+    ("scope", "In one sentence, what is in scope and what is out of scope?"),
+]
+LIST_FIELDS = {"must_answer_topics", "must_refuse_topics"}
 MAX_TOPICS = 12
 MAX_TOPIC_WORDS = 8
 PREVIEW_WORDS = 50
@@ -148,37 +158,25 @@ def run_manager(
     draft_prompt = Template((config.PROMPTS_DIR / "manager_draft.txt").read_text(encoding="utf-8")).substitute(
         brief=brief, documents=_documents_text(summaries),
     )
-    draft = generate_json(draft_prompt, DraftRequirements, llm_fn=llm_fn, log=log, max_tokens=900)
-
-    notes: list[str] = []
-    questions = draft.questions
-    if len(questions) > MAX_QUESTIONS:
-        notes.append(f"model proposed {len(questions)} questions; only the first {MAX_QUESTIONS} were asked")
-        questions = questions[:MAX_QUESTIONS]
+    draft = generate_json(draft_prompt, RequirementFields, llm_fn=llm_fn, log=log, max_tokens=700)
 
     # 3. ASK
+    values = draft.model_dump()
     clarifications = []
-    for number, q in enumerate(questions, start=1):
+    for number, (field, question) in enumerate(INTERVIEW, start=1):
+        default = ", ".join(values[field]) if field in LIST_FIELDS else str(values[field])
         answer = ""
         if not auto:
-            answer = input_fn(f"\nQ{number}/{len(questions)}: {q.question}\n  (Enter = {q.default_answer})\n  > ").strip()
-        if answer:
-            clarifications.append(Clarification(question=q.question, answer=answer, source="requester"))
-        else:
-            clarifications.append(Clarification(question=q.question, answer=q.default_answer, source="assumed"))
+            answer = input_fn(f"\nQ{number}/{len(INTERVIEW)}: {question}\n  (Enter = {default})\n  > ").strip()
+        source = "requester" if answer else "assumed"
+        answer = answer or default
+        clarifications.append(Clarification(question=question, answer=answer, source=source))
+        if source == "requester":
+            values[field] = [t for t in re.split(r"[,;]", answer) if t.strip()] if field in LIST_FIELDS else answer
 
-    # 4. FINALIZE (only if the requester actually answered something)
-    fields: RequirementFields = draft
-    if any(c.source == "requester" for c in clarifications):
-        answers = "\n".join(f"- Q: {c.question}\n  A: {c.answer}" for c in clarifications)
-        draft_json = json.dumps(draft.model_dump(exclude={"questions"}), indent=1)
-        final_prompt = Template((config.PROMPTS_DIR / "manager_finalize.txt").read_text(encoding="utf-8")).substitute(
-            brief=brief, draft=draft_json, answers=answers,
-        )
-        fields = generate_json(final_prompt, RequirementFields, llm_fn=llm_fn, log=log, max_tokens=900)
-
-    # 5. CLEAN UP
-    fields = clean_fields(fields, notes)
+    # 4. CLEAN UP
+    notes: list[str] = []
+    fields = clean_fields(RequirementFields(**values), notes)
     return Requirements(
         **fields.model_dump(),
         brief=brief,

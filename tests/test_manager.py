@@ -14,7 +14,7 @@ from tests.helpers import SAMPLE_DOCS, FakeLLM
 BRIEF = "I need an assistant that answers leave and travel policy questions for shore staff."
 
 
-def draft(questions=None, **changes):
+def draft(**changes):
     data = {
         "agent_name": "Shore Staff Policy Assistant!",
         "purpose": "Answers leave and travel policy questions for shore staff.",
@@ -23,18 +23,7 @@ def draft(questions=None, **changes):
         "tone": "formal and concise",
         "must_answer_topics": ["annual leave", "sick leave", "travel claims", "Annual Leave"],
         "must_refuse_topics": ["legal advice", "salary negotiation"],
-        "questions": questions if questions is not None else [
-            {"question": "Should it answer salary questions?", "default_answer": "No, refuse them."},
-            {"question": "Formal or friendly tone?", "default_answer": "Formal."},
-        ],
     }
-    data.update(changes)
-    return data
-
-
-def final(**changes):
-    data = draft()
-    del data["questions"]
     data.update(changes)
     return data
 
@@ -43,8 +32,9 @@ class TestManager(unittest.TestCase):
     def test_auto_mode_uses_defaults_and_one_model_call(self):
         fake = FakeLLM(draft())
         req = run_manager(BRIEF, SAMPLE_DOCS, auto=True, llm_fn=fake)
-        self.assertEqual(len(fake.calls), 1)                       # no finalize call
-        self.assertEqual([c.source for c in req.clarifications], ["assumed", "assumed"])
+        self.assertEqual(len(fake.calls), 1)
+        self.assertEqual([c.source for c in req.clarifications], ["assumed"] * 5)
+        self.assertEqual(req.clarifications[1].answer, "formal and concise")
         self.assertEqual(req.agent_name, "shore_staff_policy_assistant")
         self.assertEqual(req.must_answer_topics, ["annual leave", "sick leave", "travel claims"])  # duplicate removed
         self.assertIn("old_memo.docx", req.skipped_files[0])
@@ -57,22 +47,22 @@ class TestManager(unittest.TestCase):
         self.assertIn("leave_policy.pdf (pdf, 2 page(s)", prompt)
         self.assertIn("CSV columns: part_no,description", prompt)
 
-    def test_interactive_answers_trigger_finalize(self):
-        answers = iter(["Yes, but only general salary policy", ""])
-        fake = FakeLLM(draft(), final(tone="friendly"))
+    def test_answers_replace_fields_directly(self):
+        answers = iter(["", "friendly", "annual leave; public holidays", "", ""])
+        fake = FakeLLM(draft())
         req = run_manager(BRIEF, SAMPLE_DOCS, input_fn=lambda _: next(answers), llm_fn=fake)
-        self.assertEqual(len(fake.calls), 2)
-        self.assertEqual([c.source for c in req.clarifications], ["requester", "assumed"])
-        self.assertIn("general salary policy", fake.calls[1]["prompt"])
+        self.assertEqual(len(fake.calls), 1)                       # answers applied in code, no 2nd call
+        self.assertEqual([c.source for c in req.clarifications],
+                         ["assumed", "requester", "requester", "assumed", "assumed"])
         self.assertEqual(req.tone, "friendly")
+        self.assertEqual(req.must_answer_topics, ["annual leave", "public holidays"])
 
-    def test_at_most_five_questions_are_asked(self):
-        many = [{"question": f"Q{i}?", "default_answer": "x"} for i in range(8)]
+    def test_exactly_five_design_questions_are_asked(self):
         asked = []
-        req = run_manager(BRIEF, SAMPLE_DOCS, input_fn=lambda q: asked.append(q) or "", llm_fn=FakeLLM(draft(many)))
+        run_manager(BRIEF, SAMPLE_DOCS, input_fn=lambda q: asked.append(q) or "", llm_fn=FakeLLM(draft()))
         self.assertEqual(len(asked), 5)
-        self.assertEqual(len(req.clarifications), 5)
-        self.assertTrue(any("only the first 5" in n for n in req.notes))
+        self.assertIn("Who will use this assistant?", asked[0])
+        self.assertIn("Enter = shore-based employees", asked[0])  # default comes from the draft
 
     def test_topic_in_both_lists_becomes_refuse_only(self):
         req = run_manager(BRIEF, SAMPLE_DOCS, auto=True, llm_fn=FakeLLM(
