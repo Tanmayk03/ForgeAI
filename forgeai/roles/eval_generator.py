@@ -9,7 +9,8 @@ between the agent and the Auditor).
 Case types (targets for a 24-case set):
   answerable    12  model writes questions from one passage; key facts must be
                     copied from that passage (checked in code)
-  multi_doc      3  question needing facts from two passages of different documents
+  multi_doc      3  question needing facts from two passages of different documents;
+                    if the model fails, code combines two questions from different documents
   ambiguous      3  informal / vague rewrites of accepted answerable questions
   out_of_scope   6+ refuse-topic questions, guard-unsupported topics, and
                     unrelated questions (checked: the documents barely mention them)
@@ -126,6 +127,39 @@ def fact_in_text(fact: str, text: str) -> bool:
     return bool(f) and f" {f} " in f" {normalise(text)} "
 
 
+FACT_STOPWORDS = {"of", "the", "a", "an", "and", "or", "per", "to", "in", "for", "on", "at", "is", "are"}
+# A number followed by 1-2 words, ignoring list markers such as "3." at a sentence start.
+NUMBER_PHRASE = re.compile(r"(?<![\w.])(\d+(?:[.,]\d+)?)(?!\.(?:\s|$))\s+([A-Za-z]+)(?:\s+([A-Za-z]+))?")
+
+
+def strengthen_fact(fact: str, passage: str) -> str:
+    """
+    Make a key fact precise, in code:
+      bare number  '24'  -> '24 working days'   (next words from the passage)
+      long sentence      -> its first number phrase, e.g. '5 unused days'
+    Anything else is returned unchanged (the normal checks still apply).
+    """
+    f = normalise(fact)
+    if re.fullmatch(r"[\d.]+", f):
+        tokens = normalise(passage).split()
+        if f in tokens:
+            i = tokens.index(f)
+            words = [t for t in tokens[i + 1:i + 3]]
+            while words and words[-1] in FACT_STOPWORDS:
+                words.pop()
+            return " ".join([f, *words])
+        return fact
+    if len(fact.split()) > MAX_FACT_WORDS:
+        for m in NUMBER_PHRASE.finditer(fact):
+            words = [w for w in m.groups()[1:] if w]
+            while words and words[-1].lower() in FACT_STOPWORDS:
+                words.pop()
+            phrase = " ".join([m.group(1), *words])
+            if fact_in_text(phrase, passage):
+                return phrase
+    return fact
+
+
 def _jaccard(a: str, b: str) -> float:
     x, y = set(tokenize(a)), set(tokenize(b))
     return len(x & y) / len(x | y) if x | y else 1.0
@@ -203,11 +237,11 @@ class _Builder:
                                            passage=chunk.text, count=min(per_chunk, target - done), avoid=avoid),
                                _QAList, origin)
                 for qa in (out.cases if out else []):
-                    reason = check_answerable(qa.question, qa.key_facts, [chunk.text], self.cases)
+                    facts = [strengthen_fact(f.strip(), chunk.text) for f in qa.key_facts if f.strip()]
+                    reason = check_answerable(qa.question, facts, [chunk.text], self.cases)
                     if reason:
                         self.reject(qa.question, reason, origin)
                         continue
-                    facts = [f.strip() for f in qa.key_facts if f.strip()]
                     self.add("answerable", qa.question, "answer", facts,
                              self.docs_with_facts(facts, chunks) or [chunk.doc_name], chunk.text, origin)
 
@@ -228,7 +262,8 @@ class _Builder:
                                        doc_b=b.doc_name, passage_b=b.text), _MultiDoc, origin)
             if not out:
                 continue
-            fa, fb = [f for f in out.facts_from_a if f.strip()], [f for f in out.facts_from_b if f.strip()]
+            fa = [strengthen_fact(f.strip(), a.text) for f in out.facts_from_a if f.strip()]
+            fb = [strengthen_fact(f.strip(), b.text) for f in out.facts_from_b if f.strip()]
             reason = ("needs a fact from each passage" if not fa or not fb else
                       check_answerable(out.question, fa, [a.text], self.cases) or
                       check_answerable(out.question, fb, [b.text], self.cases))
@@ -237,6 +272,29 @@ class _Builder:
                 continue
             self.add("multi_doc", out.question, "answer", fa + fb, sorted({a.doc_name, b.doc_name}),
                      a.text + "\n\n" + b.text, origin)
+
+    # -- multi-document fallback (code-built)
+    def combined_multi_doc(self):
+        """Join two accepted questions from different documents into one question needing both."""
+        need = TARGETS["multi_doc"] - sum(c.type == "multi_doc" for c in self.cases)
+        base = [c for c in self.cases if c.type == "answerable" and len(c.expected_docs) == 1]
+        pairs = [(x, y) for i, x in enumerate(base) for y in base[i + 1:] if x.expected_docs != y.expected_docs]
+        self.rng.shuffle(pairs)
+        used: set[str] = set()
+        for x, y in pairs:
+            if need <= 0:
+                break
+            if x.id in used or y.id in used:
+                continue
+            second = y.question[0].lower() + y.question[1:]
+            question = f"{x.question.rstrip(' ?')}, and {second.rstrip(' ?')}?"
+            self.add("multi_doc", question, "answer", x.key_facts + y.key_facts,
+                     sorted({*x.expected_docs, *y.expected_docs}), x.source_text + "\n\n" + y.source_text,
+                     f"combined {x.id} + {y.id}")
+            used.update({x.id, y.id})
+            need -= 1
+        if need > 0:
+            self.notes.append(f"{need} multi-document case(s) short: not enough questions from different documents")
 
     # -- ambiguous rewrites
     def ambiguous(self):
@@ -328,6 +386,7 @@ def generate_evals(req: Requirements, llm_fn: Callable[..., str] | None = None,
     if chunks:
         b.answerable(chunks)
         b.multi_doc(chunks)
+        b.combined_multi_doc()
     b.csv_rows(loaded, chunks)
     b.ambiguous()
     b.out_of_scope(all_tokens)

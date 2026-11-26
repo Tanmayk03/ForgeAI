@@ -7,7 +7,7 @@ from pathlib import Path
 
 from forgeai.retrieval.loader import load_documents
 from forgeai.roles.eval_generator import (
-    check_answerable, fact_in_text, generate_evals, load_evals, save_evals, verify_frozen,
+    check_answerable, fact_in_text, generate_evals, load_evals, save_evals, strengthen_fact, verify_frozen,
 )
 from forgeai.roles.manager import summarise_documents
 from forgeai.roles.requirements import Requirements, TopicSupport
@@ -84,6 +84,44 @@ class TestChecks(unittest.TestCase):
         self.assertIn("not found", check_answerable("How many leave days do staff get?", ["30 days"], p, []))
         self.assertIn("own answer", check_answerable("Do staff get 24 working days of leave?", ["24 working days"], p, []))
         self.assertIn("too short", check_answerable("Leave?", ["24 working days"], p, []))
+
+
+class TestStrengthenFact(unittest.TestCase):
+    P = ("Shore staff are entitled to 24 working days of paid annual leave per calendar year. "
+         "Up to 5 unused days may be carried forward. 3. Sick leave. Employees receive 12 days of paid sick leave.")
+
+    def test_bare_number_gets_its_unit(self):
+        self.assertEqual(strengthen_fact("24", self.P), "24 working days")
+        self.assertEqual(strengthen_fact("5", self.P), "5 unused days")
+
+    def test_long_sentence_becomes_number_phrase(self):
+        self.assertEqual(strengthen_fact("Up to 5 unused days may be carried forward to the next year", self.P),
+                         "5 unused days")
+        self.assertEqual(strengthen_fact("3. Sick leave. Employees receive 12 days of paid sick leave per year.",
+                                         self.P), "12 days")          # list marker "3." ignored
+
+    def test_normal_fact_unchanged(self):
+        self.assertEqual(strengthen_fact("medical certificate", self.P), "medical certificate")
+
+
+class BadMultiDocLLM(ScriptedLLM):
+    def __call__(self, prompt, **kw):
+        if "needs TWO passages" in prompt:
+            self.calls.append(prompt)
+            return json.dumps({"question": "How many sick days do employees get per year?",
+                               "facts_from_a": ["3. Sick leave. Employees receive 12 days of paid sick leave per year now."],
+                               "facts_from_b": []})
+        return super().__call__(prompt, **kw)
+
+
+class TestCombinedMultiDoc(unittest.TestCase):
+    def test_fallback_combines_questions_from_two_documents(self):
+        evals, rejected = generate_evals(req(), llm_fn=BadMultiDocLLM())
+        multi = [c for c in evals.cases if c.type == "multi_doc"]
+        self.assertEqual(len(multi), 3)
+        self.assertTrue(all(c.origin.startswith("combined") for c in multi))
+        self.assertTrue(all(len(c.expected_docs) == 2 for c in multi))
+        self.assertTrue(any("needs a fact from each passage" in r.reason for r in rejected))
 
 
 class TestGenerateEvals(unittest.TestCase):
