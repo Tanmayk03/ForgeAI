@@ -21,6 +21,7 @@ from forgeai.runtime.agent_schema import load_agent_definition
 def main() -> int:
     parser = argparse.ArgumentParser(description="ForgeAI Repair")
     parser.add_argument("--run", required=True)
+    parser.add_argument("--iterations", type=int, default=3)
     args = parser.parse_args()
     run_dir = config.RUNS_DIR / args.run
     baseline_path = run_dir / "scorecard_iteration_0.json"
@@ -34,7 +35,7 @@ def main() -> int:
     print("Failures in iteration 0:")
     for f in classify_all(baseline, evals):
         print(f"  {f.id} {f.category:15} ({f.subtype}) {f.evidence}")
-    best, card, logs = run_repair(agent, evals, baseline, run_dir, progress=print)
+    best, card, logs = run_repair(agent, evals, baseline, run_dir, progress=print, max_iterations=args.iterations)
     print(f"\nFinal: {card.passed}/{card.passed + card.failed} ({card.pass_rate:.0%})  "
           f"after {sum(1 for l in logs if l.change)} change(s); saved agent_final.json and repair_log.json")
     return 0

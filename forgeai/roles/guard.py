@@ -35,6 +35,7 @@ from forgeai.retrieval.loader import load_documents, read_text_file
 from forgeai.roles.requirements import Requirements, TopicSupport
 
 TOP_K = 3
+CSV_SUPPORT_SHARE = 0.5   # share of a topic's key words that must appear in one CSV
 KEYWORDS_PER_DOC = 5   # distinctive keywords reported per document
 QUOTE_MATCH = 0.8      # share of the quote's words that must appear in the chunks
 
@@ -80,7 +81,7 @@ def run_guard(
         terms = list(dict.fromkeys(tokenize(topic)))
         results = index.search(topic, top_k=TOP_K) if index else []
         best = max((_coverage(terms, chunk_tokens[r.chunk.chunk_id]) for r in results), default=0.0)
-        csv_hits = [name for name, toks in csv_tokens.items() if terms and _coverage(terms, toks) == 1.0]
+        csv_hits = [name for name, toks in csv_tokens.items() if terms and _coverage(terms, toks) >= CSV_SUPPORT_SHARE]
 
         if not terms or _coverage(terms, anywhere) == 0.0:
             support.append(TopicSupport(topic=topic, status="unsupported", method="code", coverage=0.0,
@@ -88,9 +89,10 @@ def run_guard(
             continue
         full_chunks = [r.chunk.chunk_id for r in results if _coverage(terms, chunk_tokens[r.chunk.chunk_id]) == 1.0]
         if full_chunks or csv_hits:
-            support.append(TopicSupport(topic=topic, status="supported", method="code", coverage=1.0,
+            support.append(TopicSupport(topic=topic, status="supported", method="code", coverage=1.0 if full_chunks else CSV_SUPPORT_SHARE,
                                         evidence=full_chunks + [f"csv:{n}" for n in csv_hits],
-                                        reason="all key words found together in one passage"))
+                                        reason="all key words found together in one passage" if full_chunks
+                                        else "most key words found in CSV data"))
             continue
 
         # In-between: some key words found, never all together -> ask the model.

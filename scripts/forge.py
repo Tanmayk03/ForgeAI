@@ -34,6 +34,7 @@ def main() -> int:
     parser.add_argument("--docs", required=True)
     parser.add_argument("--run", required=True)
     parser.add_argument("--auto", action="store_true", help="unattended: use interview defaults")
+    parser.add_argument("--iterations", type=int, default=3, help="repair iterations (1-3; fewer = faster)")
     args = parser.parse_args()
     brief_path = Path(args.brief)
     brief = brief_path.read_text(encoding="utf-8-sig") if brief_path.suffix == ".txt" and brief_path.is_file() else args.brief
@@ -68,7 +69,8 @@ def main() -> int:
         baseline = stage("evaluation", lambda: run_evals(evals, AgentRunner(agent), progress=lambda m: print("  " + m)))
         save_scorecard(baseline, run_dir)
         print(f"  baseline {baseline.passed}/{baseline.passed + baseline.failed}")
-        stage("repair", lambda: run_repair(agent, evals, baseline, run_dir, progress=lambda m: print("  " + m)))
+        stage("repair", lambda: run_repair(agent, evals, baseline, run_dir, progress=lambda m: print("  " + m),
+                                           max_iterations=args.iterations))
     except (ManagerError, BuilderError, LLMJSONError, LLMError, FileNotFoundError) as exc:
         print(f"\nFactory stopped: {exc}")
         (run_dir / "timings.json").parent.mkdir(parents=True, exist_ok=True)

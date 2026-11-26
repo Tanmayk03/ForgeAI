@@ -48,7 +48,7 @@ class TestToolUse(unittest.TestCase):
 
     def test_unusable_planner_reply_is_skipped(self):
         fake = FakeLLM("garbage", answer("24 working days.", [1]))
-        response = runner(fake, ["calculator"]).ask("How many days of annual leave do shore staff get?")
+        response = runner(fake, ["calculator"]).ask("How many days of annual leave do shore staff get in 2 years?")
         self.assertFalse(response.refused)
         self.assertTrue(any("planner reply unusable" in w for w in response.trace.warnings))
 
@@ -71,10 +71,24 @@ class TestToolUse(unittest.TestCase):
         self.assertIn("TOOLS: none", fake.calls[0]["system"])
 
     def test_tool_limit(self):
-        fake = FakeLLM(plan(), *[tool_call("calculator", "1+1")] * 3)
+        fake = FakeLLM(plan(), *[tool_call("calculator", "1+1")] * 4)
         response = runner(fake, ["calculator"]).ask(self.Q)
         self.assertEqual(response.trace.decision, "refused_tool_limit")
         self.assertEqual(len(response.trace.tool_calls), 2)
+        self.assertIn("answer from the sources", " ".join(response.trace.warnings))   # last chance was given
+
+    def test_tool_limit_last_chance_can_answer(self):
+        fake = FakeLLM(plan(), tool_call("calculator", "1+1"), tool_call("calculator", "2+2"),
+                       tool_call("calculator", "3+3"), answer("24 working days.", [1]))
+        response = runner(fake, ["calculator"]).ask(self.Q)
+        self.assertFalse(response.refused, response.refusal_reason)
+        self.assertIn("cannot use more tools", fake.calls[-1]["prompt"])
+
+    def test_planner_skipped_without_hint(self):
+        fake = FakeLLM(answer("24 working days.", [1]))
+        response = runner(fake, ["calculator", "weather_api"]).ask("How many days of annual leave do shore staff get?")
+        self.assertEqual(len(fake.calls), 1)          # no planning call
+        self.assertFalse(response.refused)
 
     def test_planner_not_called_without_planned_tools(self):
         fake = FakeLLM(answer("24 working days.", [1]))
@@ -152,15 +166,15 @@ class TestToolSpeedFixes(unittest.TestCase):
     def test_planner_calculator_without_operator_is_skipped(self):
         # Real Qwen planned calculator("145.00") for a simple lookup.
         fake = FakeLLM(plan("calculator", "145.00"), answer("The unit price is 145.00 USD.", [1]))
-        response = runner(fake, ["csv_lookup", "calculator"]).ask("What is the unit price of the fuel injector nozzle?")
+        response = runner(fake, ["csv_lookup", "calculator"]).ask("What is the total unit price of the fuel injector nozzle?")
         self.assertEqual([c.name for c in response.trace.tool_calls], ["csv_lookup"])
         self.assertTrue(any("no calculation" in w for w in response.trace.warnings))
         self.assertFalse(response.refused, response.refusal_reason)
 
     def test_repeated_tool_call_is_not_rerun(self):
         q = "What is the unit price of the fuel injector nozzle?"
-        fake = FakeLLM(plan(), tool_call("csv_lookup", q), answer("145.00 USD.", [1]))
+        fake = FakeLLM(tool_call("csv_lookup", q), answer("145.00 USD.", [1]))
         response = runner(fake, ["csv_lookup", "calculator"]).ask(q)
         self.assertFalse(response.refused, response.refusal_reason)
-        self.assertIn("already source [1]", fake.calls[2]["prompt"])
+        self.assertIn("already source [1]", fake.calls[1]["prompt"])
         self.assertEqual(sum(1 for c in response.trace.tool_calls if c.name == "csv_lookup"), 2)  # auto + repeat record

@@ -54,7 +54,25 @@ from forgeai.tools.registry import run_tool
 # tests pass a fake with the same signature so they run without Ollama.
 LLMFunction = Callable[..., str]
 
+# The planning call costs ~5-10 s on CPU, so it runs only when the question hints at a tool.
+NUMBER_WORDS = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
+                "twice", "double", "half", "dozen"}
+PLANNER_HINTS = {
+    "calculator": {"total", "sum", "cost", "costs", "discount", "discounts", "percent", "percentage",
+                   "average", "difference", "calculate", "altogether", "combined", "times"} | NUMBER_WORDS,
+    "weather_api": {"weather", "forecast", "temperature", "rain", "wind"},
+}
+
+
+def tool_hinted(tool: str, question: str) -> bool:
+    words = set(question.lower().replace("?", " ").split())
+    has_digit = any(ch.isdigit() for ch in question)
+    return bool(words & PLANNER_HINTS.get(tool, set())) or (tool == "calculator" and has_digit)
+
+
 # An arithmetic operator between numbers: "145 * 4" yes, "145.00" no.
+LIMIT_NOTE = "\n\nYou cannot use more tools. Answer now using only the SOURCES, or refuse."
+
 ARITHMETIC = re.compile(r"[\d)]\s*(\*\*|[-+*/%])\s*[\d(.]")
 
 
@@ -150,9 +168,9 @@ class AgentRunner:
 
     def _run_planner(self, question, sources, trace) -> None:
         """Short model call: which of calculator / weather_api (or none) is needed?"""
-        planned = [t for t in self.agent.tools if t in PLANNED_TOOLS]
+        planned = [t for t in self.agent.tools if t in PLANNED_TOOLS and tool_hinted(t, question)]
         if not planned:
-            return
+            return  # no hint of a calculation or weather question: skip the extra model call
         trace.model_called = True
         trace.model_attempts += 1
         raw = self.llm_fn(
@@ -234,8 +252,13 @@ class AgentRunner:
                     break
                 model_calls = sum(1 for c in trace.tool_calls if c.requested_by == "model")
                 if model_calls >= config.MAX_TOOL_CALLS:
-                    trace.decision = "refused_tool_limit"
-                    return self._refusal(trace, f"Stopped after {config.MAX_TOOL_CALLS} tool calls.")
+                    if note.startswith(LIMIT_NOTE):
+                        trace.decision = "refused_tool_limit"
+                        return self._refusal(trace, f"Stopped after {config.MAX_TOOL_CALLS} tool calls.")
+                    # One last chance: answer from what is already in the SOURCES.
+                    trace.warnings.append("tool limit reached; asked the model to answer from the sources")
+                    note = LIMIT_NOTE
+                    continue
                 duplicate = next((c for c in trace.tool_calls
                                   if c.name == output.tool_name and c.tool_input == output.tool_input), None)
                 if duplicate:

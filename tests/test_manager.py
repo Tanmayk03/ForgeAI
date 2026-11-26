@@ -64,6 +64,10 @@ class TestManager(unittest.TestCase):
         self.assertIn("Who will use this assistant?", asked[0])
         self.assertIn("Enter = shore-based employees", asked[0])  # default comes from the draft
 
+    def test_column_style_topics_become_words(self):
+        req = run_manager(BRIEF, SAMPLE_DOCS, auto=True, llm_fn=FakeLLM(draft(must_answer_topics=["lead_time_days"])))
+        self.assertEqual(req.must_answer_topics, ["lead time days"])
+
     def test_topic_in_both_lists_becomes_refuse_only(self):
         req = run_manager(BRIEF, SAMPLE_DOCS, auto=True, llm_fn=FakeLLM(
             draft(must_refuse_topics=["sick leave", "legal advice"])))

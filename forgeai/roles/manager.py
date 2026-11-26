@@ -97,7 +97,8 @@ def _slug(text: str) -> str:
 def _clean_topics(topics: list[str], label: str, notes: list[str]) -> list[str]:
     cleaned, seen = [], set()
     for topic in topics:
-        topic = " ".join(str(topic).split()[:MAX_TOPIC_WORDS]).strip(" .;,")
+        # "lead_time_days" -> "lead time days" (the model sometimes copies CSV column names)
+        topic = " ".join(str(topic).replace("_", " ").split()[:MAX_TOPIC_WORDS]).strip(" .;,")
         if topic and topic.lower() not in seen:
             seen.add(topic.lower())
             cleaned.append(topic)

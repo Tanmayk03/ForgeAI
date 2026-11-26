@@ -152,13 +152,14 @@ def _score(card: Scorecard) -> str:
 
 def run_repair(agent: AgentDefinition, evals: EvalSet, baseline: Scorecard, run_dir: str | Path,
                agent_llm_fn: Callable[..., str] | None = None, judge_llm_fn: Callable[..., str] | None = None,
-               progress: Callable[[str], None] = lambda _: None) -> tuple[AgentDefinition, Scorecard, list[IterationLog]]:
+               progress: Callable[[str], None] = lambda _: None,
+               max_iterations: int = MAX_ITERATIONS) -> tuple[AgentDefinition, Scorecard, list[IterationLog]]:
     """Returns (best agent, its scorecard, iteration logs). Saves every artifact in run_dir."""
     run_dir = Path(run_dir)
     best_agent, best_card = agent, baseline
     logs: list[IterationLog] = []
     tried: set[str] = set()   # descriptions of changes already tested (kept or rolled back)
-    for iteration in range(1, MAX_ITERATIONS + 1):
+    for iteration in range(1, min(max_iterations, MAX_ITERATIONS) + 1):
         failures = classify_all(best_card, evals)
         log = IterationLog(iteration=iteration, failures=failures, score_before=_score(best_card),
                            failures_by_category=dict(Counter(f.category for f in failures)))

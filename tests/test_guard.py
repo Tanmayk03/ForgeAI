@@ -55,6 +55,12 @@ class TestGuard(unittest.TestCase):
         s = by_topic(run_guard(requirements(["maternity leave"]), llm_fn=fake))["maternity leave"]
         self.assertEqual(s.status, "unsupported")
 
+    def test_csv_topic_with_partial_column_match_is_supported(self):
+        # Real demo2: "part number or description" vs CSV column "part_no" - must not become a refusal topic.
+        s = by_topic(run_guard(requirements(["part number or description"]), llm_fn=FakeLLM()))["part number or description"]
+        self.assertEqual((s.status, s.method), ("supported", "code"))
+        self.assertIn("csv:spare_parts.csv", s.evidence)
+
     def test_warnings(self):
         req = run_guard(requirements(["annual leave", "pension scheme"], must_refuse=["medical", "legal advice"]),
                         llm_fn=FakeLLM())
