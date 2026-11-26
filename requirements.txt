@@ -1,0 +1,12 @@
+# ForgeAI dependencies
+# Install with:  pip install -r requirements.txt
+
+# --- Used now (Module 1: LLM connection) ---
+requests>=2.31        # talks to Ollama's local HTTP API
+
+# --- Used in upcoming modules (installed now so the environment is ready) ---
+pydantic>=2.5         # validates the JSON artifacts (requirements, agent definitions, evals)
+rank-bm25>=0.2.2      # BM25 keyword retrieval over document chunks
+pypdf>=4.0            # PDF text extraction (pure Python, works well on Windows)
+# PyMuPDF>=1.24       # alternative PDF parser: better text layout, larger install.
+                      # Uncomment only if we decide to switch from pypdf.

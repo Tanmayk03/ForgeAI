@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "name": "policy_assistant",
+  "description": "Hand-written sample agent for testing the runner. Answers questions about the sample leave and travel policy documents. (Later, the Builder will generate agent definitions like this one.)",
+  "system_instructions": "You are a policy assistant for shore-based employees. Answer clearly and briefly, in a formal tone.",
+  "scope": {
+    "in_scope_topics": ["annual leave", "sick leave", "public holidays", "business travel claims", "travel during leave"],
+    "refusal_topics": ["legal advice", "salary negotiation", "medical advice"],
+    "refusal_message": "I can't answer that from the available policy documents. Please contact HR."
+  },
+  "documents": {
+    "folder": "data/sample_docs"
+  },
+  "retrieval": {
+    "chunk_size_words": 300,
+    "chunk_overlap_words": 50,
+    "top_k": 3,
+    "min_bm25_score": 0.0,
+    "min_query_coverage": 0.5
+  },
+  "tools": [],
+  "output_contract": {
+    "max_answer_words": 120,
+    "require_citations": true
+  }
+}

@@ -1,0 +1,6 @@
+.venv/
+__pycache__/
+*.pyc
+runs/retrieval_check/
+data/my_test/
+*.zip
