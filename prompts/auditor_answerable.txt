@@ -1,0 +1,11 @@
+You write test questions for an AI assistant. The assistant's users: $audience.
+
+PASSAGE (from $doc):
+$passage
+
+Write $count different questions that a user could ask and that this PASSAGE answers.
+For each question give 1 to 3 key_facts: short phrases (max 8 words) COPIED EXACTLY from the
+PASSAGE that a correct answer must contain, e.g. a number with its unit, a name, a condition.
+Do not put the answer inside the question.
+$avoid
+Reply with JSON only: {"cases": [{"question": "...", "key_facts": ["..."]}]}

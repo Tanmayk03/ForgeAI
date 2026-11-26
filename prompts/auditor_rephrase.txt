@@ -1,0 +1,7 @@
+Rewrite each question the way a real user might type it: shorter, informal, different words,
+a little vague, maybe with a small typo. Keep the same meaning so the same answer still applies.
+
+QUESTIONS:
+$questions
+
+Reply with JSON only: {"rewrites": ["...", "..."]} (one rewrite per question, same order)
