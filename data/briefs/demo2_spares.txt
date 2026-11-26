@@ -1,0 +1,1 @@
+I need an assistant for our ship-spares procurement team. It should find spare parts by part number or description, give prices, suppliers, lead times and minimum order quantities, calculate order totals and discounts, and explain supplier terms and our procurement approval rules.

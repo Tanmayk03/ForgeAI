@@ -1,0 +1,26 @@
+part_no,description,category,unit_price_usd,supplier,lead_time_days,min_order_qty
+SP-1001,Fuel injector nozzle,Main engine,145.00,Marisupply Ltd,14,4
+SP-1002,Cylinder head gasket,Main engine,89.50,Oceanparts Co,10,2
+SP-1003,Piston ring set,Main engine,410.00,Marisupply Ltd,21,1
+SP-1004,Exhaust valve spindle,Main engine,1250.00,Marisupply Ltd,30,1
+SP-1005,Turbocharger bearing kit,Main engine,2200.00,Oceanparts Co,28,1
+SP-1006,Lube oil filter element,Lubrication,36.00,Oceanparts Co,7,10
+SP-1007,Fuel oil filter element,Fuel system,42.00,Oceanparts Co,7,10
+SP-1008,Fuel pump plunger and barrel,Fuel system,780.00,Marisupply Ltd,25,1
+SP-1009,Seawater pump impeller,Cooling,265.00,Oceanparts Co,12,2
+SP-1010,Freshwater cooler gasket set,Cooling,120.00,Oceanparts Co,10,2
+SP-1011,Thermostatic valve element,Cooling,310.00,Marisupply Ltd,18,1
+SP-1012,Air compressor valve plate,Compressed air,190.00,Oceanparts Co,14,2
+SP-1013,Starting air valve overhaul kit,Compressed air,540.00,Marisupply Ltd,20,1
+SP-1014,Generator AVR module,Electrical,1680.00,Marisupply Ltd,35,1
+SP-1015,Circuit breaker 400A,Electrical,950.00,Oceanparts Co,21,1
+SP-1016,Navigation light LED unit,Electrical,135.00,Oceanparts Co,9,4
+SP-1017,Steering gear hydraulic seal kit,Steering,385.00,Marisupply Ltd,16,1
+SP-1018,Hydraulic hose 1 inch (per metre),Steering,28.00,Oceanparts Co,5,20
+SP-1019,Mooring rope 64mm (per 200 m coil),Deck,3400.00,Oceanparts Co,30,1
+SP-1020,Winch brake lining set,Deck,620.00,Marisupply Ltd,22,1
+SP-1021,Fire hose 45mm with couplings,Safety,95.00,Oceanparts Co,6,5
+SP-1022,Lifejacket SOLAS approved,Safety,48.00,Oceanparts Co,5,10
+SP-1023,Oily water separator filter,Pollution control,455.00,Marisupply Ltd,15,2
+SP-1024,Boiler burner nozzle,Boiler,175.00,Marisupply Ltd,12,2
+SP-1025,Boiler water level gauge glass,Boiler,64.00,Oceanparts Co,8,4
