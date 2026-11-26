@@ -1,0 +1,13 @@
+Decide whether the TEXT contains information that answers questions about the TOPIC.
+
+TOPIC: $topic
+
+TEXT:
+$text
+
+Rules:
+- "supported" only if the TEXT itself states facts about the TOPIC. Similar words are not enough.
+- If supported, copy ONE sentence from the TEXT, exactly as written, that shows it.
+- If not supported, give an empty evidence_quote.
+
+Reply with JSON only: {"verdict": "supported" or "unsupported", "evidence_quote": "..."}
