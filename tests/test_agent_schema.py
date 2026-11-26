@@ -29,6 +29,7 @@ class TestValidDefinitions(unittest.TestCase):
         agent = parse_agent_definition(data)
         self.assertEqual(agent.retrieval.chunk_size_words, config.CHUNK_SIZE_WORDS)
         self.assertTrue(agent.output_contract.require_citations)
+        self.assertTrue(agent.output_contract.block_unsupported_numbers)
         self.assertEqual(agent.tools, [])
 
     def test_save_and_reload_is_identical(self):

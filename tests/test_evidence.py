@@ -33,6 +33,10 @@ class TestUnsupportedNumbers(unittest.TestCase):
         self.assertEqual(unsupported_numbers("Limit is INR 6000.", ["up to INR 6,000 per night"]), [])
         self.assertEqual(unsupported_numbers("Price 12.50", ["costs 12.5 USD"]), [])
 
+    def test_citation_markers_ignored(self):
+        self.assertEqual(unsupported_numbers("24 days [1] and 12 days [1, 2].", ["24 days", "12 days"]), [])
+        self.assertEqual(unsupported_numbers("8 weeks [1]", ["24 days"]), ["8"])
+
     def test_no_numbers(self):
         self.assertEqual(unsupported_numbers("Yes, a certificate is needed.", ["text"]), [])
 

@@ -14,6 +14,10 @@ from forgeai.retrieval.bm25_index import tokenize
 # Numbers like 24, 6000, 6,000, 12.5, 2026. Commas inside numbers are removed before comparing.
 NUMBER_PATTERN = re.compile(r"\d+(?:[.,]\d+)*")
 
+# Citation markers the model may write inside its answer, e.g. "[1]" or "[1, 3]".
+# They are source numbers, not facts, so they are removed before checking numbers.
+CITATION_MARKER = re.compile(r"\[\s*\d+(?:\s*,\s*\d+)*\s*\]")
+
 
 def query_coverage(question: str, chunk_texts: list[str]) -> tuple[list[str], list[str], float]:
     """
@@ -52,9 +56,12 @@ def unsupported_numbers(answer: str, cited_texts: list[str]) -> list[str]:
 
     Invented figures are the most common and most damaging hallucination
     ("24 days" when the policy says 20), so they get their own check.
-    The runner only FLAGS these in the trace; it does not change the answer,
-    because a number can legitimately be derived (e.g. "two weeks" -> 14).
+    Citation markers such as "[1]" are ignored. Whether a flagged answer is
+    blocked is decided by the runner (output_contract.block_unsupported_numbers).
+    Known trade-off: a correctly reworded number (e.g. "2 days" -> "48 hours")
+    is also flagged.
     """
+    answer = CITATION_MARKER.sub(" ", answer)
     source_numbers = {
         _normalise_number(n) for text in cited_texts for n in NUMBER_PATTERN.findall(text)
     }

@@ -23,7 +23,8 @@ Example agent.json:
   "retrieval": {"chunk_size_words": 300, "chunk_overlap_words": 50, "top_k": 3,
                 "min_bm25_score": 0.0, "min_query_coverage": 0.5},
   "tools": [],
-  "output_contract": {"max_answer_words": 120, "require_citations": true}
+  "output_contract": {"max_answer_words": 120, "require_citations": true,
+                      "block_unsupported_numbers": true}
 }
 """
 
@@ -108,6 +109,11 @@ class OutputContract(StrictModel):
     max_answer_words: int = Field(default=150, ge=10, le=1000)
     require_citations: bool = Field(
         default=True, description="If true, an answer without a valid source is turned into a refusal"
+    )
+    block_unsupported_numbers: bool = Field(
+        default=True,
+        description="If true, an answer containing a number found in none of the cited sources "
+        "is turned into a refusal (invented figures are the most damaging hallucination)",
     )
 
 

@@ -11,9 +11,10 @@ Answering a question has four stages:
                 cover too little of the question  -> refuse WITHOUT calling the model
   3. GENERATE   ask the model for JSON {answer, sources, refused, refusal_reason},
                 retrying once if the reply is unusable
-  4. VERIFY     code-only checks on the reply. An answer citing no valid source is
-                turned into a refusal (fail closed). Numbers not found in the cited
-                chunks are flagged in the trace for the Auditor.
+  4. VERIFY     code-only checks on the reply. An answer citing no valid source, or
+                containing a number found in none of the cited chunks, is turned
+                into a refusal (fail closed; the number check can be switched off
+                with output_contract.block_unsupported_numbers).
 
 Errors from Ollama (not running, model missing, timeout) are NOT turned into
 refusals: they are raised to the caller. An outage is not an answer, and the
@@ -182,6 +183,13 @@ class AgentRunner:
                 trace.warnings.append(
                     f"numbers not found in cited sources: {trace.unsupported_numbers}"
                 )
+                if self.agent.output_contract.block_unsupported_numbers:
+                    trace.decision = "refused_unsupported_number"
+                    return self._refusal(
+                        trace,
+                        "The answer contained figures not found in the cited sources: "
+                        + ", ".join(trace.unsupported_numbers) + ".",
+                    )
 
             word_count = len(output.answer.split())
             if word_count > self.agent.output_contract.max_answer_words:

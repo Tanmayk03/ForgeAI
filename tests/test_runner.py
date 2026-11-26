@@ -56,12 +56,22 @@ class TestAnswerable(unittest.TestCase):
         self.assertGreaterEqual(trace.latency_seconds, 0)
         json.dumps(trace.model_dump())  # the whole trace must be saveable as JSON
 
-    def test_invented_number_is_flagged(self):
+    def test_invented_number_is_flagged_when_blocking_is_off(self):
+        data = agent_dict()
+        data["output_contract"]["block_unsupported_numbers"] = False
         fake = FakeLLM(answer("Shore staff get 30 days.", [1]))
-        response = make_runner(fake).ask("How many days of annual leave do shore staff get?")
+        response = AgentRunner(parse_agent_definition(data), llm_fn=fake).ask(
+            "How many days of annual leave do shore staff get?"
+        )
         self.assertFalse(response.refused)
         self.assertEqual(response.trace.unsupported_numbers, ["30"])
         self.assertTrue(any("numbers not found" in w for w in response.trace.warnings))
+
+    def test_citation_markers_in_answer_are_not_treated_as_numbers(self):
+        fake = FakeLLM(answer("Shore staff get 24 working days [1].", [1]))
+        response = make_runner(fake).ask("How many days of annual leave do shore staff get?")
+        self.assertFalse(response.refused)
+        self.assertEqual(response.trace.unsupported_numbers, [])
 
     def test_mixed_valid_and_invalid_citations(self):
         fake = FakeLLM(answer("24 working days.", [1, 9]))
@@ -98,6 +108,16 @@ class TestUnsupported(unittest.TestCase):
         self.assertEqual(response.trace.decision, "refused_no_citation")
         # the overridden answer is kept for the Auditor to inspect
         self.assertIn("26 weeks", response.trace.model_answer_before_checks)
+
+    def test_invented_number_with_real_citation_becomes_refusal(self):
+        # Exactly what real Qwen did: invented "8 weeks" and cited a real chunk.
+        fake = FakeLLM(answer("8 weeks", [1]))
+        response = make_runner(fake).ask(self.QUESTION)
+        self.assertTrue(response.refused)
+        self.assertEqual(response.trace.decision, "refused_unsupported_number")
+        self.assertIn("8", response.refusal_reason)
+        self.assertEqual(response.trace.unsupported_numbers, ["8"])
+        self.assertEqual(response.trace.model_answer_before_checks, "8 weeks")
 
     def test_answer_citing_nonexistent_source_becomes_refusal(self):
         fake = FakeLLM(answer("26 weeks.", [7]))

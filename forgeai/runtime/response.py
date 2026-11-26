@@ -32,6 +32,7 @@ Decision = Literal[
     "refused_low_coverage",   # gate: chunks cover too little of the question
     "refused_by_model",       # model chose to refuse
     "refused_no_citation",    # model answered but cited no valid source -> refused (fail closed)
+    "refused_unsupported_number",  # answer has a number not in the cited sources -> refused (fail closed)
     "refused_invalid_output", # model output unusable even after retry -> refused (fail closed)
 ]
 

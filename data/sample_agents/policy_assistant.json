@@ -21,6 +21,7 @@
   "tools": [],
   "output_contract": {
     "max_answer_words": 120,
-    "require_citations": true
+    "require_citations": true,
+    "block_unsupported_numbers": true
   }
 }
