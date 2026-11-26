@@ -103,8 +103,24 @@ class TestRepairLoop(unittest.TestCase):
             self.assertEqual(best, agent)                        # original kept
             self.assertEqual(card.passed, baseline.passed)
             self.assertLessEqual(len(logs), 3)
-            changes = [(l.field, l.new_value) for l in logs if l.change]
+            changes = [l.change for l in logs if l.change]
             self.assertEqual(len(changes), len(set(changes)))   # a rolled-back change is never retried
+
+    def test_no_gain_is_rolled_back_and_not_retried(self):
+        # Real run: instruction A rolled back, B kept with no gain, then A retried.
+        multi = case("q3", "multi_doc", "How many days of annual leave do shore staff get, and what is the hotel limit per night?",
+                     facts=["24 working days", "INR 6,000 per night"], docs=["leave_policy.pdf", "travel_policy.md"])
+        evals = evalset(LEAVE, multi)
+        agent = parse_agent_definition(agent_dict())
+        llm = AgentLLM({"annual": answer("24 working days.", [1])})      # never fixes q3
+        baseline = run_evals(evals, AgentRunner(agent, llm_fn=llm), llm_fn=FakeLLM())
+        with tempfile.TemporaryDirectory() as tmp:
+            best, card, logs = run_repair(agent, evals, baseline, tmp, agent_llm_fn=llm, judge_llm_fn=FakeLLM())
+        self.assertTrue(all(not l.kept for l in logs if l.change))
+        self.assertTrue(any("no gain" in l.note for l in logs))
+        self.assertEqual(best, agent)
+        changes = [l.change for l in logs if l.change]
+        self.assertEqual(len(changes), len(set(changes)))
 
 
 if __name__ == "__main__":

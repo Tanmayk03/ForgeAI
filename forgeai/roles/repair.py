@@ -1,6 +1,6 @@
 """
 repair.py - the Repair role: classify every failure, apply ONE targeted fix,
-re-run ALL evals, keep the fix only if the score did not drop. Max 3 iterations.
+re-run ALL evals, keep the fix only if MORE cases pass. Max 3 iterations.
 
 Repair is CODE ONLY (no model):
   * classification uses the judge's evidence with fixed rules (below), so it is
@@ -157,7 +157,7 @@ def run_repair(agent: AgentDefinition, evals: EvalSet, baseline: Scorecard, run_
     run_dir = Path(run_dir)
     best_agent, best_card = agent, baseline
     logs: list[IterationLog] = []
-    tried: set[tuple[str, str]] = set()   # (field, new value) of changes already tested
+    tried: set[str] = set()   # descriptions of changes already tested (kept or rolled back)
     for iteration in range(1, MAX_ITERATIONS + 1):
         failures = classify_all(best_card, evals)
         log = IterationLog(iteration=iteration, failures=failures, score_before=_score(best_card),
@@ -172,7 +172,7 @@ def run_repair(agent: AgentDefinition, evals: EvalSet, baseline: Scorecard, run_
         for (category, subtype), _ in sorted(groups.items(),
                                              key=lambda kv: (-log.failures_by_category[kv[0][0]], -kv[1])):
             patch = propose_patch(best_agent, category, subtype)
-            if patch and (patch[2], patch[4]) in tried:
+            if patch and patch[1] in tried:
                 patch = None              # already tested and rolled back
             if patch:
                 log.target_category, log.target_subtype = category, subtype
@@ -181,7 +181,7 @@ def run_repair(agent: AgentDefinition, evals: EvalSet, baseline: Scorecard, run_
             log.note = "no untried fix left for the remaining failures; stopping"
             break
         data, log.change, log.field, log.old_value, log.new_value = patch
-        tried.add((log.field, log.new_value))
+        tried.add(log.change)
         log.targeted_cases = [f.id for f in failures if (f.category, f.subtype) == (log.target_category, log.target_subtype)]
         progress(f"iteration {iteration}: {log.change}  (targets {log.targeted_cases})")
 
@@ -195,11 +195,13 @@ def run_repair(agent: AgentDefinition, evals: EvalSet, baseline: Scorecard, run_
         log.fixed_cases = [i for i in after if before.get(i) == "fail" and after[i] == "pass"]
         log.broken_cases = [i for i in after if before.get(i) == "pass" and after[i] == "fail"]
         log.score_after = _score(card)
-        log.kept = card.pass_rate >= best_card.pass_rate and card.passed >= best_card.passed
+        # Keep a change only if it pays for itself: strictly more cases pass.
+        log.kept = card.passed > best_card.passed
         if log.kept:
             best_agent, best_card = candidate, card
         else:
-            log.note = "score dropped: change rolled back"
+            log.note = ("score dropped: change rolled back" if card.passed < best_card.passed
+                        else "no gain: change rolled back")
         progress(f"  {log.score_before} -> {log.score_after}  fixed {log.fixed_cases} broken {log.broken_cases}"
                  f"  {'KEPT' if log.kept else 'ROLLED BACK'}")
 
