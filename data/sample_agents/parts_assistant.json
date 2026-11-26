@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "name": "parts_assistant",
+  "description": "Hand-written sample agent with tools. Looks up spare parts in the sample CSV and does price arithmetic.",
+  "system_instructions": "You help procurement staff find spare parts and prices. Use csv_lookup to find parts and the calculator for any arithmetic.",
+  "scope": {
+    "in_scope_topics": ["spare parts", "part numbers", "part prices", "suppliers", "order cost"],
+    "refusal_topics": ["legal advice"],
+    "refusal_message": "I can't answer that from the parts catalogue."
+  },
+  "documents": {"folder": "data/sample_docs"},
+  "retrieval": {"chunk_size_words": 300, "chunk_overlap_words": 50, "top_k": 3,
+                "min_bm25_score": 0.0, "min_query_coverage": 0.5},
+  "tools": ["csv_lookup", "calculator"],
+  "output_contract": {"max_answer_words": 80, "require_citations": true, "block_unsupported_numbers": true}
+}

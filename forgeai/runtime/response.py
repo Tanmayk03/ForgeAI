@@ -23,6 +23,10 @@ class ModelOutput(BaseModel):
     sources: list[int] = Field(description="Numbers of the sources used, e.g. [1, 3]")
     refused: bool
     refusal_reason: str = ""
+    # To use a tool: leave answer empty and set these. The result is added to the
+    # sources and the model is asked again.
+    tool_name: str = ""
+    tool_input: str = ""
 
 
 # Which stage decided the outcome. Lets an auditor see WHY an answer looks the way it does.
@@ -34,6 +38,7 @@ Decision = Literal[
     "refused_no_citation",    # model answered but cited no valid source -> refused (fail closed)
     "refused_unsupported_number",  # answer has a number not in the cited sources -> refused (fail closed)
     "refused_invalid_output", # model output unusable even after retry -> refused (fail closed)
+    "refused_tool_limit",     # model kept asking for tools past MAX_TOOL_CALLS -> refused
 ]
 
 
@@ -49,6 +54,16 @@ class RetrievedChunkInfo(BaseModel):
     text: str
 
 
+class ToolCallRecord(BaseModel):
+    """One tool call, as recorded in the trace."""
+
+    source_number: int = Field(description="Number the result was shown under, e.g. [4]")
+    name: str
+    tool_input: str
+    ok: bool
+    output: str
+
+
 class RunTrace(BaseModel):
     """Everything that happened while answering one question."""
 
@@ -56,6 +71,7 @@ class RunTrace(BaseModel):
     question: str
     decision: Decision
     retrieved: list[RetrievedChunkInfo] = Field(default_factory=list)
+    tool_calls: list[ToolCallRecord] = Field(default_factory=list)
     query_terms: list[str] = Field(default_factory=list)
     covered_terms: list[str] = Field(default_factory=list)
     query_coverage: float = 0.0
@@ -73,7 +89,7 @@ class AgentResponse(BaseModel):
     """What every caller (chat CLI now, Auditor later) receives."""
 
     answer: str
-    sources: list[str] = Field(description="Chunk IDs the answer is based on")
+    sources: list[str] = Field(description="Chunk IDs (or 'tool:<name>:<n>') the answer is based on")
     refused: bool
     refusal_reason: str = ""
     trace: RunTrace

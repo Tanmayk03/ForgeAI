@@ -1,1 +1,1 @@
-"""Placeholder package. Code for this module is added in a later step."""
+"""Tool registry: the tools an agent may be given (see registry.py)."""

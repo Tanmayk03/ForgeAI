@@ -56,6 +56,7 @@ def parse_model_output(raw: str) -> tuple[ModelOutput | None, str]:
 
     output.answer = output.answer.strip()
     output.refusal_reason = output.refusal_reason.strip()
-    if not output.refused and not output.answer:
+    output.tool_name = output.tool_name.strip()
+    if not output.refused and not output.answer and not output.tool_name:
         return None, "answer is empty but refused is false"
     return output, ""

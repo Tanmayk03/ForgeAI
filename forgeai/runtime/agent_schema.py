@@ -35,13 +35,13 @@ from pathlib import Path
 from pydantic import BaseModel, ConfigDict, Field, ValidationError, field_validator, model_validator
 
 from forgeai import config
+from forgeai.tools.registry import TOOL_NAMES
 
 SCHEMA_VERSION = "1.0"
 
-# Tool names an agent may list. The tool registry module (built later) will own
-# this list and actually run the tools; for now we only validate names, so a typo
-# like "calculater" is caught. The runner does not execute tools yet.
-KNOWN_TOOL_NAMES = {"csv_lookup", "calculator", "weather_api", "current_date"}
+# Tool names an agent may list come from the tool registry, so a typo like
+# "calculater" is caught when agent.json is loaded.
+KNOWN_TOOL_NAMES = TOOL_NAMES
 
 NAME_PATTERN = re.compile(r"^[a-z0-9][a-z0-9_\-]*$")
 

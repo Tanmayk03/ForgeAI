@@ -8,9 +8,12 @@ Answering a question has four stages:
 
   1. RETRIEVE   BM25 top-k chunks (agent's own chunking + top_k settings)
   2. GATE       code-only evidence check. No matching chunk, or chunks that
-                cover too little of the question  -> refuse WITHOUT calling the model
-  3. GENERATE   ask the model for JSON {answer, sources, refused, refusal_reason},
-                retrying once if the reply is unusable
+                cover too little of the question  -> refuse WITHOUT calling the model.
+                (Skipped for agents with tools: a tool may supply the evidence.)
+  3. GENERATE   ask the model for JSON {answer, sources, refused, refusal_reason,
+                tool_name, tool_input}, retrying once if the reply is unusable.
+                If it asks for a tool, the runner runs it (only if agent.json
+                allows it), adds the result as a numbered source, and asks again.
   4. VERIFY     code-only checks on the reply. An answer citing no valid source, or
                 containing a number found in none of the cited chunks, is turned
                 into a refusal (fail closed; the number check can be switched off
@@ -33,8 +36,12 @@ from forgeai.retrieval.models import LoadResult, SearchResult
 from forgeai.runtime import evidence
 from forgeai.runtime.agent_schema import AgentDefinition, load_agent_definition
 from forgeai.runtime.output_parser import parse_model_output
-from forgeai.runtime.prompt_builder import build_retry_note, build_system_prompt, build_user_prompt
-from forgeai.runtime.response import AgentResponse, ModelOutput, RetrievedChunkInfo, RunTrace
+from forgeai.runtime.prompt_builder import (
+    PromptSource, build_retry_note, build_system_prompt, build_user_prompt,
+)
+from forgeai.runtime.response import AgentResponse, ModelOutput, RetrievedChunkInfo, RunTrace, ToolCallRecord
+from forgeai.tools.base import ToolContext
+from forgeai.tools.registry import run_tool
 
 # Type of the function used to call the model. Normally llm_client.generate;
 # tests pass a fake with the same signature so they run without Ollama.
@@ -64,12 +71,16 @@ class AgentRunner:
             chunk_size=agent.retrieval.chunk_size_words,
             overlap=agent.retrieval.chunk_overlap_words,
         )
-        if not self.chunks:
+        # An agent needs searchable text, unless it has tools (e.g. a CSV-only folder + csv_lookup).
+        if not self.chunks and not agent.tools:
             raise AgentLoadError(
                 f"Agent '{agent.name}': no searchable text found in {folder} "
                 f"({len(self.load_result.skipped)} file(s) skipped)."
             )
-        self.index = BM25Index(self.chunks)
+        self.index = BM25Index(self.chunks) if self.chunks else None
+        self.tool_context = ToolContext(
+            csv_paths=[Path(d.path) for d in self.load_result.documents if d.file_type == "csv"]
+        )
 
     @classmethod
     def from_file(cls, path: str | Path, llm_fn: LLMFunction | None = None) -> "AgentRunner":
@@ -119,7 +130,7 @@ class AgentRunner:
         try:
             # 1. RETRIEVE
             results: list[SearchResult] = [
-                r for r in self.index.search(question, top_k=retrieval.top_k)
+                r for r in (self.index.search(question, top_k=retrieval.top_k) if self.index else [])
                 if r.score > retrieval.min_bm25_score
             ]
             trace.retrieved = [
@@ -133,30 +144,54 @@ class AgentRunner:
             # 2. GATE (coverage is computed first so the trace always shows the question's key terms)
             terms, covered, coverage = evidence.query_coverage(question, [r.chunk.text for r in results])
             trace.query_terms, trace.covered_terms, trace.query_coverage = terms, covered, round(coverage, 3)
-            if not results:
+            has_tools = bool(self.agent.tools)
+            if not results and not has_tools:
                 trace.decision = "refused_no_evidence"
                 return self._refusal(trace, "No document passage matches this question.")
 
-            if coverage < retrieval.min_query_coverage:
+            if coverage < retrieval.min_query_coverage and not has_tools:
                 missing = [t for t in terms if t not in covered]
                 trace.decision = "refused_low_coverage"
                 return self._refusal(
                     trace, f"The documents do not mention key terms of the question: {', '.join(missing)}."
                 )
+            if has_tools and (not results or coverage < retrieval.min_query_coverage):
+                trace.warnings.append("evidence gate skipped: agent has tools that may supply evidence")
 
-            # 3. GENERATE
-            user_prompt = build_user_prompt(question, results)
-            trace.estimated_prompt_tokens = evidence.estimate_tokens(self.system_prompt + user_prompt)
+            # 3. GENERATE (with up to MAX_TOOL_CALLS tool rounds)
+            sources = [
+                PromptSource(r.chunk.chunk_id, f"{r.chunk.doc_name}, page {r.chunk.page}", r.chunk.text)
+                for r in results
+            ]
+            while True:
+                user_prompt = build_user_prompt(question, sources)
+                trace.estimated_prompt_tokens = evidence.estimate_tokens(self.system_prompt + user_prompt)
+                output, reason = self._call_model(user_prompt, trace)
+                if output is None:
+                    trace.decision = "refused_invalid_output"
+                    return self._refusal(trace, f"The model's reply could not be used ({reason}).")
+                if not output.tool_name:
+                    break
+                if len(trace.tool_calls) >= config.MAX_TOOL_CALLS:
+                    trace.decision = "refused_tool_limit"
+                    return self._refusal(trace, f"Stopped after {config.MAX_TOOL_CALLS} tool calls.")
+                result = run_tool(output.tool_name, output.tool_input, self.tool_context, self.agent.tools)
+                number = len(sources) + 1
+                trace.tool_calls.append(ToolCallRecord(
+                    source_number=number, name=result.name, tool_input=result.tool_input,
+                    ok=result.ok, output=result.output,
+                ))
+                sources.append(PromptSource(
+                    f"tool:{result.name}:{len(trace.tool_calls)}",
+                    f"tool {result.name}, input: {result.tool_input or '(none)'}",
+                    result.output,
+                ))
+
             if trace.estimated_prompt_tokens > 0.8 * config.NUM_CTX:
                 trace.warnings.append(
                     f"prompt is about {trace.estimated_prompt_tokens} tokens, close to the "
                     f"{config.NUM_CTX}-token context window; text may be cut off"
                 )
-
-            output, reason = self._call_model(user_prompt, trace)
-            if output is None:
-                trace.decision = "refused_invalid_output"
-                return self._refusal(trace, f"The model's reply could not be used ({reason}).")
 
             trace.model_answer_before_checks = output.answer
             if output.refused:
@@ -164,7 +199,7 @@ class AgentRunner:
                 return self._refusal(trace, output.refusal_reason or "The model declined to answer.")
 
             # 4. VERIFY
-            valid_numbers = [n for n in dict.fromkeys(output.sources) if 1 <= n <= len(results)]
+            valid_numbers = [n for n in dict.fromkeys(output.sources) if 1 <= n <= len(sources)]
             invalid_numbers = [n for n in output.sources if n not in valid_numbers]
             if invalid_numbers:
                 trace.warnings.append(f"model cited source number(s) that were not provided: {invalid_numbers}")
@@ -173,11 +208,11 @@ class AgentRunner:
                 trace.decision = "refused_no_citation"
                 return self._refusal(trace, "The answer did not cite any of the provided sources.")
 
-            cited = [results[n - 1] for n in valid_numbers]
-            # Without citations (allowed only if require_citations is false), check against all retrieved chunks.
-            checked_against = cited or results
+            cited = [sources[n - 1] for n in valid_numbers]
+            # Without citations (allowed only if require_citations is false), check against all sources.
+            checked_against = cited or sources
             trace.unsupported_numbers = evidence.unsupported_numbers(
-                output.answer, [r.chunk.text for r in checked_against]
+                output.answer, [src.text for src in checked_against]
             )
             if trace.unsupported_numbers:
                 trace.warnings.append(
@@ -201,7 +236,7 @@ class AgentRunner:
             trace.decision = "answered"
             return AgentResponse(
                 answer=output.answer,
-                sources=[r.chunk.chunk_id for r in cited],
+                sources=[src.source_id for src in cited],
                 refused=False,
                 refusal_reason="",
                 trace=trace,

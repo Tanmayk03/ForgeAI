@@ -60,6 +60,9 @@ KEEP_ALIVE: str = _env("FORGEAI_KEEP_ALIVE", "30m")
 # If the model's reply is not valid JSON, ask again this many times before giving up.
 MAX_OUTPUT_RETRIES: int = int(_env("FORGEAI_OUTPUT_RETRIES", "1"))
 
+# Maximum tool calls the model may make while answering one question.
+MAX_TOOL_CALLS: int = int(_env("FORGEAI_MAX_TOOL_CALLS", "2"))
+
 
 # ---------------------------------------------------------------------------
 # Document chunking and retrieval
