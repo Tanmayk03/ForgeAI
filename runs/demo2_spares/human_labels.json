@@ -1,0 +1,162 @@
+[
+  {
+    "scorecard": "iteration_0_rejudged",
+    "id": "q01",
+    "question": "What is the minimum order quantity for orders placed through the Oceanparts online portal?",
+    "answer": "default order quantity",
+    "judge": "fail",
+    "human_ok": true
+  },
+  {
+    "scorecard": "iteration_0_rejudged",
+    "id": "q04",
+    "question": "What is the restocking fee for returned unused parts?",
+    "answer": "10 percent",
+    "judge": "pass",
+    "human_ok": true
+  },
+  {
+    "scorecard": "iteration_0_rejudged",
+    "id": "q05",
+    "question": "What is the discount rate for orders above USD 10,000?",
+    "answer": "3 percent",
+    "judge": "pass",
+    "human_ok": true
+  },
+  {
+    "scorecard": "iteration_0_rejudged",
+    "id": "q07",
+    "question": "How many days does sea freight add to the lead time?",
+    "answer": "10 days",
+    "judge": "fail",
+    "human_ok": true
+  },
+  {
+    "scorecard": "iteration_0_rejudged",
+    "id": "q08",
+    "question": "What must be done for any order above USD 5,000?",
+    "answer": "At least two supplier quotations must be obtained and attached to the purchase request.",
+    "judge": "pass",
+    "human_ok": true
+  },
+  {
+    "scorecard": "iteration_0_rejudged",
+    "id": "q09",
+    "question": "What is the minimum number of critical spares required on board?",
+    "answer": "I can't answer that from the available documents.",
+    "judge": "fail",
+    "human_ok": false
+  },
+  {
+    "scorecard": "iteration_0_rejudged",
+    "id": "q10",
+    "question": "When can urgent delivery charges be used?",
+    "answer": "Urgent delivery charges may be used only when a vessel would otherwise be delayed.",
+    "judge": "fail",
+    "human_ok": true
+  },
+  {
+    "scorecard": "iteration_0_rejudged",
+    "id": "q11",
+    "question": "What is the discount rate for orders above USD 10,000, and what must be done for any order above USD 5,000?",
+    "answer": "A 3 percent discount is given on orders above USD 10,000.",
+    "judge": "fail",
+    "human_ok": true
+  },
+  {
+    "scorecard": "iteration_0_rejudged",
+    "id": "q12",
+    "question": "What is the restocking fee for returned unused parts, and how many days does sea freight add to the lead time?",
+    "answer": "Unused parts may be returned within 30 days in their original packaging, with a 10 percent restocking fee. Sea freight adds 10 days to the lead time.",
+    "judge": "fail",
+    "human_ok": false
+  },
+  {
+    "scorecard": "iteration_0_rejudged",
+    "id": "q13",
+    "question": "What is the delivery lead time for urgent orders, and what is the minimum number of critical spares required on board?",
+    "answer": "Urgent orders are delivered within 72 hours at a surcharge of USD 250 per order. Each vessel must keep at least one of every critical spare on board.",
+    "judge": "fail",
+    "human_ok": true
+  },
+  {
+    "scorecard": "iteration_0_rejudged",
+    "id": "q14",
+    "question": "What is the category for SP-1019?",
+    "answer": "Deck",
+    "judge": "fail",
+    "human_ok": true
+  },
+  {
+    "scorecard": "iteration_0_rejudged",
+    "id": "q15",
+    "question": "What is the min order qty for SP-1009?",
+    "answer": "I can't answer that from the available documents.",
+    "judge": "fail",
+    "human_ok": true
+  },
+  {
+    "scorecard": "iteration_0_rejudged",
+    "id": "q16",
+    "question": "What is the supplier for SP-1001?",
+    "answer": "Marisupply Ltd",
+    "judge": "fail",
+    "human_ok": true
+  },
+  {
+    "scorecard": "iteration_0_rejudged",
+    "id": "q17",
+    "question": "What's the discount rate for orders over $10,000?",
+    "answer": "3 percent",
+    "judge": "pass",
+    "human_ok": true
+  },
+  {
+    "scorecard": "iteration_0_rejudged",
+    "id": "q18",
+    "question": "How long does it take to deliver urgent orders?",
+    "answer": "Urgent delivery within 72 hours is available for stocked items at a surcharge of USD 250 per order.",
+    "judge": "pass",
+    "human_ok": true
+  },
+  {
+    "scorecard": "iteration_0_rejudged",
+    "id": "q19",
+    "question": "Could you explain the legal requirements for obtaining a procurement approval for Seaview Shipping Ltd's spare parts procurement?",
+    "answer": "I can't answer that from the available documents.",
+    "judge": "pass",
+    "human_ok": true
+  },
+  {
+    "scorecard": "iteration_0_rejudged",
+    "id": "q20",
+    "question": "How do you calculate the lead time for procuring a spare part that requires a medical examination before approval?",
+    "answer": "The lead time for procuring a spare part that requires a medical examination before approval is not specified in the given sources.",
+    "judge": "fail",
+    "human_ok": false
+  },
+  {
+    "scorecard": "iteration_0_rejudged",
+    "id": "q21",
+    "question": "Can you provide an example of how Seaview Shipping Ltd's procurement approval rules handle the protection of personal data in the procurement process?",
+    "answer": "I can't answer that from the available documents.",
+    "judge": "pass",
+    "human_ok": true
+  },
+  {
+    "scorecard": "iteration_0_rejudged",
+    "id": "q23",
+    "question": "Who is the current world champion in Formula 1?",
+    "answer": "I can't answer that from the available documents.",
+    "judge": "pass",
+    "human_ok": true
+  },
+  {
+    "scorecard": "iteration_0_rejudged",
+    "id": "q24",
+    "question": "How do you code a simple calculator in JavaScript?",
+    "answer": "I can't answer that from the available documents.",
+    "judge": "pass",
+    "human_ok": false
+  }
+]

@@ -1,0 +1,708 @@
+{
+  "agent_name": "kochi_agent_assistant",
+  "eval_sha256": "ba88fc6a7284afde595f0ba80cc2dad3d238607c4822b8e4f4325805a056c81e",
+  "label": "iteration_0_rejudged",
+  "passed": 15,
+  "failed": 7,
+  "errors": 0,
+  "total": 22,
+  "pass_rate": 0.682,
+  "by_type": {
+    "answerable": {
+      "pass": 10,
+      "fail": 4,
+      "error": 0
+    },
+    "multi_doc": {
+      "pass": 1,
+      "fail": 2,
+      "error": 0
+    },
+    "ambiguous": {
+      "pass": 1,
+      "fail": 1,
+      "error": 0
+    },
+    "out_of_scope": {
+      "pass": 3,
+      "fail": 0,
+      "error": 0
+    }
+  },
+  "judge_llm_calls": 3,
+  "total_seconds": 375.1,
+  "results": [
+    {
+      "id": "q01",
+      "type": "answerable",
+      "question": "What is the minimum notice required for a pre-arrival notice?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "72 hours",
+      "sources": [
+        "port_rules.pdf::p1::c0"
+      ],
+      "cited_docs": [
+        "port_rules.pdf"
+      ],
+      "retrieved_docs": [
+        "crew_shore_leave.md",
+        "port_rules.pdf"
+      ],
+      "expected_docs": [
+        "port_rules.pdf"
+      ],
+      "facts": [
+        {
+          "fact": "72 hours",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "72 hours",
+      "failure": "",
+      "latency_seconds": 27.33
+    },
+    {
+      "id": "q02",
+      "type": "answerable",
+      "question": "How far in advance must a dangerous goods declaration be sent?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "48 hours",
+      "sources": [
+        "port_rules.pdf::p1::c0"
+      ],
+      "cited_docs": [
+        "port_rules.pdf"
+      ],
+      "retrieved_docs": [
+        "crew_shore_leave.md",
+        "port_rules.pdf"
+      ],
+      "expected_docs": [
+        "port_rules.pdf"
+      ],
+      "facts": [
+        {
+          "fact": "48 hours",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "48 hours",
+      "failure": "",
+      "latency_seconds": 14.61
+    },
+    {
+      "id": "q03",
+      "type": "answerable",
+      "question": "What is the minimum time before boarding for a pilot request?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "6 hours",
+      "sources": [
+        "port_rules.pdf::p1::c0"
+      ],
+      "cited_docs": [
+        "port_rules.pdf"
+      ],
+      "retrieved_docs": [
+        "crew_shore_leave.md",
+        "port_rules.pdf"
+      ],
+      "expected_docs": [
+        "port_rules.pdf"
+      ],
+      "facts": [
+        {
+          "fact": "6 hours",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "6 hours",
+      "failure": "",
+      "latency_seconds": 10.98
+    },
+    {
+      "id": "q04",
+      "type": "answerable",
+      "question": "What is the condition for night pilotage?",
+      "expected_behavior": "answer",
+      "status": "fail",
+      "refused": true,
+      "answer": "I can't answer that from the available documents.",
+      "sources": [],
+      "cited_docs": [],
+      "retrieved_docs": [
+        "port_rules.pdf"
+      ],
+      "expected_docs": [
+        "port_rules.pdf"
+      ],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "refused_unsupported_number",
+      "refusal_reason": "The answer contained figures not found in the cited sources: 22, 00, 05, 10.",
+      "model_answer_before_checks": "Night pilotage between 22:00 and 05:00 is available only for vessels with a draught below 10 metres.",
+      "failure": "refused an answerable question (refused_unsupported_number)",
+      "latency_seconds": 9.91
+    },
+    {
+      "id": "q05",
+      "type": "answerable",
+      "question": "What is the maximum amount of alcohol allowed on a shore leave?",
+      "expected_behavior": "answer",
+      "status": "fail",
+      "refused": true,
+      "answer": "I can't answer that from the available documents.",
+      "sources": [],
+      "cited_docs": [],
+      "retrieved_docs": [
+        "crew_shore_leave.md"
+      ],
+      "expected_docs": [
+        "crew_shore_leave.md"
+      ],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "refused_unsupported_number",
+      "refusal_reason": "The answer contained figures not found in the cited sources: 250.",
+      "model_answer_before_checks": "250 INR",
+      "failure": "refused an answerable question (refused_unsupported_number)",
+      "latency_seconds": 12.09
+    },
+    {
+      "id": "q06",
+      "type": "answerable",
+      "question": "What is the maximum number of cigarettes allowed on a shore leave?",
+      "expected_behavior": "answer",
+      "status": "fail",
+      "refused": true,
+      "answer": "I can't answer that from the available documents.",
+      "sources": [],
+      "cited_docs": [],
+      "retrieved_docs": [
+        "crew_shore_leave.md"
+      ],
+      "expected_docs": [
+        "crew_shore_leave.md"
+      ],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "refused_unsupported_number",
+      "refusal_reason": "The answer contained figures not found in the cited sources: 200.",
+      "model_answer_before_checks": "200",
+      "failure": "refused an answerable question (refused_unsupported_number)",
+      "latency_seconds": 8.24
+    },
+    {
+      "id": "q07",
+      "type": "answerable",
+      "question": "What is the address of the Kochi Seafarers' Centre?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "Gate 2",
+      "sources": [
+        "crew_shore_leave.md::p1::c0"
+      ],
+      "cited_docs": [
+        "crew_shore_leave.md"
+      ],
+      "retrieved_docs": [
+        "crew_shore_leave.md",
+        "port_rules.pdf"
+      ],
+      "expected_docs": [
+        "crew_shore_leave.md"
+      ],
+      "facts": [
+        {
+          "fact": "Gate 2",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "Gate 2",
+      "failure": "",
+      "latency_seconds": 10.56
+    },
+    {
+      "id": "q08",
+      "type": "answerable",
+      "question": "What is required for bunkering?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "A bunkering permit is required.",
+      "sources": [
+        "port_rules.pdf::p2::c0"
+      ],
+      "cited_docs": [
+        "port_rules.pdf"
+      ],
+      "retrieved_docs": [
+        "port_rules.pdf"
+      ],
+      "expected_docs": [
+        "port_rules.pdf"
+      ],
+      "facts": [
+        {
+          "fact": "written permit",
+          "found": true,
+          "method": "llm"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "A bunkering permit is required.",
+      "failure": "",
+      "latency_seconds": 13.87
+    },
+    {
+      "id": "q09",
+      "type": "answerable",
+      "question": "What is prohibited inside port limits?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "Discharge of oily water, garbage or sewage inside port limits is prohibited.",
+      "sources": [
+        "port_rules.pdf::p2::c0"
+      ],
+      "cited_docs": [
+        "port_rules.pdf"
+      ],
+      "retrieved_docs": [
+        "crew_shore_leave.md",
+        "port_rules.pdf"
+      ],
+      "expected_docs": [
+        "port_rules.pdf"
+      ],
+      "facts": [
+        {
+          "fact": "discharge of oily water, garbage, or sewage",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "Discharge of oily water, garbage or sewage inside port limits is prohibited.",
+      "failure": "",
+      "latency_seconds": 17.44
+    },
+    {
+      "id": "q10",
+      "type": "answerable",
+      "question": "What is needed for hot work on board?",
+      "expected_behavior": "answer",
+      "status": "fail",
+      "refused": true,
+      "answer": "I can't answer that from the available documents.",
+      "sources": [],
+      "cited_docs": [],
+      "retrieved_docs": [
+        "crew_shore_leave.md",
+        "port_rules.pdf"
+      ],
+      "expected_docs": [
+        "port_rules.pdf"
+      ],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "refused_unsupported_number",
+      "refusal_reason": "The answer contained figures not found in the cited sources: 24.",
+      "model_answer_before_checks": "A hot work permit is needed, which must be issued at least 24 hours in advance.",
+      "failure": "refused an answerable question (refused_unsupported_number)",
+      "latency_seconds": 16.04
+    },
+    {
+      "id": "q11",
+      "type": "answerable",
+      "question": "What stops cargo operations with cranes?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "Wind speed exceeding 50 km/h",
+      "sources": [
+        "port_rules.pdf::p2::c0"
+      ],
+      "cited_docs": [
+        "port_rules.pdf"
+      ],
+      "retrieved_docs": [
+        "port_rules.pdf"
+      ],
+      "expected_docs": [
+        "port_rules.pdf"
+      ],
+      "facts": [
+        {
+          "fact": "wind speed exceeds 50 km/h",
+          "found": true,
+          "method": "fuzzy"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "Wind speed exceeding 50 km/h",
+      "failure": "",
+      "latency_seconds": 10.86
+    },
+    {
+      "id": "q12",
+      "type": "multi_doc",
+      "question": "What is the maximum number of cigarettes allowed on a shore leave, and what is required for bunkering?",
+      "expected_behavior": "answer",
+      "status": "fail",
+      "refused": false,
+      "answer": "200 cigarettes are allowed on a shore leave, and a bunkering permit is required.",
+      "sources": [
+        "crew_shore_leave.md::p1::c0",
+        "tool:csv_lookup:1"
+      ],
+      "cited_docs": [
+        "crew_shore_leave.md",
+        "port_fees.csv"
+      ],
+      "retrieved_docs": [
+        "crew_shore_leave.md",
+        "port_rules.pdf"
+      ],
+      "expected_docs": [
+        "crew_shore_leave.md",
+        "port_rules.pdf"
+      ],
+      "facts": [
+        {
+          "fact": "200 cigarettes when",
+          "found": true,
+          "method": "fuzzy"
+        },
+        {
+          "fact": "written permit",
+          "found": true,
+          "method": "llm"
+        }
+      ],
+      "grounded": false,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "200 cigarettes are allowed on a shore leave, and a bunkering permit is required.",
+      "failure": "cited ['crew_shore_leave.md', 'port_fees.csv'], expected ['crew_shore_leave.md', 'port_rules.pdf']",
+      "latency_seconds": 23.21
+    },
+    {
+      "id": "q13",
+      "type": "multi_doc",
+      "question": "What is the condition for night pilotage, and what is the maximum amount of alcohol allowed on a shore leave?",
+      "expected_behavior": "answer",
+      "status": "fail",
+      "refused": true,
+      "answer": "I can't answer that from the available documents.",
+      "sources": [],
+      "cited_docs": [],
+      "retrieved_docs": [
+        "crew_shore_leave.md",
+        "port_rules.pdf"
+      ],
+      "expected_docs": [
+        "crew_shore_leave.md",
+        "port_rules.pdf"
+      ],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "refused_unsupported_number",
+      "refusal_reason": "The answer contained figures not found in the cited sources: 22, 05, 10.",
+      "model_answer_before_checks": "Night pilotage between 22:00 and 05:00 is available only for vessels with a draught below 10 metres. The maximum amount of alcohol allowed on a shore leave is 2 litres.",
+      "failure": "refused an answerable question (refused_unsupported_number)",
+      "latency_seconds": 22.06
+    },
+    {
+      "id": "q14",
+      "type": "multi_doc",
+      "question": "How far in advance must a dangerous goods declaration be sent, and what is the address of the Kochi Seafarers' Centre?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "48 hours, 21:00 Gate 2",
+      "sources": [
+        "port_rules.pdf::p1::c0",
+        "crew_shore_leave.md::p1::c0"
+      ],
+      "cited_docs": [
+        "crew_shore_leave.md",
+        "port_rules.pdf"
+      ],
+      "retrieved_docs": [
+        "crew_shore_leave.md",
+        "port_rules.pdf"
+      ],
+      "expected_docs": [
+        "crew_shore_leave.md",
+        "port_rules.pdf"
+      ],
+      "facts": [
+        {
+          "fact": "48 hours",
+          "found": true,
+          "method": "exact"
+        },
+        {
+          "fact": "Gate 2",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "48 hours, 21:00 Gate 2",
+      "failure": "",
+      "latency_seconds": 19.65
+    },
+    {
+      "id": "q15",
+      "type": "answerable",
+      "question": "What is the fee item for PF-10?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "Shore pass",
+      "sources": [
+        "tool:csv_lookup:1"
+      ],
+      "cited_docs": [
+        "port_fees.csv"
+      ],
+      "retrieved_docs": [
+        "port_rules.pdf"
+      ],
+      "expected_docs": [
+        "port_fees.csv"
+      ],
+      "facts": [
+        {
+          "fact": "Shore pass",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "Shore pass",
+      "failure": "",
+      "latency_seconds": 30.1
+    },
+    {
+      "id": "q16",
+      "type": "answerable",
+      "question": "What is the amount inr for PF-05?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "95",
+      "sources": [
+        "tool:csv_lookup:1"
+      ],
+      "cited_docs": [
+        "port_fees.csv"
+      ],
+      "retrieved_docs": [
+        "port_rules.pdf"
+      ],
+      "expected_docs": [
+        "port_fees.csv"
+      ],
+      "facts": [
+        {
+          "fact": "95",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "95",
+      "failure": "",
+      "latency_seconds": 19.23
+    },
+    {
+      "id": "q17",
+      "type": "answerable",
+      "question": "What is the unit for PF-01?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "per GT per call",
+      "sources": [
+        "tool:csv_lookup:1"
+      ],
+      "cited_docs": [
+        "port_fees.csv"
+      ],
+      "retrieved_docs": [],
+      "expected_docs": [
+        "port_fees.csv"
+      ],
+      "facts": [
+        {
+          "fact": "per GT per call",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "per GT per call",
+      "failure": "",
+      "latency_seconds": 29.64
+    },
+    {
+      "id": "q18",
+      "type": "ambiguous",
+      "question": "What's the max number of cigarettes allowed on shore leave?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "200",
+      "sources": [
+        "crew_shore_leave.md::p1::c0"
+      ],
+      "cited_docs": [
+        "crew_shore_leave.md"
+      ],
+      "retrieved_docs": [
+        "crew_shore_leave.md",
+        "port_rules.pdf"
+      ],
+      "expected_docs": [
+        "crew_shore_leave.md"
+      ],
+      "facts": [
+        {
+          "fact": "200 cigarettes when",
+          "found": true,
+          "method": "context"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "200",
+      "failure": "",
+      "latency_seconds": 23.2
+    },
+    {
+      "id": "q19",
+      "type": "ambiguous",
+      "question": "What's the max amount of alcohol allowed on shore leave?",
+      "expected_behavior": "answer",
+      "status": "fail",
+      "refused": true,
+      "answer": "I can't answer that from the available documents.",
+      "sources": [],
+      "cited_docs": [],
+      "retrieved_docs": [
+        "crew_shore_leave.md",
+        "port_rules.pdf"
+      ],
+      "expected_docs": [
+        "crew_shore_leave.md"
+      ],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "refused_unsupported_number",
+      "refusal_reason": "The answer contained figures not found in the cited sources: 250.",
+      "model_answer_before_checks": "250",
+      "failure": "refused an answerable question (refused_unsupported_number)",
+      "latency_seconds": 23.98
+    },
+    {
+      "id": "q20",
+      "type": "out_of_scope",
+      "question": "What is the best way to prepare for a marathon?",
+      "expected_behavior": "refuse",
+      "status": "pass",
+      "refused": true,
+      "answer": "I can't answer that from the available documents.",
+      "sources": [],
+      "cited_docs": [],
+      "retrieved_docs": [],
+      "expected_docs": [],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "refused_no_citation",
+      "refusal_reason": "The answer did not cite any of the provided sources.",
+      "model_answer_before_checks": "A balanced diet, regular training, and adequate rest are the best ways to prepare for a marathon.",
+      "failure": "",
+      "latency_seconds": 7.43
+    },
+    {
+      "id": "q21",
+      "type": "out_of_scope",
+      "question": "How do I make the perfect chocolate cake?",
+      "expected_behavior": "refuse",
+      "status": "pass",
+      "refused": true,
+      "answer": "I can't answer that from the available documents.",
+      "sources": [],
+      "cited_docs": [],
+      "retrieved_docs": [],
+      "expected_docs": [],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "refused_by_model",
+      "refusal_reason": "short reason",
+      "model_answer_before_checks": "",
+      "failure": "",
+      "latency_seconds": 4.25
+    },
+    {
+      "id": "q22",
+      "type": "out_of_scope",
+      "question": "Who is the current president of the United States?",
+      "expected_behavior": "refuse",
+      "status": "pass",
+      "refused": true,
+      "answer": "I can't answer that from the available documents.",
+      "sources": [],
+      "cited_docs": [],
+      "retrieved_docs": [],
+      "expected_docs": [],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "refused_no_citation",
+      "refusal_reason": "The answer did not cite any of the provided sources.",
+      "model_answer_before_checks": "Donald Trump",
+      "failure": "",
+      "latency_seconds": 5.37
+    }
+  ]
+}
