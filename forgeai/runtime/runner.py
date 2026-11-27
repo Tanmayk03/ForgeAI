@@ -312,6 +312,16 @@ class AgentRunner:
                 return self._refusal(trace, "The answer did not cite any of the provided sources.")
 
             cited = [sources[n - 1] for n in valid_numbers]
+            # A calculator result is computed by code, not written by the model, so it is evidence
+            # for its own result even if the model forgot to cite it. Add it when the answer uses it.
+            answer_numbers = {n.replace(",", "") for n in evidence.NUMBER_PATTERN.findall(output.answer)}
+            for call in trace.tool_calls:
+                if call.name == "calculator" and call.ok:
+                    result = call.output.rsplit("=", 1)[-1].strip().replace(",", "")
+                    source = sources[call.source_number - 1]
+                    if result in answer_numbers and source not in cited:
+                        cited.append(source)
+                        trace.warnings.append(f"calculator result {result} used but not cited; added as a source")
             # Without citations (allowed only if require_citations is false), check against all sources.
             checked_against = cited or sources
             trace.unsupported_numbers = evidence.unsupported_numbers(

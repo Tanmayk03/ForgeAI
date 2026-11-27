@@ -32,6 +32,9 @@ def print_response(response: AgentResponse, show_trace: bool) -> None:
         print(f"  query coverage: {t.query_coverage:.2f}  covered={t.covered_terms}  all={t.query_terms}")
         for r in t.retrieved:
             print(f"  [{r.source_number}] score {r.score:5.2f}  {r.chunk_id}")
+        for c in t.tool_calls:
+            status = "ok" if c.ok else "FAILED"
+            print(f"  tool [{c.source_number}] {c.name}({c.tool_input!r}) by {c.requested_by}, {status}: {c.output[:100]}")
         print(f"  model called: {t.model_called}, attempts: {t.model_attempts}")
         if t.model_answer_before_checks and response.refused:
             print(f"  model's own answer (overridden): {t.model_answer_before_checks}")

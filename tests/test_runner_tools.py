@@ -205,3 +205,20 @@ class TestToolRobustness(unittest.TestCase):
         self.assertTrue(response.refused)
         self.assertEqual(response.trace.decision, "refused_no_citation")
         self.assertIn("failed tool result", " ".join(response.trace.warnings))
+
+
+class TestCalculatorEvidence(unittest.TestCase):
+    Q = "What is the total of 2 fees, 48000 and 12000?"
+
+    def test_uncited_calculator_result_supports_the_answer(self):
+        # Real chat: answer "60000" was blocked because only the CSV row was cited.
+        fake = FakeLLM(plan("calculator", "48000 + 12000"), answer("60000", [1]))
+        response = runner(fake, ["calculator"]).ask(self.Q)
+        self.assertFalse(response.refused, response.refusal_reason)
+        self.assertIn("tool:calculator:1", response.sources)
+        self.assertIn("used but not cited", " ".join(response.trace.warnings))
+
+    def test_number_computed_by_the_model_itself_is_still_blocked(self):
+        fake = FakeLLM(plan(), answer("60000", [1]))      # no calculator call
+        response = runner(fake, ["calculator"]).ask(self.Q)
+        self.assertEqual(response.trace.decision, "refused_unsupported_number")
