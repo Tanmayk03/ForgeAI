@@ -286,9 +286,13 @@ The LLM is consulted only for facts code could not find, one fact at a time, wit
 * `scripts/rejudge.py` re-scores **saved answers** with the current judge — no agent, no model, instant —
   so a judge change can be shown on identical answers (demo2 baseline 42 % → 54 %, rehearsal baseline
   64 % → 68 %, demo1 unchanged).
+* **The human check found a lenient case.** In demo2 q11 the LLM judge accepted "supplier quotations"
+  with a quote that really was in the answer — but was about the discount. Quote verification now also
+  requires the quote to contain at least half of the fact's key words.
 * `scripts/label_judge.py` measures **judge–human agreement**: a person labels a sample of saved
-  answers (all judge failures first), and the tool reports agreement plus every case where the judge
-  was too lenient or too strict. The result is shown in the report and the viewer.
+  answers (all judge failures first) for **content**, and the tool reports content agreement and
+  full agreement (content + correct document cited) with every disagreement. Most full-agreement
+  differences are correct answers citing the wrong document, which the judge fails by design.
 
 In the demos the judge needed **3 LLM calls for 22 cases** (demo1) and **8 for 25** (demo2); everything else was decided by code.
 

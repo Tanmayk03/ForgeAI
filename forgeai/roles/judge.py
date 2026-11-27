@@ -42,6 +42,7 @@ from forgeai.roles.eval_generator import EvalCase, EvalSet, fact_in_text, verify
 from forgeai.runtime.runner import AgentRunner
 
 FUZZY_SHARE = 0.8
+QUOTE_FACT_SHARE = 0.5   # an LLM quote must contain at least this share of the fact's key words
 NUMBER = re.compile(r"\d+(?:[.,]\d+)*")
 
 
@@ -144,8 +145,14 @@ class Judge:
             return FactCheck(fact=fact, found=False, method="missing")
         if not v.states_fact:
             return FactCheck(fact=fact, found=False, method="missing")
-        quote_ok = (bool(tokenize(v.quote)) and check_fact_by_code(v.quote, answer) != ""
-                    and _numbers(fact) <= _numbers(v.quote))
+        # The quote must (1) really be in the answer, (2) keep the fact's numbers and (3) be ABOUT
+        # the fact. Without (3), a real sentence of the answer was accepted for an unrelated fact
+        # (demo2 q11: a discount sentence accepted as stating "supplier quotations").
+        fact_words = tokenize(fact)
+        quote_words = set(tokenize(v.quote))
+        relevant = not fact_words or sum(w in quote_words for w in fact_words) / len(fact_words) >= QUOTE_FACT_SHARE
+        quote_ok = (bool(quote_words) and check_fact_by_code(v.quote, answer) != ""
+                    and _numbers(fact) <= _numbers(v.quote) and relevant)
         return FactCheck(fact=fact, found=quote_ok, method="llm" if quote_ok else "llm-rejected")
 
     def judge_case(self, case: EvalCase, runner: AgentRunner) -> CaseResult:
@@ -219,15 +226,19 @@ def run_evals(evals: EvalSet, runner: AgentRunner, label: str = "iteration_0",
 def rejudge(card: Scorecard, label: str | None = None) -> Scorecard:
     """
     Re-score saved answers with the CURRENT code-only fact checks - no agent and
-    no model calls, so it is instant and repeatable. A fact already found stays
-    found; a missing fact is re-checked in code. Grounding, refusals and errors
-    are unchanged. Used to show the effect of a judge change on the same answers.
+    no model calls, so it is instant and repeatable. A fact found by code stays
+    found; a missing fact is re-checked in code; a fact accepted by the LLM judge
+    is re-checked in code too, and kept only if code also finds it (the saved
+    quote is not stored, so the LLM's 'yes' cannot be re-verified). Grounding,
+    refusals and errors are unchanged.
     """
     results = []
     for res in card.results:
         res = res.model_copy(deep=True)
         if res.status != "error" and res.expected_behavior == "answer" and not res.refused:
             for fc in res.facts:
+                if fc.method == "llm":
+                    fc.found, fc.method = False, "llm-unverified"
                 if not fc.found:
                     method = check_fact_by_code(fc.fact, res.answer, res.question)
                     if method:

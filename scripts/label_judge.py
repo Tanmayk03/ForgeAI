@@ -41,6 +41,7 @@ def main() -> int:
         else:
             print(f"  SHOULD: answer, containing {facts.get(r.id, [])}")
         print(f"  AGENT : {'REFUSED - ' if r.refused else ''}{r.answer}")
+        print("  Judge the CONTENT against the documents (citations are checked separately).")
         while True:
             key = input("  Is the agent's response acceptable? [y/n/s/q] ").strip().lower()
             if key in ("y", "n", "s", "q"):
@@ -53,8 +54,10 @@ def main() -> int:
                                  judge=r.status, human_ok=key == "y"))
         save_labels(labels + [l for l in load_labels(run_dir) if l.scorecard != card.label], run_dir)
 
-    a = agreement(labels)
-    print(f"\nJudge agrees with you on {a.agree}/{a.labelled} ({a.rate:.0%}) of labelled cases.")
+    a = agreement(labels, card.results)
+    print(f"\nContent: judge agrees with you on {a.content_agree}/{a.labelled} ({a.content_rate:.0%}); "
+          f"disagreements: {a.content_disagreements or '-'}")
+    print(f"Full (content + correct document cited): {a.agree}/{a.labelled} ({a.rate:.0%}) of labelled cases.")
     print(f"  judge too lenient (passed, you said wrong): {a.false_pass or '-'}")
     print(f"  judge too strict  (failed, you said fine) : {a.false_fail or '-'}")
     return 0

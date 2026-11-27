@@ -3,7 +3,7 @@
 import tempfile
 import unittest
 
-from forgeai.roles.judge import CaseResult
+from forgeai.roles.judge import CaseResult, FactCheck
 from forgeai.roles.judge_agreement import HumanLabel, agreement, choose_sample, load_labels, save_labels
 
 
@@ -21,6 +21,13 @@ class TestAgreement(unittest.TestCase):
         self.assertEqual((a.labelled, a.agree, a.rate), (4, 2, 0.5))
         self.assertEqual(a.false_pass, ["q3"])
         self.assertEqual(a.false_fail, ["q4"])
+
+    def test_content_agreement_ignores_citations(self):
+        # Correct answer, wrong document cited: judge fails it, but its content verdict is "ok".
+        r = CaseResult(id="q7", type="answerable", question="q", expected_behavior="answer", status="fail",
+                       answer="10 days", grounded=False, facts=[FactCheck(fact="10 days", found=True, method="exact")])
+        a = agreement([lab("q7", "fail", True)], [r])
+        self.assertEqual((a.agree, a.content_agree), (0, 1))
 
     def test_sample_takes_all_failures_first_and_is_repeatable(self):
         results = [res(f"q{i:02d}", "fail" if i % 4 == 0 else "pass") for i in range(1, 25)] + [res("q99", "error")]

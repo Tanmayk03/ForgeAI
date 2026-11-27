@@ -93,6 +93,16 @@ class TestJudge(unittest.TestCase):
         self.assertEqual(bad.results[0].facts[0].method, "llm-rejected")   # quote is not in the answer
         self.assertEqual(bad.results[0].status, "fail")
 
+    def test_llm_quote_must_be_about_the_fact(self):
+        # Real false pass (demo2 q11): a real sentence of the answer, unrelated to the fact, was accepted.
+        two = case("q11", "answerable", "How many days of annual leave do shore staff get, and is a certificate needed?",
+                   facts=["medical certificate"], docs=["leave_policy.pdf"])
+        agent = runner({"annual": answer("Shore staff get 24 working days of paid annual leave.", [1])})
+        card = run_evals(evalset(two), agent, llm_fn=FakeLLM(
+            {"states_fact": True, "quote": "Shore staff get 24 working days of paid annual leave"}))
+        self.assertEqual(card.results[0].facts[0].method, "llm-rejected")
+        self.assertEqual(card.results[0].status, "fail")
+
     def test_llm_quote_must_keep_the_numbers(self):
         agent = runner({"annual": answer("You get twenty-four days off for working.", [1])})
         card = run_evals(evalset(LEAVE), agent, llm_fn=FakeLLM({"states_fact": True, "quote": "twenty-four days off"}))

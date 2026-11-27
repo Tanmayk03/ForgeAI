@@ -35,6 +35,17 @@ class Agreement(BaseModel):
     rate: float
     false_pass: list[str]
     false_fail: list[str]
+    # Content only (is the answer right?), ignoring whether the right document was cited.
+    content_agree: int | None = None
+    content_rate: float | None = None
+    content_disagreements: list[str] = []
+
+
+def content_ok(r: CaseResult) -> bool:
+    """The judge's verdict on content alone: right refusal, or every key fact present."""
+    if r.expected_behavior == "refuse":
+        return r.refused
+    return not r.refused and bool(r.facts) and all(f.found for f in r.facts)
 
 
 def choose_sample(results: list[CaseResult], n: int) -> list[CaseResult]:
@@ -47,9 +58,16 @@ def choose_sample(results: list[CaseResult], n: int) -> list[CaseResult]:
     return sorted(sample, key=lambda r: r.id)
 
 
-def agreement(labels: list[HumanLabel]) -> Agreement:
+def agreement(labels: list[HumanLabel], results: list[CaseResult] | None = None) -> Agreement:
     agree = [l for l in labels if (l.judge == "pass") == l.human_ok]
+    content = {}
+    if results is not None:
+        by_id = {r.id: r for r in results}
+        content = {l.id: content_ok(by_id[l.id]) == l.human_ok for l in labels if l.id in by_id}
     return Agreement(
+        content_agree=sum(content.values()) if content else None,
+        content_rate=round(sum(content.values()) / len(content), 3) if content else None,
+        content_disagreements=[i for i, ok in content.items() if not ok],
         labelled=len(labels), agree=len(agree),
         rate=round(len(agree) / len(labels), 3) if labels else 0.0,
         false_pass=[l.id for l in labels if l.judge == "pass" and not l.human_ok],

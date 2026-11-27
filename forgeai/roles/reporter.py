@@ -119,11 +119,17 @@ def write_report(run_dir: str | Path) -> Path:
     from forgeai.roles.judge_agreement import agreement, load_labels
     labels = load_labels(run)
     if labels:
-        a = agreement(labels)
+        labelled_card = _card(run / f"scorecard_{labels[0].scorecard}.json")
+        a = agreement(labels, labelled_card.results if labelled_card else None)
+        content = (f"On **content** (is the answer right?) the judge agreed on **{a.content_agree}/{a.labelled} "
+                   f"({a.content_rate:.0%})**; disagreements: {', '.join(a.content_disagreements) or 'none'}. "
+                   if a.content_agree is not None else "")
         L += ["### Is the judge trustworthy?", "",
-              f"A human labelled {a.labelled} saved answers. The judge agreed on **{a.agree}/{a.labelled} "
-              f"({a.rate:.0%})**. Judge too lenient (passed, human said wrong): {', '.join(a.false_pass) or 'none'}. "
-              f"Judge too strict (failed, human said fine): {', '.join(a.false_fail) or 'none'}.", ""]
+              f"A human labelled {a.labelled} saved answers of {labels[0].scorecard} for content. {content}"
+              f"Including the citation check the judge agreed on {a.agree}/{a.labelled} ({a.rate:.0%}): most "
+              f"differences are correct answers that cite the wrong document, which the judge fails by design "
+              f"(grounding). Judge stricter than the human: {', '.join(a.false_fail) or 'none'}; "
+              f"more lenient: {', '.join(a.false_pass) or 'none'}.", ""]
 
     failures = classify_all(final, evals)
     L += ["## 6. What still fails, and why", ""]
