@@ -49,3 +49,19 @@ class TestPipelineAndReport(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestCompareCards(unittest.TestCase):
+    def test_case_by_case_comparison(self):
+        from forgeai.roles.judge import CaseResult, Scorecard
+        from forgeai.roles.reporter import compare_cards
+
+        def card(label, statuses):
+            results = [CaseResult(id=i, type="answerable", question="q", expected_behavior="answer", status=s)
+                       for i, s in statuses.items()]
+            return Scorecard(agent_name="a", eval_sha256="x", label=label, passed=0, failed=0, errors=0,
+                             total=len(results), pass_rate=0.0, by_type={}, judge_llm_calls=0,
+                             total_seconds=0.0, results=results)
+        cmp = compare_cards(card("f", {"q1": "pass", "q2": "pass", "q3": "fail", "q4": "error"}),
+                            card("h", {"q1": "pass", "q2": "fail", "q3": "pass", "q4": "pass"}))
+        self.assertEqual(cmp, {"only_a": ["q2"], "only_b": ["q3"], "both": ["q1"], "neither": []})

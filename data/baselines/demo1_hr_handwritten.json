@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0",
+  "name": "hr_handwritten_baseline",
+  "description": "Hand-written baseline for demo1 (no factory): what a developer would write in about 10 minutes from the brief - simple prompt, default settings, topics copied from the brief, no groundability guard, no tuning. Same runtime as factory agents, so only the definition differs.",
+  "system_instructions": "You are an HR assistant for shore staff. Answer employee questions about HR policies clearly and politely.",
+  "scope": {
+    "in_scope_topics": ["leave", "public holidays", "business travel", "expense claims", "working hours", "remote work", "code of conduct", "pension scheme"],
+    "refusal_topics": ["legal advice"],
+    "refusal_message": "I can't answer that from the available documents."
+  },
+  "documents": {"folder": "data/demo1_hr"},
+  "retrieval": {"chunk_size_words": 300, "chunk_overlap_words": 50, "top_k": 3, "min_bm25_score": 0.0, "min_query_coverage": 0.5},
+  "tools": [],
+  "output_contract": {"max_answer_words": 150, "require_citations": true, "block_unsupported_numbers": true}
+}

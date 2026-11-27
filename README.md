@@ -396,6 +396,21 @@ python -m pip install streamlit
 streamlit run streamlit_app.py
 ```
 
+### Factory vs hand-written agent
+
+`data/baselines/demo1_hr_handwritten.json` is a deliberately ordinary hand-written agent for demo1:
+a simple prompt, default settings, topics copied from the brief (including the unsupported pension
+scheme) and no tuning. It runs on the same runtime and is scored on demo1's **same frozen eval set with
+the same judge**, so only the way the definition was made differs; `report.md` compares the two case by
+case.
+
+```powershell
+python -m scripts.run_evals --run demo1_hr --agent data\baselines\demo1_hr_handwritten.json --label handwritten
+python -m scripts.rejudge --run demo1_hr --label handwritten
+python -m scripts.rejudge --run demo1_hr --label iteration_0
+python -m scripts.report --run demo1_hr
+```
+
 ## 9. Design decisions and the evidence behind them
 
 | Decision | Why — what was observed |

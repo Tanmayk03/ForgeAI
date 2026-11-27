@@ -37,6 +37,15 @@ LIMITATIONS = [
 ]
 
 
+def compare_cards(a: Scorecard, b: Scorecard) -> dict[str, list[str]]:
+    """Case-by-case comparison of two scorecards on the same eval set."""
+    sa = {r.id: r.status == "pass" for r in a.results if r.status != "error"}
+    sb = {r.id: r.status == "pass" for r in b.results if r.status != "error"}
+    ids = sorted(set(sa) & set(sb))
+    return {"only_a": [i for i in ids if sa[i] and not sb[i]], "only_b": [i for i in ids if sb[i] and not sa[i]],
+            "both": [i for i in ids if sa[i] and sb[i]], "neither": [i for i in ids if not sa[i] and not sb[i]]}
+
+
 def _read(path: Path):
     return json.loads(path.read_text(encoding="utf-8")) if path.is_file() else None
 
@@ -115,6 +124,19 @@ def write_report(run_dir: str | Path) -> Path:
                  f"{rc.passed}/{rc.passed + rc.failed} ({rc.pass_rate:.0%}) | | | see judge note |")
     L += ["", "By case type (final): " + "; ".join(
         f"{t} {row['pass']}/{row['pass'] + row['fail']}" for t, row in final.by_type.items()), ""]
+
+    handwritten = _card(run / "scorecard_handwritten_rejudged.json") or _card(run / "scorecard_handwritten.json")
+    if handwritten:
+        factory = _card(run / f"scorecard_{final_label}_rejudged.json") or final
+        cmp = compare_cards(factory, handwritten)
+        L += ["### Factory agent vs hand-written agent (same frozen exam, same judge)", "",
+              "| Agent | Passed |", "|---|---|",
+              f"| Factory ({factory.label}) | {factory.passed}/{factory.passed + factory.failed} ({factory.pass_rate:.0%}) |",
+              f"| Hand-written baseline ({handwritten.label}) | {handwritten.passed}/{handwritten.passed + handwritten.failed} "
+              f"({handwritten.pass_rate:.0%}) |", "",
+              f"Only the factory agent passed: {', '.join(cmp['only_a']) or 'none'}. "
+              f"Only the hand-written agent passed: {', '.join(cmp['only_b']) or 'none'}. "
+              f"Both passed: {len(cmp['both'])}; both failed: {len(cmp['neither'])}.", ""]
 
     from forgeai.roles.judge_agreement import agreement, load_labels
     labels = load_labels(run)
