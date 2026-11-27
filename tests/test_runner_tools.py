@@ -178,3 +178,21 @@ class TestToolSpeedFixes(unittest.TestCase):
         self.assertFalse(response.refused, response.refusal_reason)
         self.assertIn("already source [1]", fake.calls[1]["prompt"])
         self.assertEqual(sum(1 for c in response.trace.tool_calls if c.name == "csv_lookup"), 2)  # auto + repeat record
+
+
+class TestToolRobustness(unittest.TestCase):
+    def test_garbled_tool_name_is_normalised(self):
+        # Real chat: the model asked for "tool weather_api".
+        fake = FakeLLM(plan(), tool_call("tool Calculator", "24 * 2"), answer("48 working days.", [1, 4]))
+        response = runner(fake, ["calculator"]).ask("How many days of annual leave do staff get in two years?")
+        self.assertEqual(response.trace.tool_calls[0].name, "calculator")
+        self.assertTrue(response.trace.tool_calls[0].ok)
+
+    def test_answer_citing_only_failed_tool_results_is_refused(self):
+        # Real chat: "The weather forecast ... is currently not available", citing two ERROR results.
+        fake = FakeLLM(plan(), tool_call("calculator", "1/0"), answer("It is not available.", [4]))
+        response = runner(fake, ["calculator"]).ask("How many days of annual leave do staff get in two years?")
+        self.assertFalse(response.trace.tool_calls[0].ok)
+        self.assertTrue(response.refused)
+        self.assertEqual(response.trace.decision, "refused_no_citation")
+        self.assertIn("failed tool result", " ".join(response.trace.warnings))

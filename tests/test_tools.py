@@ -14,7 +14,7 @@ from forgeai.tools.calculator import calculator
 from forgeai.tools.csv_lookup import csv_lookup
 from forgeai.tools.current_date import current_date
 from forgeai.tools.registry import TOOL_NAMES, run_tool
-from forgeai.tools.weather import weather_api
+from forgeai.tools.weather import place_candidates, weather_api
 
 CSV = config.DATA_DIR / "sample_docs" / "spare_parts.csv"
 
@@ -87,9 +87,20 @@ class TestWeather(unittest.TestCase):
         self.assertIn("Weather for Mumbai, India: now 29.4 C", out)
         self.assertIn("2026-11-27: max 32.1 C", out)
 
+    def test_place_name_fallbacks(self):
+        self.assertEqual(place_candidates("Port of Kochi"), ["Port of Kochi", "Kochi"])
+        self.assertEqual(place_candidates("Mumbai"), ["Mumbai"])
+        self.assertEqual(place_candidates("Kochi port, India"), ["Kochi port, India", "Kochi India", "Kochi"])
+
+    def test_port_of_kochi_found_on_second_try(self):
+        # Real chat: "Port of Kochi" is not a geocoder name; "Kochi" is.
+        out = weather_api("Port of Kochi", ToolContext(http_get=fake_get([{"results": []}, GEO, FORECAST])))
+        self.assertIn("Weather for Mumbai, India", out)   # the fake geocoder answers GEO
+
     def test_errors(self):
         cases = [
             ("Nowhereville", [{"results": []}]),
+            ("Port of Nowhere", [{"results": []}, {"results": []}]),
             ("Mumbai", [requests.exceptions.ConnectionError("offline")]),
             ("Mumbai", [GEO, {"unexpected": 1}]),
             ("", []),

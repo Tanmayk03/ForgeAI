@@ -6,9 +6,26 @@ Two calls: the geocoding API turns the name into coordinates, then the
 forecast API returns the weather. Network problems become ToolError.
 """
 
+import re
+
 import requests
 
 from forgeai.tools.base import ToolContext, ToolError
+
+# "Port of Kochi" / "Kochi port" / "the city of Pune" -> also try "Kochi" / "Pune"
+PLACE_NOISE = re.compile(r"\b(the|port|harbou?r|city|town|of|terminal|airport|area)\b", re.IGNORECASE)
+
+
+def place_candidates(place: str) -> list[str]:
+    """The place as given, then without words like 'port of', then its first remaining word
+    (usually the city: "Kochi port, India" -> "Kochi", not the country)."""
+    candidates = [place]
+    cleaned = " ".join(PLACE_NOISE.sub(" ", place).replace(",", " ").split())
+    if cleaned and cleaned.lower() != place.lower():
+        candidates.append(cleaned)
+    if cleaned and len(cleaned.split()) > 1:
+        candidates.append(cleaned.split()[0])
+    return list(dict.fromkeys(candidates))
 
 GEOCODE_URL = "https://geocoding-api.open-meteo.com/v1/search"
 FORECAST_URL = "https://api.open-meteo.com/v1/forecast"
@@ -31,10 +48,14 @@ def weather_api(tool_input: str, context: ToolContext) -> str:
     if not place:
         raise ToolError("give a place name, e.g. 'Mumbai'")
 
-    found = _get_json(context, GEOCODE_URL, {"name": place, "count": 1}).get("results") or []
-    if not found:
+    loc = None
+    for candidate in place_candidates(place):
+        found = _get_json(context, GEOCODE_URL, {"name": candidate, "count": 1}).get("results") or []
+        if found:
+            loc = found[0]
+            break
+    if loc is None:
         raise ToolError(f"place not found: {place}")
-    loc = found[0]
 
     data = _get_json(context, FORECAST_URL, {
         "latitude": loc["latitude"], "longitude": loc["longitude"], "timezone": "auto",

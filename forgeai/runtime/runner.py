@@ -144,8 +144,15 @@ class AgentRunner:
             prompt = user_prompt + build_retry_note(reason)
         return None, reason
 
+    @staticmethod
+    def _normalise_tool_name(name: str) -> str:
+        """'tool weather_api', 'Weather-API ' -> 'weather_api' (small models garble names)."""
+        name = re.sub(r"^\s*tool[\s:_-]+", "", name.strip(), flags=re.IGNORECASE)
+        return re.sub(r"[\s-]+", "_", name.strip()).lower()
+
     def _add_tool_result(self, name, tool_input, requested_by, sources, trace) -> None:
         """Run a tool and add its result as the next numbered source."""
+        name = self._normalise_tool_name(name)
         result = run_tool(name, tool_input, self.tool_context, self.agent.tools)
         trace.tool_calls.append(ToolCallRecord(
             source_number=len(sources) + 1, requested_by=requested_by, name=result.name,
@@ -259,8 +266,9 @@ class AgentRunner:
                     trace.warnings.append("tool limit reached; asked the model to answer from the sources")
                     note = LIMIT_NOTE
                     continue
+                wanted = self._normalise_tool_name(output.tool_name)
                 duplicate = next((c for c in trace.tool_calls
-                                  if c.name == output.tool_name and c.tool_input == output.tool_input), None)
+                                  if c.name == wanted and c.tool_input == output.tool_input), None)
                 if duplicate:
                     # Don't run the same call twice: point the model at the existing result.
                     trace.tool_calls.append(duplicate.model_copy(update={"requested_by": "model"}))
@@ -282,7 +290,11 @@ class AgentRunner:
                 return self._refusal(trace, output.refusal_reason or "The model declined to answer.")
 
             # 4. VERIFY
-            valid_numbers = [n for n in dict.fromkeys(output.sources) if 1 <= n <= len(sources)]
+            # A failed tool call ("ERROR: ...") is not evidence: citing it does not count.
+            failed = {c.source_number for c in trace.tool_calls if not c.ok}
+            if failed & set(output.sources):
+                trace.warnings.append(f"model cited failed tool result(s) {sorted(failed & set(output.sources))}; ignored")
+            valid_numbers = [n for n in dict.fromkeys(output.sources) if 1 <= n <= len(sources) and n not in failed]
             invalid_numbers = [n for n in output.sources if n not in valid_numbers]
             if invalid_numbers:
                 trace.warnings.append(f"model cited source number(s) that were not provided: {invalid_numbers}")
