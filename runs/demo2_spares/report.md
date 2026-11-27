@@ -54,8 +54,13 @@ Time per stage: manager 29 s, guard 0 s, builder 9 s, eval generation 98 s, eval
 | 1 | add instruction: Cite every source you use. If you combine facts from two sources, cite both source numbers. | 10/24 (42%) | q10 | q19 | no gain: change rolled back |
 | 2 | add instruction: Always include the exact figures, units and conditions from the SOURCES in your answer. | 9/24 (38%) | - | q19 | score dropped: change rolled back |
 | 3 | add instruction: Refuse questions about the refusal topics even when the SOURCES mention related words. | 10/24 (42%) | q15 | q19 | no gain: change rolled back |
+| iteration_0 re-judged | same answers, current judge (code checks only) | 13/24 (54%) | | | see judge note |
 
 By case type (final): answerable 4/13; multi_doc 0/3; ambiguous 1/2; out_of_scope 5/6
+
+### Is the judge trustworthy?
+
+A human labelled 20 saved answers of iteration_0_rejudged for content. On **content** (is the answer right?) the judge agreed on **15/20 (75%)**; disagreements: q01, q11, q12, q15, q24. Including the citation check the judge agreed on 11/20 (55%): most differences are correct answers that cite the wrong document, which the judge fails by design (grounding). Judge stricter than the human: q01, q07, q10, q11, q13, q14, q15, q16; more lenient: q24.
 
 ## 6. What still fails, and why
 
@@ -95,6 +100,7 @@ By case type (final): answerable 4/13; multi_doc 0/3; ambiguous 1/2; out_of_scop
 - Multi-document cases join two questions from different documents; they test answers that span two documents, not reasoning across them.
 - Key facts are short phrases; a correct answer that states a fact in different words (e.g. spelled-out numbers) can be scored as missing.
 - Repair tunes the agent on the same eval set it is scored on, so the final score may be optimistic.
+- The guard counts a topic as supported when at least half of its key words appear in a CSV, so a two-word topic can pass on one word.
 
 ## 8. Files
 

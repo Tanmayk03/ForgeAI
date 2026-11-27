@@ -52,6 +52,7 @@ Time per stage: manager 34 s, guard 40 s, builder 10 s, eval generation 118 s, e
 |---|---|---|---|---|---|
 | 0 | (baseline agent) | 14/22 | | | |
 | 1 | add instruction: Cite every source you use. If you combine facts from two sources, cite both source numbers. | 17/22 (77%) | q04, q10, q18, q19 | q17 | kept |
+| iteration_0 re-judged | same answers, current judge (code checks only) | 15/22 (68%) | | | see judge note |
 
 By case type (final): answerable 11/14; multi_doc 1/3; ambiguous 2/2; out_of_scope 3/3
 
