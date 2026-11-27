@@ -1,0 +1,741 @@
+{
+  "agent_name": "hr_policy_assistant",
+  "eval_sha256": "f3ec1f3d1c3bce888b93b799e929082029c7089d6956e6abf5fb5256b9167b3c",
+  "label": "iteration_1",
+  "passed": 18,
+  "failed": 4,
+  "errors": 0,
+  "total": 22,
+  "pass_rate": 0.818,
+  "by_type": {
+    "answerable": {
+      "pass": 11,
+      "fail": 1,
+      "error": 0
+    },
+    "multi_doc": {
+      "pass": 0,
+      "fail": 3,
+      "error": 0
+    },
+    "ambiguous": {
+      "pass": 3,
+      "fail": 0,
+      "error": 0
+    },
+    "out_of_scope": {
+      "pass": 4,
+      "fail": 0,
+      "error": 0
+    }
+  },
+  "judge_llm_calls": 3,
+  "total_seconds": 265.3,
+  "results": [
+    {
+      "id": "q01",
+      "type": "answerable",
+      "question": "What is the maximum reimbursement for hotel accommodation in India?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "INR 6,000 per night in India",
+      "sources": [
+        "travel_expenses_policy.pdf::p1::c0"
+      ],
+      "cited_docs": [
+        "travel_expenses_policy.pdf"
+      ],
+      "retrieved_docs": [
+        "travel_expenses_policy.pdf"
+      ],
+      "expected_docs": [
+        "travel_expenses_policy.pdf"
+      ],
+      "facts": [
+        {
+          "fact": "INR 6,000",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "INR 6,000 per night in India",
+      "failure": "",
+      "latency_seconds": 15.8
+    },
+    {
+      "id": "q02",
+      "type": "answerable",
+      "question": "How much is the daily meal allowance for business travel in India?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "INR 1,200 (or USD 45 abroad)",
+      "sources": [
+        "travel_expenses_policy.pdf::p1::c0"
+      ],
+      "cited_docs": [
+        "travel_expenses_policy.pdf"
+      ],
+      "retrieved_docs": [
+        "code_of_conduct.md",
+        "travel_expenses_policy.pdf"
+      ],
+      "expected_docs": [
+        "travel_expenses_policy.pdf"
+      ],
+      "facts": [
+        {
+          "fact": "INR 1,200",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "INR 1,200 (or USD 45 abroad)",
+      "failure": "",
+      "latency_seconds": 14.31
+    },
+    {
+      "id": "q03",
+      "type": "answerable",
+      "question": "What is the maximum reimbursement for hotel accommodation abroad?",
+      "expected_behavior": "answer",
+      "status": "fail",
+      "refused": false,
+      "answer": "The maximum reimbursement for hotel accommodation abroad is INR 6,000 per night.",
+      "sources": [
+        "travel_expenses_policy.pdf::p1::c0"
+      ],
+      "cited_docs": [
+        "travel_expenses_policy.pdf"
+      ],
+      "retrieved_docs": [
+        "travel_expenses_policy.pdf"
+      ],
+      "expected_docs": [
+        "travel_expenses_policy.pdf"
+      ],
+      "facts": [
+        {
+          "fact": "USD 180",
+          "found": false,
+          "method": "llm-rejected"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "The maximum reimbursement for hotel accommodation abroad is INR 6,000 per night.",
+      "failure": "missing key fact(s): ['USD 180']",
+      "latency_seconds": 5.9
+    },
+    {
+      "id": "q04",
+      "type": "answerable",
+      "question": "What is the deadline for submitting annual leave requests?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "Annual leave requests must be submitted in the HR portal at least 10 working days in advance and approved by the line manager.",
+      "sources": [
+        "leave_policy.pdf::p1::c0"
+      ],
+      "cited_docs": [
+        "leave_policy.pdf"
+      ],
+      "retrieved_docs": [
+        "leave_policy.pdf",
+        "travel_expenses_policy.pdf"
+      ],
+      "expected_docs": [
+        "leave_policy.pdf"
+      ],
+      "facts": [
+        {
+          "fact": "10 working days in advance",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "Annual leave requests must be submitted in the HR portal at least 10 working days in advance and approved by the line manager.",
+      "failure": "",
+      "latency_seconds": 16.01
+    },
+    {
+      "id": "q05",
+      "type": "answerable",
+      "question": "How many weeks of paid maternity leave are available to mothers?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "26 weeks",
+      "sources": [
+        "leave_policy.pdf::p2::c0"
+      ],
+      "cited_docs": [
+        "leave_policy.pdf"
+      ],
+      "retrieved_docs": [
+        "leave_policy.pdf",
+        "travel_expenses_policy.pdf"
+      ],
+      "expected_docs": [
+        "leave_policy.pdf"
+      ],
+      "facts": [
+        {
+          "fact": "26 weeks",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "26 weeks",
+      "failure": "",
+      "latency_seconds": 14.69
+    },
+    {
+      "id": "q06",
+      "type": "answerable",
+      "question": "How many working days of paid paternity leave are available to fathers and partners?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "10 working days",
+      "sources": [
+        "leave_policy.pdf::p2::c0"
+      ],
+      "cited_docs": [
+        "leave_policy.pdf"
+      ],
+      "retrieved_docs": [
+        "leave_policy.pdf",
+        "travel_expenses_policy.pdf"
+      ],
+      "expected_docs": [
+        "leave_policy.pdf"
+      ],
+      "facts": [
+        {
+          "fact": "10 working days",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "10 working days",
+      "failure": "",
+      "latency_seconds": 5.32
+    },
+    {
+      "id": "q07",
+      "type": "answerable",
+      "question": "How many working days of compassionate leave are available to employees?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "Up to 5 working days of paid compassionate leave are granted on the death of an immediate family member.",
+      "sources": [
+        "leave_policy.pdf::p2::c0"
+      ],
+      "cited_docs": [
+        "leave_policy.pdf"
+      ],
+      "retrieved_docs": [
+        "leave_policy.pdf",
+        "travel_expenses_policy.pdf"
+      ],
+      "expected_docs": [
+        "leave_policy.pdf",
+        "travel_expenses_policy.pdf"
+      ],
+      "facts": [
+        {
+          "fact": "5 working days",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "Up to 5 working days of paid compassionate leave are granted on the death of an immediate family member.",
+      "failure": "",
+      "latency_seconds": 6.17
+    },
+    {
+      "id": "q08",
+      "type": "answerable",
+      "question": "How long must an expense claim be submitted within to be considered?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "30 days",
+      "sources": [
+        "travel_expenses_policy.pdf::p2::c0"
+      ],
+      "cited_docs": [
+        "travel_expenses_policy.pdf"
+      ],
+      "retrieved_docs": [
+        "code_of_conduct.md",
+        "leave_policy.pdf",
+        "travel_expenses_policy.pdf"
+      ],
+      "expected_docs": [
+        "travel_expenses_policy.pdf"
+      ],
+      "facts": [
+        {
+          "fact": "30 days",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "30 days",
+      "failure": "",
+      "latency_seconds": 19.91
+    },
+    {
+      "id": "q09",
+      "type": "answerable",
+      "question": "What happens to an expense claim submitted after the 30-day deadline?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "Approved claims are reimbursed with the next monthly salary.",
+      "sources": [
+        "travel_expenses_policy.pdf::p2::c0"
+      ],
+      "cited_docs": [
+        "travel_expenses_policy.pdf"
+      ],
+      "retrieved_docs": [
+        "leave_policy.pdf",
+        "travel_expenses_policy.pdf"
+      ],
+      "expected_docs": [
+        "travel_expenses_policy.pdf"
+      ],
+      "facts": [
+        {
+          "fact": "written approval from the department head",
+          "found": true,
+          "method": "llm"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "Approved claims are reimbursed with the next monthly salary.",
+      "failure": "",
+      "latency_seconds": 15.14
+    },
+    {
+      "id": "q10",
+      "type": "answerable",
+      "question": "What is the maximum amount for gifts that must be declared to the compliance team?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "INR 5,000",
+      "sources": [
+        "code_of_conduct.md::p1::c0"
+      ],
+      "cited_docs": [
+        "code_of_conduct.md"
+      ],
+      "retrieved_docs": [
+        "code_of_conduct.md",
+        "leave_policy.pdf",
+        "travel_expenses_policy.pdf"
+      ],
+      "expected_docs": [
+        "code_of_conduct.md"
+      ],
+      "facts": [
+        {
+          "fact": "INR 5,000",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "INR 5,000",
+      "failure": "",
+      "latency_seconds": 24.22
+    },
+    {
+      "id": "q11",
+      "type": "answerable",
+      "question": "How many days per week can an employee work from home after completing 6 months of service?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "2 days per week",
+      "sources": [
+        "code_of_conduct.md::p1::c0"
+      ],
+      "cited_docs": [
+        "code_of_conduct.md"
+      ],
+      "retrieved_docs": [
+        "code_of_conduct.md",
+        "leave_policy.pdf",
+        "travel_expenses_policy.pdf"
+      ],
+      "expected_docs": [
+        "code_of_conduct.md"
+      ],
+      "facts": [
+        {
+          "fact": "2 days per week",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "2 days per week",
+      "failure": "",
+      "latency_seconds": 16.0
+    },
+    {
+      "id": "q12",
+      "type": "answerable",
+      "question": "What is the dress code for the office?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "Business casual dress is expected in the office.",
+      "sources": [
+        "code_of_conduct.md::p1::c0"
+      ],
+      "cited_docs": [
+        "code_of_conduct.md"
+      ],
+      "retrieved_docs": [
+        "code_of_conduct.md"
+      ],
+      "expected_docs": [
+        "code_of_conduct.md"
+      ],
+      "facts": [
+        {
+          "fact": "Business casual dress",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "Business casual dress is expected in the office.",
+      "failure": "",
+      "latency_seconds": 6.95
+    },
+    {
+      "id": "q13",
+      "type": "multi_doc",
+      "question": "How much is the daily meal allowance for business travel in India, and what is the maximum amount for gifts that must be declared to the compliance team?",
+      "expected_behavior": "answer",
+      "status": "fail",
+      "refused": true,
+      "answer": "I can't answer that from the available documents.",
+      "sources": [],
+      "cited_docs": [],
+      "retrieved_docs": [
+        "code_of_conduct.md",
+        "travel_expenses_policy.pdf"
+      ],
+      "expected_docs": [
+        "code_of_conduct.md",
+        "travel_expenses_policy.pdf"
+      ],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "refused_unsupported_number",
+      "refusal_reason": "The answer contained figures not found in the cited sources: 5,000.",
+      "model_answer_before_checks": "The daily meal allowance for business travel in India is INR 1,200 (or USD 45 abroad), and gifts worth more than INR 5,000 must be declared to the compliance team.",
+      "failure": "refused an answerable question (refused_unsupported_number)",
+      "latency_seconds": 25.76
+    },
+    {
+      "id": "q14",
+      "type": "multi_doc",
+      "question": "How many weeks of paid maternity leave are available to mothers, and how many days per week can an employee work from home after completing 6 months of service?",
+      "expected_behavior": "answer",
+      "status": "fail",
+      "refused": false,
+      "answer": "Mothers are entitled to 26 weeks of paid maternity leave.",
+      "sources": [
+        "leave_policy.pdf::p2::c0"
+      ],
+      "cited_docs": [
+        "leave_policy.pdf"
+      ],
+      "retrieved_docs": [
+        "code_of_conduct.md",
+        "leave_policy.pdf",
+        "travel_expenses_policy.pdf"
+      ],
+      "expected_docs": [
+        "code_of_conduct.md",
+        "leave_policy.pdf"
+      ],
+      "facts": [
+        {
+          "fact": "26 weeks",
+          "found": true,
+          "method": "exact"
+        },
+        {
+          "fact": "2 days per week",
+          "found": false,
+          "method": "llm-rejected"
+        }
+      ],
+      "grounded": false,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "Mothers are entitled to 26 weeks of paid maternity leave.",
+      "failure": "missing key fact(s): ['2 days per week']; cited ['leave_policy.pdf'], expected ['code_of_conduct.md', 'leave_policy.pdf']",
+      "latency_seconds": 17.66
+    },
+    {
+      "id": "q15",
+      "type": "multi_doc",
+      "question": "What happens to an expense claim submitted after the 30-day deadline, and what is the dress code for the office?",
+      "expected_behavior": "answer",
+      "status": "fail",
+      "refused": true,
+      "answer": "I can't answer that from the available documents.",
+      "sources": [],
+      "cited_docs": [],
+      "retrieved_docs": [
+        "code_of_conduct.md",
+        "travel_expenses_policy.pdf"
+      ],
+      "expected_docs": [
+        "code_of_conduct.md",
+        "travel_expenses_policy.pdf"
+      ],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "refused_unsupported_number",
+      "refusal_reason": "The answer contained figures not found in the cited sources: 30.",
+      "model_answer_before_checks": "Expense claims submitted after 30 days require written approval from the department head. Business casual dress is expected in the office.",
+      "failure": "refused an answerable question (refused_unsupported_number)",
+      "latency_seconds": 21.71
+    },
+    {
+      "id": "q16",
+      "type": "ambiguous",
+      "question": "How many days of paid paternity leave can fathers and partners take?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "10 working days",
+      "sources": [
+        "leave_policy.pdf::p2::c0"
+      ],
+      "cited_docs": [
+        "leave_policy.pdf"
+      ],
+      "retrieved_docs": [
+        "leave_policy.pdf",
+        "travel_expenses_policy.pdf"
+      ],
+      "expected_docs": [
+        "leave_policy.pdf"
+      ],
+      "facts": [
+        {
+          "fact": "10 working days",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "10 working days",
+      "failure": "",
+      "latency_seconds": 15.08
+    },
+    {
+      "id": "q17",
+      "type": "ambiguous",
+      "question": "What's the dress code for the office?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "Business casual dress is expected in the office.",
+      "sources": [
+        "code_of_conduct.md::p1::c0"
+      ],
+      "cited_docs": [
+        "code_of_conduct.md"
+      ],
+      "retrieved_docs": [
+        "code_of_conduct.md"
+      ],
+      "expected_docs": [
+        "code_of_conduct.md"
+      ],
+      "facts": [
+        {
+          "fact": "Business casual dress",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "Business casual dress is expected in the office.",
+      "failure": "",
+      "latency_seconds": 6.24
+    },
+    {
+      "id": "q18",
+      "type": "ambiguous",
+      "question": "What's the maximum amount of gifts that need to be declared to the compliance team?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "INR 5,000",
+      "sources": [
+        "code_of_conduct.md::p1::c0"
+      ],
+      "cited_docs": [
+        "code_of_conduct.md"
+      ],
+      "retrieved_docs": [
+        "code_of_conduct.md"
+      ],
+      "expected_docs": [
+        "code_of_conduct.md"
+      ],
+      "facts": [
+        {
+          "fact": "INR 5,000",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "INR 5,000",
+      "failure": "",
+      "latency_seconds": 6.79
+    },
+    {
+      "id": "q19",
+      "type": "out_of_scope",
+      "question": "What is the best way to cook a perfect steak?",
+      "expected_behavior": "refuse",
+      "status": "pass",
+      "refused": true,
+      "answer": "I can't answer that from the available documents.",
+      "sources": [],
+      "cited_docs": [],
+      "retrieved_docs": [],
+      "expected_docs": [],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "refused_no_evidence",
+      "refusal_reason": "No document passage matches this question.",
+      "model_answer_before_checks": "",
+      "failure": "",
+      "latency_seconds": 0.0
+    },
+    {
+      "id": "q20",
+      "type": "out_of_scope",
+      "question": "Who is the current world champion in Formula 1?",
+      "expected_behavior": "refuse",
+      "status": "pass",
+      "refused": true,
+      "answer": "I can't answer that from the available documents.",
+      "sources": [],
+      "cited_docs": [],
+      "retrieved_docs": [
+        "leave_policy.pdf",
+        "travel_expenses_policy.pdf"
+      ],
+      "expected_docs": [],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "refused_low_coverage",
+      "refusal_reason": "The documents do not mention key terms of the question: current, world, champion, formula.",
+      "model_answer_before_checks": "",
+      "failure": "",
+      "latency_seconds": 0.0
+    },
+    {
+      "id": "q21",
+      "type": "out_of_scope",
+      "question": "What is the latest programming language being used in the tech industry?",
+      "expected_behavior": "refuse",
+      "status": "pass",
+      "refused": true,
+      "answer": "I can't answer that from the available documents.",
+      "sources": [],
+      "cited_docs": [],
+      "retrieved_docs": [
+        "leave_policy.pdf"
+      ],
+      "expected_docs": [],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "refused_low_coverage",
+      "refusal_reason": "The documents do not mention key terms of the question: latest, programming, language, being, tech, industry.",
+      "model_answer_before_checks": "",
+      "failure": "",
+      "latency_seconds": 0.0
+    },
+    {
+      "id": "q22",
+      "type": "out_of_scope",
+      "question": "What information is available about company pension scheme?",
+      "expected_behavior": "refuse",
+      "status": "pass",
+      "refused": true,
+      "answer": "I can't answer that from the available documents.",
+      "sources": [],
+      "cited_docs": [],
+      "retrieved_docs": [
+        "code_of_conduct.md"
+      ],
+      "expected_docs": [],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "refused_low_coverage",
+      "refusal_reason": "The documents do not mention key terms of the question: information, available, company, pension, scheme.",
+      "model_answer_before_checks": "",
+      "failure": "",
+      "latency_seconds": 0.0
+    }
+  ]
+}

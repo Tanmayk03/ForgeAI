@@ -1,0 +1,356 @@
+{
+  "schema_version": "1.0",
+  "created_at": "2026-11-27T05:03:55",
+  "model": "qwen2.5:1.5b",
+  "sha256": "c93db74931bd9c163c5dd60e0b36c47334c19d9829b9850c43ed0491eb27d2f5",
+  "counts": {
+    "answerable": 13,
+    "multi_doc": 3,
+    "ambiguous": 2,
+    "out_of_scope": 7,
+    "total": 25,
+    "rejected": 12
+  },
+  "notes": [],
+  "cases": [
+    {
+      "id": "q01",
+      "type": "answerable",
+      "question": "What is the minimum order quantity for orders placed through the Oceanparts online portal?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "USD 5,000"
+      ],
+      "expected_docs": [
+        "oceanparts_supply_terms.pdf",
+        "procurement_rules.md"
+      ],
+      "source_text": "Oceanparts Co - Supply Terms for Seaview Shipping Ltd (2026) 1. Ordering Orders are placed through the Oceanparts online portal or by email to orders@oceanparts.example. Orders below the minimum order quantity shown in the catalogue are not accepted. 2. Prices and discounts Prices are in US dollars and exclude delivery. A volume discount of 5 percent applies to any single order above USD 5,000, and 8 percent above USD 15,000. 3. Delivery Lead times in the catalogue are counted from order confirmation. Urgent delivery within 72 hours is available for stocked items at a surcharge of USD 250 per order. Deliveries are made to the ports of Mumbai, Chennai and Kochi. Delivery to other ports is quoted separately. 4. Payment Invoices are payable within 45 days of the invoice date. 5. Returns and warranty Unused parts may be returned within 30 days in their original packaging, with a 10 percent restocking fee. All parts carry a 12-month warranty from delivery.",
+      "origin": "passage oceanparts_supply_terms.pdf::p1::c0"
+    },
+    {
+      "id": "q02",
+      "type": "answerable",
+      "question": "What is the volume discount for orders above USD 15,000?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "8 percent"
+      ],
+      "expected_docs": [
+        "oceanparts_supply_terms.pdf"
+      ],
+      "source_text": "Oceanparts Co - Supply Terms for Seaview Shipping Ltd (2026) 1. Ordering Orders are placed through the Oceanparts online portal or by email to orders@oceanparts.example. Orders below the minimum order quantity shown in the catalogue are not accepted. 2. Prices and discounts Prices are in US dollars and exclude delivery. A volume discount of 5 percent applies to any single order above USD 5,000, and 8 percent above USD 15,000. 3. Delivery Lead times in the catalogue are counted from order confirmation. Urgent delivery within 72 hours is available for stocked items at a surcharge of USD 250 per order. Deliveries are made to the ports of Mumbai, Chennai and Kochi. Delivery to other ports is quoted separately. 4. Payment Invoices are payable within 45 days of the invoice date. 5. Returns and warranty Unused parts may be returned within 30 days in their original packaging, with a 10 percent restocking fee. All parts carry a 12-month warranty from delivery.",
+      "origin": "passage oceanparts_supply_terms.pdf::p1::c0"
+    },
+    {
+      "id": "q03",
+      "type": "answerable",
+      "question": "What is the delivery lead time for urgent orders?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "72 hours"
+      ],
+      "expected_docs": [
+        "oceanparts_supply_terms.pdf"
+      ],
+      "source_text": "Oceanparts Co - Supply Terms for Seaview Shipping Ltd (2026) 1. Ordering Orders are placed through the Oceanparts online portal or by email to orders@oceanparts.example. Orders below the minimum order quantity shown in the catalogue are not accepted. 2. Prices and discounts Prices are in US dollars and exclude delivery. A volume discount of 5 percent applies to any single order above USD 5,000, and 8 percent above USD 15,000. 3. Delivery Lead times in the catalogue are counted from order confirmation. Urgent delivery within 72 hours is available for stocked items at a surcharge of USD 250 per order. Deliveries are made to the ports of Mumbai, Chennai and Kochi. Delivery to other ports is quoted separately. 4. Payment Invoices are payable within 45 days of the invoice date. 5. Returns and warranty Unused parts may be returned within 30 days in their original packaging, with a 10 percent restocking fee. All parts carry a 12-month warranty from delivery.",
+      "origin": "passage oceanparts_supply_terms.pdf::p1::c0"
+    },
+    {
+      "id": "q04",
+      "type": "answerable",
+      "question": "What is the restocking fee for returned unused parts?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "10 percent"
+      ],
+      "expected_docs": [
+        "oceanparts_supply_terms.pdf"
+      ],
+      "source_text": "Oceanparts Co - Supply Terms for Seaview Shipping Ltd (2026) 1. Ordering Orders are placed through the Oceanparts online portal or by email to orders@oceanparts.example. Orders below the minimum order quantity shown in the catalogue are not accepted. 2. Prices and discounts Prices are in US dollars and exclude delivery. A volume discount of 5 percent applies to any single order above USD 5,000, and 8 percent above USD 15,000. 3. Delivery Lead times in the catalogue are counted from order confirmation. Urgent delivery within 72 hours is available for stocked items at a surcharge of USD 250 per order. Deliveries are made to the ports of Mumbai, Chennai and Kochi. Delivery to other ports is quoted separately. 4. Payment Invoices are payable within 45 days of the invoice date. 5. Returns and warranty Unused parts may be returned within 30 days in their original packaging, with a 10 percent restocking fee. All parts carry a 12-month warranty from delivery.",
+      "origin": "passage oceanparts_supply_terms.pdf::p1::c0"
+    },
+    {
+      "id": "q05",
+      "type": "answerable",
+      "question": "What is the discount rate for orders above USD 10,000?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "3 percent discount"
+      ],
+      "expected_docs": [
+        "marisupply_supply_terms.md"
+      ],
+      "source_text": "# Marisupply Ltd - Supply Terms for Seaview Shipping Ltd (2026) ## Ordering Orders are placed by purchase order sent to po@marisupply.example. Each order line must meet the minimum order quantity listed in the catalogue. ## Prices and discounts Prices are in US dollars, ex works Singapore. Marisupply gives a 3 percent discount on orders above USD 10,000. There is no other volume discount. ## Delivery Lead times in the catalogue start from receipt of the purchase order. Air freight to any Indian port costs USD 400 per order; sea freight costs USD 150 per order but adds 10 days to the lead time. ## Payment Invoices are payable within 30 days of the invoice date. Late payments incur interest of 1.5 percent per month. ## Warranty Engine parts carry an 18-month warranty from delivery. Electrical parts carry a 12-month warranty.",
+      "origin": "passage marisupply_supply_terms.md::p1::c0"
+    },
+    {
+      "id": "q06",
+      "type": "answerable",
+      "question": "How much does air freight cost per order?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "USD 400"
+      ],
+      "expected_docs": [
+        "marisupply_supply_terms.md"
+      ],
+      "source_text": "# Marisupply Ltd - Supply Terms for Seaview Shipping Ltd (2026) ## Ordering Orders are placed by purchase order sent to po@marisupply.example. Each order line must meet the minimum order quantity listed in the catalogue. ## Prices and discounts Prices are in US dollars, ex works Singapore. Marisupply gives a 3 percent discount on orders above USD 10,000. There is no other volume discount. ## Delivery Lead times in the catalogue start from receipt of the purchase order. Air freight to any Indian port costs USD 400 per order; sea freight costs USD 150 per order but adds 10 days to the lead time. ## Payment Invoices are payable within 30 days of the invoice date. Late payments incur interest of 1.5 percent per month. ## Warranty Engine parts carry an 18-month warranty from delivery. Electrical parts carry a 12-month warranty.",
+      "origin": "passage marisupply_supply_terms.md::p1::c0"
+    },
+    {
+      "id": "q07",
+      "type": "answerable",
+      "question": "What is the additional lead time for sea freight orders?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "10 days"
+      ],
+      "expected_docs": [
+        "marisupply_supply_terms.md"
+      ],
+      "source_text": "# Marisupply Ltd - Supply Terms for Seaview Shipping Ltd (2026) ## Ordering Orders are placed by purchase order sent to po@marisupply.example. Each order line must meet the minimum order quantity listed in the catalogue. ## Prices and discounts Prices are in US dollars, ex works Singapore. Marisupply gives a 3 percent discount on orders above USD 10,000. There is no other volume discount. ## Delivery Lead times in the catalogue start from receipt of the purchase order. Air freight to any Indian port costs USD 400 per order; sea freight costs USD 150 per order but adds 10 days to the lead time. ## Payment Invoices are payable within 30 days of the invoice date. Late payments incur interest of 1.5 percent per month. ## Warranty Engine parts carry an 18-month warranty from delivery. Electrical parts carry a 12-month warranty.",
+      "origin": "passage marisupply_supply_terms.md::p1::c0"
+    },
+    {
+      "id": "q08",
+      "type": "answerable",
+      "question": "What must be done for any order above USD 5,000?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "supplier quotations",
+        "purchase request"
+      ],
+      "expected_docs": [
+        "procurement_rules.md"
+      ],
+      "source_text": "# Seaview Shipping Ltd - Spare Parts Procurement Rules ## Approval limits - Orders up to USD 2,000: approved by the purchasing officer. - Orders above USD 2,000 and up to USD 10,000: require approval from the technical superintendent. - Orders above USD 10,000: require approval from the fleet manager. ## Quotations For any order above USD 5,000, at least two supplier quotations must be obtained and attached to the purchase request. ## Critical spares Parts in the Main engine, Steering and Safety categories are critical spares. Each vessel must keep at least one of every critical spare on board, and a used critical spare must be reordered within 48 hours. ## Urgent orders Urgent delivery charges may be used only when a vessel would otherwise be delayed. The reason must be recorded on the purchase request.",
+      "origin": "passage procurement_rules.md::p1::c0"
+    },
+    {
+      "id": "q09",
+      "type": "answerable",
+      "question": "What is the condition for critical spares?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "Main engine",
+        "Steering",
+        "Safety",
+        "vessel",
+        "used critical spare"
+      ],
+      "expected_docs": [
+        "procurement_rules.md"
+      ],
+      "source_text": "# Seaview Shipping Ltd - Spare Parts Procurement Rules ## Approval limits - Orders up to USD 2,000: approved by the purchasing officer. - Orders above USD 2,000 and up to USD 10,000: require approval from the technical superintendent. - Orders above USD 10,000: require approval from the fleet manager. ## Quotations For any order above USD 5,000, at least two supplier quotations must be obtained and attached to the purchase request. ## Critical spares Parts in the Main engine, Steering and Safety categories are critical spares. Each vessel must keep at least one of every critical spare on board, and a used critical spare must be reordered within 48 hours. ## Urgent orders Urgent delivery charges may be used only when a vessel would otherwise be delayed. The reason must be recorded on the purchase request.",
+      "origin": "passage procurement_rules.md::p1::c0"
+    },
+    {
+      "id": "q10",
+      "type": "answerable",
+      "question": "What is the approval limit for orders above USD 10,000?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "require approval from the fleet manager"
+      ],
+      "expected_docs": [
+        "procurement_rules.md"
+      ],
+      "source_text": "# Seaview Shipping Ltd - Spare Parts Procurement Rules ## Approval limits - Orders up to USD 2,000: approved by the purchasing officer. - Orders above USD 2,000 and up to USD 10,000: require approval from the technical superintendent. - Orders above USD 10,000: require approval from the fleet manager. ## Quotations For any order above USD 5,000, at least two supplier quotations must be obtained and attached to the purchase request. ## Critical spares Parts in the Main engine, Steering and Safety categories are critical spares. Each vessel must keep at least one of every critical spare on board, and a used critical spare must be reordered within 48 hours. ## Urgent orders Urgent delivery charges may be used only when a vessel would otherwise be delayed. The reason must be recorded on the purchase request.",
+      "origin": "passage procurement_rules.md::p1::c0"
+    },
+    {
+      "id": "q11",
+      "type": "multi_doc",
+      "question": "What is the discount rate for orders above USD 10,000, and what must be done for any order above USD 5,000?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "3 percent discount",
+        "supplier quotations",
+        "purchase request"
+      ],
+      "expected_docs": [
+        "marisupply_supply_terms.md",
+        "procurement_rules.md"
+      ],
+      "source_text": "# Marisupply Ltd - Supply Terms for Seaview Shipping Ltd (2026) ## Ordering Orders are placed by purchase order sent to po@marisupply.example. Each order line must meet the minimum order quantity listed in the catalogue. ## Prices and discounts Prices are in US dollars, ex works Singapore. Marisupply gives a 3 percent discount on orders above USD 10,000. There is no other volume discount. ## Delivery Lead times in the catalogue start from receipt of the purchase order. Air freight to any Indian port costs USD 400 per order; sea freight costs USD 150 per order but adds 10 days to the lead time. ## Payment Invoices are payable within 30 days of the invoice date. Late payments incur interest of 1.5 percent per month. ## Warranty Engine parts carry an 18-month warranty from delivery. Electrical parts carry a 12-month warranty.\n\n# Seaview Shipping Ltd - Spare Parts Procurement Rules ## Approval limits - Orders up to USD 2,000: approved by the purchasing officer. - Orders above USD 2,000 and up to USD 10,000: require approval from the technical superintendent. - Orders above USD 10,000: require approval from the fleet manager. ## Quotations For any order above USD 5,000, at least two supplier quotations must be obtained and attached to the purchase request. ## Critical spares Parts in the Main engine, Steering and Safety categories are critical spares. Each vessel must keep at least one of every critical spare on board, and a used critical spare must be reordered within 48 hours. ## Urgent orders Urgent delivery charges may be used only when a vessel would otherwise be delayed. The reason must be recorded on the purchase request.",
+      "origin": "combined q05 + q08"
+    },
+    {
+      "id": "q12",
+      "type": "multi_doc",
+      "question": "What is the restocking fee for returned unused parts, and what is the additional lead time for sea freight orders?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "10 percent",
+        "10 days"
+      ],
+      "expected_docs": [
+        "marisupply_supply_terms.md",
+        "oceanparts_supply_terms.pdf"
+      ],
+      "source_text": "Oceanparts Co - Supply Terms for Seaview Shipping Ltd (2026) 1. Ordering Orders are placed through the Oceanparts online portal or by email to orders@oceanparts.example. Orders below the minimum order quantity shown in the catalogue are not accepted. 2. Prices and discounts Prices are in US dollars and exclude delivery. A volume discount of 5 percent applies to any single order above USD 5,000, and 8 percent above USD 15,000. 3. Delivery Lead times in the catalogue are counted from order confirmation. Urgent delivery within 72 hours is available for stocked items at a surcharge of USD 250 per order. Deliveries are made to the ports of Mumbai, Chennai and Kochi. Delivery to other ports is quoted separately. 4. Payment Invoices are payable within 45 days of the invoice date. 5. Returns and warranty Unused parts may be returned within 30 days in their original packaging, with a 10 percent restocking fee. All parts carry a 12-month warranty from delivery.\n\n# Marisupply Ltd - Supply Terms for Seaview Shipping Ltd (2026) ## Ordering Orders are placed by purchase order sent to po@marisupply.example. Each order line must meet the minimum order quantity listed in the catalogue. ## Prices and discounts Prices are in US dollars, ex works Singapore. Marisupply gives a 3 percent discount on orders above USD 10,000. There is no other volume discount. ## Delivery Lead times in the catalogue start from receipt of the purchase order. Air freight to any Indian port costs USD 400 per order; sea freight costs USD 150 per order but adds 10 days to the lead time. ## Payment Invoices are payable within 30 days of the invoice date. Late payments incur interest of 1.5 percent per month. ## Warranty Engine parts carry an 18-month warranty from delivery. Electrical parts carry a 12-month warranty.",
+      "origin": "combined q04 + q07"
+    },
+    {
+      "id": "q13",
+      "type": "multi_doc",
+      "question": "What is the delivery lead time for urgent orders, and what is the condition for critical spares?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "72 hours",
+        "Main engine",
+        "Steering",
+        "Safety",
+        "vessel",
+        "used critical spare"
+      ],
+      "expected_docs": [
+        "oceanparts_supply_terms.pdf",
+        "procurement_rules.md"
+      ],
+      "source_text": "Oceanparts Co - Supply Terms for Seaview Shipping Ltd (2026) 1. Ordering Orders are placed through the Oceanparts online portal or by email to orders@oceanparts.example. Orders below the minimum order quantity shown in the catalogue are not accepted. 2. Prices and discounts Prices are in US dollars and exclude delivery. A volume discount of 5 percent applies to any single order above USD 5,000, and 8 percent above USD 15,000. 3. Delivery Lead times in the catalogue are counted from order confirmation. Urgent delivery within 72 hours is available for stocked items at a surcharge of USD 250 per order. Deliveries are made to the ports of Mumbai, Chennai and Kochi. Delivery to other ports is quoted separately. 4. Payment Invoices are payable within 45 days of the invoice date. 5. Returns and warranty Unused parts may be returned within 30 days in their original packaging, with a 10 percent restocking fee. All parts carry a 12-month warranty from delivery.\n\n# Seaview Shipping Ltd - Spare Parts Procurement Rules ## Approval limits - Orders up to USD 2,000: approved by the purchasing officer. - Orders above USD 2,000 and up to USD 10,000: require approval from the technical superintendent. - Orders above USD 10,000: require approval from the fleet manager. ## Quotations For any order above USD 5,000, at least two supplier quotations must be obtained and attached to the purchase request. ## Critical spares Parts in the Main engine, Steering and Safety categories are critical spares. Each vessel must keep at least one of every critical spare on board, and a used critical spare must be reordered within 48 hours. ## Urgent orders Urgent delivery charges may be used only when a vessel would otherwise be delayed. The reason must be recorded on the purchase request.",
+      "origin": "combined q03 + q09"
+    },
+    {
+      "id": "q14",
+      "type": "answerable",
+      "question": "What is the category for SP-1019?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "Deck"
+      ],
+      "expected_docs": [
+        "spares_catalogue.csv"
+      ],
+      "source_text": "spares_catalogue.csv: part_no=SP-1019; description=Mooring rope 64mm (per 200 m coil); category=Deck; unit_price_usd=3400.00; supplier=Oceanparts Co; lead_time_days=30; min_order_qty=1",
+      "origin": "csv row spares_catalogue.csv part_no=SP-1019"
+    },
+    {
+      "id": "q15",
+      "type": "answerable",
+      "question": "What is the min order qty for SP-1009?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "2"
+      ],
+      "expected_docs": [
+        "spares_catalogue.csv"
+      ],
+      "source_text": "spares_catalogue.csv: part_no=SP-1009; description=Seawater pump impeller; category=Cooling; unit_price_usd=265.00; supplier=Oceanparts Co; lead_time_days=12; min_order_qty=2",
+      "origin": "csv row spares_catalogue.csv part_no=SP-1009"
+    },
+    {
+      "id": "q16",
+      "type": "answerable",
+      "question": "What is the supplier for SP-1001?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "Marisupply Ltd"
+      ],
+      "expected_docs": [
+        "spares_catalogue.csv"
+      ],
+      "source_text": "spares_catalogue.csv: part_no=SP-1001; description=Fuel injector nozzle; category=Main engine; unit_price_usd=145.00; supplier=Marisupply Ltd; lead_time_days=14; min_order_qty=4",
+      "origin": "csv row spares_catalogue.csv part_no=SP-1001"
+    },
+    {
+      "id": "q17",
+      "type": "ambiguous",
+      "question": "What's the discount rate for orders over $10,000?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "3 percent discount"
+      ],
+      "expected_docs": [
+        "marisupply_supply_terms.md"
+      ],
+      "source_text": "# Marisupply Ltd - Supply Terms for Seaview Shipping Ltd (2026) ## Ordering Orders are placed by purchase order sent to po@marisupply.example. Each order line must meet the minimum order quantity listed in the catalogue. ## Prices and discounts Prices are in US dollars, ex works Singapore. Marisupply gives a 3 percent discount on orders above USD 10,000. There is no other volume discount. ## Delivery Lead times in the catalogue start from receipt of the purchase order. Air freight to any Indian port costs USD 400 per order; sea freight costs USD 150 per order but adds 10 days to the lead time. ## Payment Invoices are payable within 30 days of the invoice date. Late payments incur interest of 1.5 percent per month. ## Warranty Engine parts carry an 18-month warranty from delivery. Electrical parts carry a 12-month warranty.",
+      "origin": "rephrase of q05"
+    },
+    {
+      "id": "q18",
+      "type": "ambiguous",
+      "question": "How long does it take to deliver urgent orders?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "72 hours"
+      ],
+      "expected_docs": [
+        "oceanparts_supply_terms.pdf"
+      ],
+      "source_text": "Oceanparts Co - Supply Terms for Seaview Shipping Ltd (2026) 1. Ordering Orders are placed through the Oceanparts online portal or by email to orders@oceanparts.example. Orders below the minimum order quantity shown in the catalogue are not accepted. 2. Prices and discounts Prices are in US dollars and exclude delivery. A volume discount of 5 percent applies to any single order above USD 5,000, and 8 percent above USD 15,000. 3. Delivery Lead times in the catalogue are counted from order confirmation. Urgent delivery within 72 hours is available for stocked items at a surcharge of USD 250 per order. Deliveries are made to the ports of Mumbai, Chennai and Kochi. Delivery to other ports is quoted separately. 4. Payment Invoices are payable within 45 days of the invoice date. 5. Returns and warranty Unused parts may be returned within 30 days in their original packaging, with a 10 percent restocking fee. All parts carry a 12-month warranty from delivery.",
+      "origin": "rephrase of q03"
+    },
+    {
+      "id": "q19",
+      "type": "out_of_scope",
+      "question": "Can you provide information on the legal requirements for obtaining a procurement approval for Seaview Shipping Ltd's spare parts procurement?",
+      "expected_behavior": "refuse",
+      "key_facts": [],
+      "expected_docs": [],
+      "source_text": "",
+      "origin": "refuse topic 'legal issues'"
+    },
+    {
+      "id": "q20",
+      "type": "out_of_scope",
+      "question": "How do I ensure the confidentiality of the supplier's medical records when discussing procurement terms with them?",
+      "expected_behavior": "refuse",
+      "key_facts": [],
+      "expected_docs": [],
+      "source_text": "",
+      "origin": "refuse topic 'medical information'"
+    },
+    {
+      "id": "q21",
+      "type": "out_of_scope",
+      "question": "What measures should Seaview Shipping Ltd take to protect the personal data of its suppliers when processing procurement information?",
+      "expected_behavior": "refuse",
+      "key_facts": [],
+      "expected_docs": [],
+      "source_text": "",
+      "origin": "refuse topic 'personal data protection'"
+    },
+    {
+      "id": "q22",
+      "type": "out_of_scope",
+      "question": "What is the best way to prepare a gourmet meal for a large gathering?",
+      "expected_behavior": "refuse",
+      "key_facts": [],
+      "expected_docs": [],
+      "source_text": "",
+      "origin": "unrelated question"
+    },
+    {
+      "id": "q23",
+      "type": "out_of_scope",
+      "question": "Who is the current world champion in Formula 1?",
+      "expected_behavior": "refuse",
+      "key_facts": [],
+      "expected_docs": [],
+      "source_text": "",
+      "origin": "unrelated question"
+    },
+    {
+      "id": "q24",
+      "type": "out_of_scope",
+      "question": "How do I create a successful marketing campaign for a new product?",
+      "expected_behavior": "refuse",
+      "key_facts": [],
+      "expected_docs": [],
+      "source_text": "",
+      "origin": "unrelated question"
+    },
+    {
+      "id": "q25",
+      "type": "out_of_scope",
+      "question": "What information is available about identify suppliers?",
+      "expected_behavior": "refuse",
+      "key_facts": [],
+      "expected_docs": [],
+      "source_text": "",
+      "origin": "guard: unsupported topic 'identify suppliers'"
+    }
+  ]
+}

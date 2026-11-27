@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Are public holidays counted as leave days?",
+    "reason": "key fact not found in the source passage: 'no'",
+    "origin": "passage leave_policy.pdf::p2::c0"
+  },
+  {
+    "question": "Can personal travel during leave be claimed?",
+    "reason": "key fact not found in the source passage: 'personal travel'",
+    "origin": "passage travel_policy.md::p1::c0"
+  },
+  {
+    "question": "How many days of paid sick leave does an employee receive per year?",
+    "reason": "near-duplicate of an existing question",
+    "origin": "passage leave_policy.pdf::p2::c0"
+  },
+  {
+    "question": "What is required for absences longer than 2 consecutive days?",
+    "reason": "near-duplicate of an existing question",
+    "origin": "passage leave_policy.pdf::p2::c0"
+  },
+  {
+    "question": "What happens to public holidays that fall within approved annual leave?",
+    "reason": "near-duplicate of an existing question",
+    "origin": "passage leave_policy.pdf::p2::c0"
+  },
+  {
+    "question": "How many working days of annual leave does Shore staff get per calendar year?",
+    "reason": "near-duplicate of an existing question",
+    "origin": "passage leave_policy.pdf::p1::c0"
+  },
+  {
+    "question": "Can Shore staff carry forward unused leave days?",
+    "reason": "near-duplicate of an existing question",
+    "origin": "passage leave_policy.pdf::p1::c0"
+  },
+  {
+    "question": "How much notice is required to apply for annual leave?",
+    "reason": "near-duplicate of an existing question",
+    "origin": "passage leave_policy.pdf::p1::c0"
+  },
+  {
+    "question": "What is the maximum amount allowed for hotel accommodation?",
+    "reason": "near-duplicate of an existing question",
+    "origin": "passage travel_policy.md::p1::c0"
+  },
+  {
+    "question": "How long must claims be submitted within to be considered valid?",
+    "reason": "near-duplicate of an existing question",
+    "origin": "passage travel_policy.md::p1::c0"
+  },
+  {
+    "question": "What is required for claims submitted after 30 days?",
+    "reason": "near-duplicate of an existing question",
+    "origin": "passage travel_policy.md::p1::c0"
+  },
+  {
+    "question": "How many days of annual leave does Shore staff get per year?",
+    "reason": "rewrite too similar to the original",
+    "origin": "rephrase of q04"
+  }
+]

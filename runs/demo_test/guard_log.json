@@ -1,0 +1,7 @@
+[
+  {
+    "attempt": 1,
+    "prompt": "Decide whether the TEXT contains information that answers questions about the TOPIC.\n\nTOPIC: Business Travel Policies\n\nTEXT:\n# Travel Policy - Shore Staff ## Business travel claims Employees travelling on approved company business may claim economy-class airfare, hotel accommodation up to INR 6,000 per night, and a daily meal allowance of INR 1,200. ## Submitting a claim Claims must be submitted in the HR portal within 30 days of returning, with original receipts attached. Claims submitted after 30 days require written approval from the department head. ## Travel during leave Travel undertaken during approved annual leave is personal and cannot be claimed, unless the employee is formally recalled to work by their manager.\n\nRules:\n- \"supported\" only if the TEXT itself states facts about the TOPIC. Similar words are not enough.\n- If supported, copy ONE sentence from the TEXT, exactly as written, that shows it.\n- If not supported, give an empty evidence_quote.\n\nReply with JSON only: {\"verdict\": \"supported\" or \"unsupported\", \"evidence_quote\": \"...\"}\n",
+    "raw_output": "{\"verdict\": \"supported\", \"evidence_quote\": \"# Travel Policy - Shore Staff\"}"
+  }
+]

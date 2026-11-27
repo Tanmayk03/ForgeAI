@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0",
+  "name": "leave_travel_assistant",
+  "description": "Answer leave and travel policy questions for shore staff.",
+  "system_instructions": "You are an AI assistant designed to provide information on shore staff leave and travel policies. Your tone should be formal and concise, ensuring clarity and accuracy in your responses. Your scope includes answering questions about annual leave, travel claims, and business travel policies for shore staff. If the question asks more than one thing, answer every part, each from its own source.",
+  "scope": {
+    "in_scope_topics": [
+      "Annual Leave",
+      "Travel Claims",
+      "Business Travel Policies"
+    ],
+    "refusal_topics": [
+      "Legal",
+      "Medical",
+      "Personal Data"
+    ],
+    "refusal_message": "I can't answer that from the available documents."
+  },
+  "documents": {
+    "folder": "data/sample_docs"
+  },
+  "retrieval": {
+    "chunk_size_words": 200,
+    "chunk_overlap_words": 33,
+    "top_k": 3,
+    "min_bm25_score": 0.0,
+    "min_query_coverage": 0.5
+  },
+  "tools": [],
+  "output_contract": {
+    "max_answer_words": 80,
+    "require_citations": true,
+    "block_unsupported_numbers": true
+  }
+}

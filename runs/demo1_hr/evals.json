@@ -1,0 +1,316 @@
+{
+  "schema_version": "1.0",
+  "created_at": "2026-11-27T03:01:27",
+  "model": "qwen2.5:1.5b",
+  "sha256": "f3ec1f3d1c3bce888b93b799e929082029c7089d6956e6abf5fb5256b9167b3c",
+  "counts": {
+    "answerable": 12,
+    "multi_doc": 3,
+    "ambiguous": 3,
+    "out_of_scope": 4,
+    "total": 22,
+    "rejected": 11
+  },
+  "notes": [],
+  "cases": [
+    {
+      "id": "q01",
+      "type": "answerable",
+      "question": "What is the maximum reimbursement for hotel accommodation in India?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "INR 6,000"
+      ],
+      "expected_docs": [
+        "travel_expenses_policy.pdf"
+      ],
+      "source_text": "Seaview Shipping Ltd - Business Travel and Expenses Policy (2026) 1. Approval All business travel must be approved in advance by the line manager. International travel also requires approval from the department head. 2. Flights Employees travel in economy class. Business class is allowed only for flights longer than 8 hours, with department head approval. 3. Hotels and meals Hotel accommodation is reimbursed up to INR 6,000 per night in India and up to USD 180 per night abroad. A daily meal allowance of INR 1,200 (or USD 45 abroad) is paid for each full travel day.",
+      "origin": "passage travel_expenses_policy.pdf::p1::c0"
+    },
+    {
+      "id": "q02",
+      "type": "answerable",
+      "question": "How much is the daily meal allowance for business travel in India?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "INR 1,200"
+      ],
+      "expected_docs": [
+        "travel_expenses_policy.pdf"
+      ],
+      "source_text": "Seaview Shipping Ltd - Business Travel and Expenses Policy (2026) 1. Approval All business travel must be approved in advance by the line manager. International travel also requires approval from the department head. 2. Flights Employees travel in economy class. Business class is allowed only for flights longer than 8 hours, with department head approval. 3. Hotels and meals Hotel accommodation is reimbursed up to INR 6,000 per night in India and up to USD 180 per night abroad. A daily meal allowance of INR 1,200 (or USD 45 abroad) is paid for each full travel day.",
+      "origin": "passage travel_expenses_policy.pdf::p1::c0"
+    },
+    {
+      "id": "q03",
+      "type": "answerable",
+      "question": "What is the maximum reimbursement for hotel accommodation abroad?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "USD 180"
+      ],
+      "expected_docs": [
+        "travel_expenses_policy.pdf"
+      ],
+      "source_text": "Seaview Shipping Ltd - Business Travel and Expenses Policy (2026) 1. Approval All business travel must be approved in advance by the line manager. International travel also requires approval from the department head. 2. Flights Employees travel in economy class. Business class is allowed only for flights longer than 8 hours, with department head approval. 3. Hotels and meals Hotel accommodation is reimbursed up to INR 6,000 per night in India and up to USD 180 per night abroad. A daily meal allowance of INR 1,200 (or USD 45 abroad) is paid for each full travel day.",
+      "origin": "passage travel_expenses_policy.pdf::p1::c0"
+    },
+    {
+      "id": "q04",
+      "type": "answerable",
+      "question": "What is the deadline for submitting annual leave requests?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "10 working days in advance"
+      ],
+      "expected_docs": [
+        "leave_policy.pdf"
+      ],
+      "source_text": "Seaview Shipping Ltd - Leave Policy for Shore Staff (version 3, 2026) This policy applies to all permanent shore-based employees. Crew on board vessels are covered by the Seafarers Employment Agreement instead. 1. Annual leave Shore staff are entitled to 24 working days of paid annual leave per calendar year. New joiners receive leave pro rata, accruing 2 days for each completed month of service. Up to 5 unused annual leave days may be carried forward into the next year. Carried-forward days must be used by 31 March or they lapse. Annual leave requests must be submitted in the HR portal at least 10 working days in advance and approved by the line manager. 2. Sick leave Employees receive 12 days of paid sick leave per calendar year. A medical certificate is required for any absence longer than 2 consecutive working days. Unused sick leave cannot be carried forward and is not paid out on leaving.",
+      "origin": "passage leave_policy.pdf::p1::c0"
+    },
+    {
+      "id": "q05",
+      "type": "answerable",
+      "question": "How many weeks of paid maternity leave are available to mothers?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "26 weeks"
+      ],
+      "expected_docs": [
+        "leave_policy.pdf"
+      ],
+      "source_text": "3. Parental leave Mothers are entitled to 26 weeks of paid maternity leave. Fathers and partners are entitled to 10 working days of paid paternity leave, to be taken within 3 months of the birth or adoption. 4. Public holidays Shore staff observe the 12 public holidays published by HR each January. Public holidays that fall within approved annual leave are not counted as leave days. 5. Compassionate leave Up to 5 working days of paid compassionate leave are granted on the death of an immediate family member. 6. Unpaid leave Unpaid leave of up to 30 calendar days may be approved by the department head after all annual leave has been used.",
+      "origin": "passage leave_policy.pdf::p2::c0"
+    },
+    {
+      "id": "q06",
+      "type": "answerable",
+      "question": "How many working days of paid paternity leave are available to fathers and partners?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "10 working days"
+      ],
+      "expected_docs": [
+        "leave_policy.pdf"
+      ],
+      "source_text": "3. Parental leave Mothers are entitled to 26 weeks of paid maternity leave. Fathers and partners are entitled to 10 working days of paid paternity leave, to be taken within 3 months of the birth or adoption. 4. Public holidays Shore staff observe the 12 public holidays published by HR each January. Public holidays that fall within approved annual leave are not counted as leave days. 5. Compassionate leave Up to 5 working days of paid compassionate leave are granted on the death of an immediate family member. 6. Unpaid leave Unpaid leave of up to 30 calendar days may be approved by the department head after all annual leave has been used.",
+      "origin": "passage leave_policy.pdf::p2::c0"
+    },
+    {
+      "id": "q07",
+      "type": "answerable",
+      "question": "How many working days of compassionate leave are available to employees?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "5 working days"
+      ],
+      "expected_docs": [
+        "leave_policy.pdf",
+        "travel_expenses_policy.pdf"
+      ],
+      "source_text": "3. Parental leave Mothers are entitled to 26 weeks of paid maternity leave. Fathers and partners are entitled to 10 working days of paid paternity leave, to be taken within 3 months of the birth or adoption. 4. Public holidays Shore staff observe the 12 public holidays published by HR each January. Public holidays that fall within approved annual leave are not counted as leave days. 5. Compassionate leave Up to 5 working days of paid compassionate leave are granted on the death of an immediate family member. 6. Unpaid leave Unpaid leave of up to 30 calendar days may be approved by the department head after all annual leave has been used.",
+      "origin": "passage leave_policy.pdf::p2::c0"
+    },
+    {
+      "id": "q08",
+      "type": "answerable",
+      "question": "How long must an expense claim be submitted within to be considered?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "30 days"
+      ],
+      "expected_docs": [
+        "travel_expenses_policy.pdf"
+      ],
+      "source_text": "4. Expense claims Expense claims must be submitted in the HR portal within 30 days of returning from the trip, with original receipts attached. Claims submitted after 30 days require written approval from the department head. Approved claims are reimbursed with the next monthly salary. 5. Travel during leave Travel undertaken during approved annual leave is personal and cannot be claimed, unless the employee is formally recalled to work by their manager. 6. Travel advances A travel advance of up to 50 percent of the estimated trip cost may be requested at least 5 working days before departure.",
+      "origin": "passage travel_expenses_policy.pdf::p2::c0"
+    },
+    {
+      "id": "q09",
+      "type": "answerable",
+      "question": "What happens to an expense claim submitted after the 30-day deadline?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "written approval from the department head"
+      ],
+      "expected_docs": [
+        "travel_expenses_policy.pdf"
+      ],
+      "source_text": "4. Expense claims Expense claims must be submitted in the HR portal within 30 days of returning from the trip, with original receipts attached. Claims submitted after 30 days require written approval from the department head. Approved claims are reimbursed with the next monthly salary. 5. Travel during leave Travel undertaken during approved annual leave is personal and cannot be claimed, unless the employee is formally recalled to work by their manager. 6. Travel advances A travel advance of up to 50 percent of the estimated trip cost may be requested at least 5 working days before departure.",
+      "origin": "passage travel_expenses_policy.pdf::p2::c0"
+    },
+    {
+      "id": "q10",
+      "type": "answerable",
+      "question": "What is the maximum amount for gifts that must be declared to the compliance team?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "INR 5,000"
+      ],
+      "expected_docs": [
+        "code_of_conduct.md"
+      ],
+      "source_text": "# Seaview Shipping Ltd - Code of Conduct (Shore Staff) ## Working hours Standard office hours are 09:00 to 18:00, Monday to Friday, with a one-hour lunch break. Flexible start times between 08:00 and 10:00 are allowed with line manager agreement. ## Remote work Employees may work from home up to 2 days per week after completing 6 months of service, if their role allows it and their manager agrees. ## Gifts and hospitality Gifts from suppliers or customers worth more than INR 5,000 must be declared to the compliance team within 7 days. Cash gifts must never be accepted. ## Conflicts of interest Employees must declare any personal or financial interest in a supplier, customer or competitor to the compliance team before taking part in related decisions. ## Reporting concerns Concerns about misconduct can be reported to the line manager, to HR, or anonymously through the ethics hotline. Retaliation against anyone who reports a concern in good faith is a disciplinary offence. ## Dress code Business casual dress is expected in the office. Safety shoes and helmets are mandatory when visiting vessels or the port.",
+      "origin": "passage code_of_conduct.md::p1::c0"
+    },
+    {
+      "id": "q11",
+      "type": "answerable",
+      "question": "How many days per week can an employee work from home after completing 6 months of service?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "2 days per week"
+      ],
+      "expected_docs": [
+        "code_of_conduct.md"
+      ],
+      "source_text": "# Seaview Shipping Ltd - Code of Conduct (Shore Staff) ## Working hours Standard office hours are 09:00 to 18:00, Monday to Friday, with a one-hour lunch break. Flexible start times between 08:00 and 10:00 are allowed with line manager agreement. ## Remote work Employees may work from home up to 2 days per week after completing 6 months of service, if their role allows it and their manager agrees. ## Gifts and hospitality Gifts from suppliers or customers worth more than INR 5,000 must be declared to the compliance team within 7 days. Cash gifts must never be accepted. ## Conflicts of interest Employees must declare any personal or financial interest in a supplier, customer or competitor to the compliance team before taking part in related decisions. ## Reporting concerns Concerns about misconduct can be reported to the line manager, to HR, or anonymously through the ethics hotline. Retaliation against anyone who reports a concern in good faith is a disciplinary offence. ## Dress code Business casual dress is expected in the office. Safety shoes and helmets are mandatory when visiting vessels or the port.",
+      "origin": "passage code_of_conduct.md::p1::c0"
+    },
+    {
+      "id": "q12",
+      "type": "answerable",
+      "question": "What is the dress code for the office?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "Business casual dress"
+      ],
+      "expected_docs": [
+        "code_of_conduct.md"
+      ],
+      "source_text": "# Seaview Shipping Ltd - Code of Conduct (Shore Staff) ## Working hours Standard office hours are 09:00 to 18:00, Monday to Friday, with a one-hour lunch break. Flexible start times between 08:00 and 10:00 are allowed with line manager agreement. ## Remote work Employees may work from home up to 2 days per week after completing 6 months of service, if their role allows it and their manager agrees. ## Gifts and hospitality Gifts from suppliers or customers worth more than INR 5,000 must be declared to the compliance team within 7 days. Cash gifts must never be accepted. ## Conflicts of interest Employees must declare any personal or financial interest in a supplier, customer or competitor to the compliance team before taking part in related decisions. ## Reporting concerns Concerns about misconduct can be reported to the line manager, to HR, or anonymously through the ethics hotline. Retaliation against anyone who reports a concern in good faith is a disciplinary offence. ## Dress code Business casual dress is expected in the office. Safety shoes and helmets are mandatory when visiting vessels or the port.",
+      "origin": "passage code_of_conduct.md::p1::c0"
+    },
+    {
+      "id": "q13",
+      "type": "multi_doc",
+      "question": "How much is the daily meal allowance for business travel in India, and what is the maximum amount for gifts that must be declared to the compliance team?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "INR 1,200",
+        "INR 5,000"
+      ],
+      "expected_docs": [
+        "code_of_conduct.md",
+        "travel_expenses_policy.pdf"
+      ],
+      "source_text": "Seaview Shipping Ltd - Business Travel and Expenses Policy (2026) 1. Approval All business travel must be approved in advance by the line manager. International travel also requires approval from the department head. 2. Flights Employees travel in economy class. Business class is allowed only for flights longer than 8 hours, with department head approval. 3. Hotels and meals Hotel accommodation is reimbursed up to INR 6,000 per night in India and up to USD 180 per night abroad. A daily meal allowance of INR 1,200 (or USD 45 abroad) is paid for each full travel day.\n\n# Seaview Shipping Ltd - Code of Conduct (Shore Staff) ## Working hours Standard office hours are 09:00 to 18:00, Monday to Friday, with a one-hour lunch break. Flexible start times between 08:00 and 10:00 are allowed with line manager agreement. ## Remote work Employees may work from home up to 2 days per week after completing 6 months of service, if their role allows it and their manager agrees. ## Gifts and hospitality Gifts from suppliers or customers worth more than INR 5,000 must be declared to the compliance team within 7 days. Cash gifts must never be accepted. ## Conflicts of interest Employees must declare any personal or financial interest in a supplier, customer or competitor to the compliance team before taking part in related decisions. ## Reporting concerns Concerns about misconduct can be reported to the line manager, to HR, or anonymously through the ethics hotline. Retaliation against anyone who reports a concern in good faith is a disciplinary offence. ## Dress code Business casual dress is expected in the office. Safety shoes and helmets are mandatory when visiting vessels or the port.",
+      "origin": "combined q02 + q10"
+    },
+    {
+      "id": "q14",
+      "type": "multi_doc",
+      "question": "How many weeks of paid maternity leave are available to mothers, and how many days per week can an employee work from home after completing 6 months of service?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "26 weeks",
+        "2 days per week"
+      ],
+      "expected_docs": [
+        "code_of_conduct.md",
+        "leave_policy.pdf"
+      ],
+      "source_text": "3. Parental leave Mothers are entitled to 26 weeks of paid maternity leave. Fathers and partners are entitled to 10 working days of paid paternity leave, to be taken within 3 months of the birth or adoption. 4. Public holidays Shore staff observe the 12 public holidays published by HR each January. Public holidays that fall within approved annual leave are not counted as leave days. 5. Compassionate leave Up to 5 working days of paid compassionate leave are granted on the death of an immediate family member. 6. Unpaid leave Unpaid leave of up to 30 calendar days may be approved by the department head after all annual leave has been used.\n\n# Seaview Shipping Ltd - Code of Conduct (Shore Staff) ## Working hours Standard office hours are 09:00 to 18:00, Monday to Friday, with a one-hour lunch break. Flexible start times between 08:00 and 10:00 are allowed with line manager agreement. ## Remote work Employees may work from home up to 2 days per week after completing 6 months of service, if their role allows it and their manager agrees. ## Gifts and hospitality Gifts from suppliers or customers worth more than INR 5,000 must be declared to the compliance team within 7 days. Cash gifts must never be accepted. ## Conflicts of interest Employees must declare any personal or financial interest in a supplier, customer or competitor to the compliance team before taking part in related decisions. ## Reporting concerns Concerns about misconduct can be reported to the line manager, to HR, or anonymously through the ethics hotline. Retaliation against anyone who reports a concern in good faith is a disciplinary offence. ## Dress code Business casual dress is expected in the office. Safety shoes and helmets are mandatory when visiting vessels or the port.",
+      "origin": "combined q05 + q11"
+    },
+    {
+      "id": "q15",
+      "type": "multi_doc",
+      "question": "What happens to an expense claim submitted after the 30-day deadline, and what is the dress code for the office?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "written approval from the department head",
+        "Business casual dress"
+      ],
+      "expected_docs": [
+        "code_of_conduct.md",
+        "travel_expenses_policy.pdf"
+      ],
+      "source_text": "4. Expense claims Expense claims must be submitted in the HR portal within 30 days of returning from the trip, with original receipts attached. Claims submitted after 30 days require written approval from the department head. Approved claims are reimbursed with the next monthly salary. 5. Travel during leave Travel undertaken during approved annual leave is personal and cannot be claimed, unless the employee is formally recalled to work by their manager. 6. Travel advances A travel advance of up to 50 percent of the estimated trip cost may be requested at least 5 working days before departure.\n\n# Seaview Shipping Ltd - Code of Conduct (Shore Staff) ## Working hours Standard office hours are 09:00 to 18:00, Monday to Friday, with a one-hour lunch break. Flexible start times between 08:00 and 10:00 are allowed with line manager agreement. ## Remote work Employees may work from home up to 2 days per week after completing 6 months of service, if their role allows it and their manager agrees. ## Gifts and hospitality Gifts from suppliers or customers worth more than INR 5,000 must be declared to the compliance team within 7 days. Cash gifts must never be accepted. ## Conflicts of interest Employees must declare any personal or financial interest in a supplier, customer or competitor to the compliance team before taking part in related decisions. ## Reporting concerns Concerns about misconduct can be reported to the line manager, to HR, or anonymously through the ethics hotline. Retaliation against anyone who reports a concern in good faith is a disciplinary offence. ## Dress code Business casual dress is expected in the office. Safety shoes and helmets are mandatory when visiting vessels or the port.",
+      "origin": "combined q09 + q12"
+    },
+    {
+      "id": "q16",
+      "type": "ambiguous",
+      "question": "How many days of paid paternity leave can fathers and partners take?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "10 working days"
+      ],
+      "expected_docs": [
+        "leave_policy.pdf"
+      ],
+      "source_text": "3. Parental leave Mothers are entitled to 26 weeks of paid maternity leave. Fathers and partners are entitled to 10 working days of paid paternity leave, to be taken within 3 months of the birth or adoption. 4. Public holidays Shore staff observe the 12 public holidays published by HR each January. Public holidays that fall within approved annual leave are not counted as leave days. 5. Compassionate leave Up to 5 working days of paid compassionate leave are granted on the death of an immediate family member. 6. Unpaid leave Unpaid leave of up to 30 calendar days may be approved by the department head after all annual leave has been used.",
+      "origin": "rephrase of q06"
+    },
+    {
+      "id": "q17",
+      "type": "ambiguous",
+      "question": "What's the dress code for the office?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "Business casual dress"
+      ],
+      "expected_docs": [
+        "code_of_conduct.md"
+      ],
+      "source_text": "# Seaview Shipping Ltd - Code of Conduct (Shore Staff) ## Working hours Standard office hours are 09:00 to 18:00, Monday to Friday, with a one-hour lunch break. Flexible start times between 08:00 and 10:00 are allowed with line manager agreement. ## Remote work Employees may work from home up to 2 days per week after completing 6 months of service, if their role allows it and their manager agrees. ## Gifts and hospitality Gifts from suppliers or customers worth more than INR 5,000 must be declared to the compliance team within 7 days. Cash gifts must never be accepted. ## Conflicts of interest Employees must declare any personal or financial interest in a supplier, customer or competitor to the compliance team before taking part in related decisions. ## Reporting concerns Concerns about misconduct can be reported to the line manager, to HR, or anonymously through the ethics hotline. Retaliation against anyone who reports a concern in good faith is a disciplinary offence. ## Dress code Business casual dress is expected in the office. Safety shoes and helmets are mandatory when visiting vessels or the port.",
+      "origin": "rephrase of q12"
+    },
+    {
+      "id": "q18",
+      "type": "ambiguous",
+      "question": "What's the maximum amount of gifts that need to be declared to the compliance team?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "INR 5,000"
+      ],
+      "expected_docs": [
+        "code_of_conduct.md"
+      ],
+      "source_text": "# Seaview Shipping Ltd - Code of Conduct (Shore Staff) ## Working hours Standard office hours are 09:00 to 18:00, Monday to Friday, with a one-hour lunch break. Flexible start times between 08:00 and 10:00 are allowed with line manager agreement. ## Remote work Employees may work from home up to 2 days per week after completing 6 months of service, if their role allows it and their manager agrees. ## Gifts and hospitality Gifts from suppliers or customers worth more than INR 5,000 must be declared to the compliance team within 7 days. Cash gifts must never be accepted. ## Conflicts of interest Employees must declare any personal or financial interest in a supplier, customer or competitor to the compliance team before taking part in related decisions. ## Reporting concerns Concerns about misconduct can be reported to the line manager, to HR, or anonymously through the ethics hotline. Retaliation against anyone who reports a concern in good faith is a disciplinary offence. ## Dress code Business casual dress is expected in the office. Safety shoes and helmets are mandatory when visiting vessels or the port.",
+      "origin": "rephrase of q10"
+    },
+    {
+      "id": "q19",
+      "type": "out_of_scope",
+      "question": "What is the best way to cook a perfect steak?",
+      "expected_behavior": "refuse",
+      "key_facts": [],
+      "expected_docs": [],
+      "source_text": "",
+      "origin": "unrelated question"
+    },
+    {
+      "id": "q20",
+      "type": "out_of_scope",
+      "question": "Who is the current world champion in Formula 1?",
+      "expected_behavior": "refuse",
+      "key_facts": [],
+      "expected_docs": [],
+      "source_text": "",
+      "origin": "unrelated question"
+    },
+    {
+      "id": "q21",
+      "type": "out_of_scope",
+      "question": "What is the latest programming language being used in the tech industry?",
+      "expected_behavior": "refuse",
+      "key_facts": [],
+      "expected_docs": [],
+      "source_text": "",
+      "origin": "unrelated question"
+    },
+    {
+      "id": "q22",
+      "type": "out_of_scope",
+      "question": "What information is available about company pension scheme?",
+      "expected_behavior": "refuse",
+      "key_facts": [],
+      "expected_docs": [],
+      "source_text": "",
+      "origin": "guard: unsupported topic 'company pension scheme'"
+    }
+  ]
+}

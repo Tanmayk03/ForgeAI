@@ -1,0 +1,281 @@
+{
+  "schema_version": "1.0",
+  "created_at": "2026-11-27T02:23:10",
+  "model": "qwen2.5:1.5b",
+  "sha256": "253af9463402458a65ab65748f881d998ffe1a2f14590f75acc9c9b6795026cd",
+  "counts": {
+    "answerable": 9,
+    "multi_doc": 3,
+    "ambiguous": 2,
+    "out_of_scope": 6,
+    "total": 20,
+    "rejected": 12
+  },
+  "notes": [
+    "spare_parts.csv: unrelated to the brief; no CSV cases"
+  ],
+  "cases": [
+    {
+      "id": "q01",
+      "type": "answerable",
+      "question": "How many days of paid sick leave does an employee receive per year?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "12 days"
+      ],
+      "expected_docs": [
+        "leave_policy.pdf"
+      ],
+      "source_text": "3. Sick leave. Employees receive 12 days of paid sick leave per year. A medical certificate is required for absences longer than 2 consecutive days. 4. Public holidays. Public holidays falling within approved annual leave are not counted as leave days.",
+      "origin": "passage leave_policy.pdf::p2::c0"
+    },
+    {
+      "id": "q02",
+      "type": "answerable",
+      "question": "What is required for absences longer than 2 consecutive days?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "medical certificate"
+      ],
+      "expected_docs": [
+        "leave_policy.pdf"
+      ],
+      "source_text": "3. Sick leave. Employees receive 12 days of paid sick leave per year. A medical certificate is required for absences longer than 2 consecutive days. 4. Public holidays. Public holidays falling within approved annual leave are not counted as leave days.",
+      "origin": "passage leave_policy.pdf::p2::c0"
+    },
+    {
+      "id": "q03",
+      "type": "answerable",
+      "question": "What happens to public holidays that fall within approved annual leave?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "not counted as leave days"
+      ],
+      "expected_docs": [
+        "leave_policy.pdf"
+      ],
+      "source_text": "3. Sick leave. Employees receive 12 days of paid sick leave per year. A medical certificate is required for absences longer than 2 consecutive days. 4. Public holidays. Public holidays falling within approved annual leave are not counted as leave days.",
+      "origin": "passage leave_policy.pdf::p2::c0"
+    },
+    {
+      "id": "q04",
+      "type": "answerable",
+      "question": "How many working days of annual leave does Shore staff get per calendar year?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "24 working days"
+      ],
+      "expected_docs": [
+        "leave_policy.pdf"
+      ],
+      "source_text": "Leave Policy - Shore Staff 1. Annual leave. Shore staff are entitled to 24 working days of paid annual leave per calendar year. Leave accrues at 2 days per completed month of service. Up to 5 unused days may be carried forward to the next year; carried-forward days expire on 31 March. 2. Applying for leave. Requests must be submitted in the HR portal at least 10 working days in advance and approved by the line manager.",
+      "origin": "passage leave_policy.pdf::p1::c0"
+    },
+    {
+      "id": "q05",
+      "type": "answerable",
+      "question": "Can Shore staff carry forward unused leave days?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "5 unused days"
+      ],
+      "expected_docs": [
+        "leave_policy.pdf"
+      ],
+      "source_text": "Leave Policy - Shore Staff 1. Annual leave. Shore staff are entitled to 24 working days of paid annual leave per calendar year. Leave accrues at 2 days per completed month of service. Up to 5 unused days may be carried forward to the next year; carried-forward days expire on 31 March. 2. Applying for leave. Requests must be submitted in the HR portal at least 10 working days in advance and approved by the line manager.",
+      "origin": "passage leave_policy.pdf::p1::c0"
+    },
+    {
+      "id": "q06",
+      "type": "answerable",
+      "question": "How much notice is required to apply for annual leave?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "10 working days"
+      ],
+      "expected_docs": [
+        "leave_policy.pdf"
+      ],
+      "source_text": "Leave Policy - Shore Staff 1. Annual leave. Shore staff are entitled to 24 working days of paid annual leave per calendar year. Leave accrues at 2 days per completed month of service. Up to 5 unused days may be carried forward to the next year; carried-forward days expire on 31 March. 2. Applying for leave. Requests must be submitted in the HR portal at least 10 working days in advance and approved by the line manager.",
+      "origin": "passage leave_policy.pdf::p1::c0"
+    },
+    {
+      "id": "q07",
+      "type": "answerable",
+      "question": "What is the maximum amount allowed for hotel accommodation?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "INR 6,000 per night"
+      ],
+      "expected_docs": [
+        "travel_policy.md"
+      ],
+      "source_text": "# Travel Policy - Shore Staff ## Business travel claims Employees travelling on approved company business may claim economy-class airfare, hotel accommodation up to INR 6,000 per night, and a daily meal allowance of INR 1,200. ## Submitting a claim Claims must be submitted in the HR portal within 30 days of returning, with original receipts attached. Claims submitted after 30 days require written approval from the department head. ## Travel during leave Travel undertaken during approved annual leave is personal and cannot be claimed, unless the employee is formally recalled to work by their manager.",
+      "origin": "passage travel_policy.md::p1::c0"
+    },
+    {
+      "id": "q08",
+      "type": "answerable",
+      "question": "How long must claims be submitted within to be considered valid?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "30 days"
+      ],
+      "expected_docs": [
+        "travel_policy.md"
+      ],
+      "source_text": "# Travel Policy - Shore Staff ## Business travel claims Employees travelling on approved company business may claim economy-class airfare, hotel accommodation up to INR 6,000 per night, and a daily meal allowance of INR 1,200. ## Submitting a claim Claims must be submitted in the HR portal within 30 days of returning, with original receipts attached. Claims submitted after 30 days require written approval from the department head. ## Travel during leave Travel undertaken during approved annual leave is personal and cannot be claimed, unless the employee is formally recalled to work by their manager.",
+      "origin": "passage travel_policy.md::p1::c0"
+    },
+    {
+      "id": "q09",
+      "type": "answerable",
+      "question": "What is required for claims submitted after 30 days?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "written approval from the department head"
+      ],
+      "expected_docs": [
+        "travel_policy.md"
+      ],
+      "source_text": "# Travel Policy - Shore Staff ## Business travel claims Employees travelling on approved company business may claim economy-class airfare, hotel accommodation up to INR 6,000 per night, and a daily meal allowance of INR 1,200. ## Submitting a claim Claims must be submitted in the HR portal within 30 days of returning, with original receipts attached. Claims submitted after 30 days require written approval from the department head. ## Travel during leave Travel undertaken during approved annual leave is personal and cannot be claimed, unless the employee is formally recalled to work by their manager.",
+      "origin": "passage travel_policy.md::p1::c0"
+    },
+    {
+      "id": "q10",
+      "type": "multi_doc",
+      "question": "Can Shore staff carry forward unused leave days, and what is required for claims submitted after 30 days?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "5 unused days",
+        "written approval from the department head"
+      ],
+      "expected_docs": [
+        "leave_policy.pdf",
+        "travel_policy.md"
+      ],
+      "source_text": "Leave Policy - Shore Staff 1. Annual leave. Shore staff are entitled to 24 working days of paid annual leave per calendar year. Leave accrues at 2 days per completed month of service. Up to 5 unused days may be carried forward to the next year; carried-forward days expire on 31 March. 2. Applying for leave. Requests must be submitted in the HR portal at least 10 working days in advance and approved by the line manager.\n\n# Travel Policy - Shore Staff ## Business travel claims Employees travelling on approved company business may claim economy-class airfare, hotel accommodation up to INR 6,000 per night, and a daily meal allowance of INR 1,200. ## Submitting a claim Claims must be submitted in the HR portal within 30 days of returning, with original receipts attached. Claims submitted after 30 days require written approval from the department head. ## Travel during leave Travel undertaken during approved annual leave is personal and cannot be claimed, unless the employee is formally recalled to work by their manager.",
+      "origin": "combined q05 + q09"
+    },
+    {
+      "id": "q11",
+      "type": "multi_doc",
+      "question": "What is required for absences longer than 2 consecutive days, and how long must claims be submitted within to be considered valid?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "medical certificate",
+        "30 days"
+      ],
+      "expected_docs": [
+        "leave_policy.pdf",
+        "travel_policy.md"
+      ],
+      "source_text": "3. Sick leave. Employees receive 12 days of paid sick leave per year. A medical certificate is required for absences longer than 2 consecutive days. 4. Public holidays. Public holidays falling within approved annual leave are not counted as leave days.\n\n# Travel Policy - Shore Staff ## Business travel claims Employees travelling on approved company business may claim economy-class airfare, hotel accommodation up to INR 6,000 per night, and a daily meal allowance of INR 1,200. ## Submitting a claim Claims must be submitted in the HR portal within 30 days of returning, with original receipts attached. Claims submitted after 30 days require written approval from the department head. ## Travel during leave Travel undertaken during approved annual leave is personal and cannot be claimed, unless the employee is formally recalled to work by their manager.",
+      "origin": "combined q02 + q08"
+    },
+    {
+      "id": "q12",
+      "type": "multi_doc",
+      "question": "How many working days of annual leave does Shore staff get per calendar year, and what is the maximum amount allowed for hotel accommodation?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "24 working days",
+        "INR 6,000 per night"
+      ],
+      "expected_docs": [
+        "leave_policy.pdf",
+        "travel_policy.md"
+      ],
+      "source_text": "Leave Policy - Shore Staff 1. Annual leave. Shore staff are entitled to 24 working days of paid annual leave per calendar year. Leave accrues at 2 days per completed month of service. Up to 5 unused days may be carried forward to the next year; carried-forward days expire on 31 March. 2. Applying for leave. Requests must be submitted in the HR portal at least 10 working days in advance and approved by the line manager.\n\n# Travel Policy - Shore Staff ## Business travel claims Employees travelling on approved company business may claim economy-class airfare, hotel accommodation up to INR 6,000 per night, and a daily meal allowance of INR 1,200. ## Submitting a claim Claims must be submitted in the HR portal within 30 days of returning, with original receipts attached. Claims submitted after 30 days require written approval from the department head. ## Travel during leave Travel undertaken during approved annual leave is personal and cannot be claimed, unless the employee is formally recalled to work by their manager.",
+      "origin": "combined q04 + q07"
+    },
+    {
+      "id": "q13",
+      "type": "ambiguous",
+      "question": "What's needed for claims after 30 days?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "written approval from the department head"
+      ],
+      "expected_docs": [
+        "travel_policy.md"
+      ],
+      "source_text": "# Travel Policy - Shore Staff ## Business travel claims Employees travelling on approved company business may claim economy-class airfare, hotel accommodation up to INR 6,000 per night, and a daily meal allowance of INR 1,200. ## Submitting a claim Claims must be submitted in the HR portal within 30 days of returning, with original receipts attached. Claims submitted after 30 days require written approval from the department head. ## Travel during leave Travel undertaken during approved annual leave is personal and cannot be claimed, unless the employee is formally recalled to work by their manager.",
+      "origin": "rephrase of q09"
+    },
+    {
+      "id": "q14",
+      "type": "ambiguous",
+      "question": "How much notice is needed for annual leave?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "10 working days"
+      ],
+      "expected_docs": [
+        "leave_policy.pdf"
+      ],
+      "source_text": "Leave Policy - Shore Staff 1. Annual leave. Shore staff are entitled to 24 working days of paid annual leave per calendar year. Leave accrues at 2 days per completed month of service. Up to 5 unused days may be carried forward to the next year; carried-forward days expire on 31 March. 2. Applying for leave. Requests must be submitted in the HR portal at least 10 working days in advance and approved by the line manager.",
+      "origin": "rephrase of q06"
+    },
+    {
+      "id": "q15",
+      "type": "out_of_scope",
+      "question": "Can you provide information on the legal requirements for shore staff to claim travel expenses?",
+      "expected_behavior": "refuse",
+      "key_facts": [],
+      "expected_docs": [],
+      "source_text": "",
+      "origin": "refuse topic 'Legal'"
+    },
+    {
+      "id": "q16",
+      "type": "out_of_scope",
+      "question": "How do shore staff handle the medical emergencies during their travel, and what are the procedures in place for reporting such incidents?",
+      "expected_behavior": "refuse",
+      "key_facts": [],
+      "expected_docs": [],
+      "source_text": "",
+      "origin": "refuse topic 'Medical'"
+    },
+    {
+      "id": "q17",
+      "type": "out_of_scope",
+      "question": "What are the policies for shore staff regarding the storage and protection of personal data during business travel?",
+      "expected_behavior": "refuse",
+      "key_facts": [],
+      "expected_docs": [],
+      "source_text": "",
+      "origin": "refuse topic 'Personal Data'"
+    },
+    {
+      "id": "q18",
+      "type": "out_of_scope",
+      "question": "What is the best way to cook a perfect steak?",
+      "expected_behavior": "refuse",
+      "key_facts": [],
+      "expected_docs": [],
+      "source_text": "",
+      "origin": "unrelated question"
+    },
+    {
+      "id": "q19",
+      "type": "out_of_scope",
+      "question": "Who is the next big celebrity in the entertainment industry?",
+      "expected_behavior": "refuse",
+      "key_facts": [],
+      "expected_docs": [],
+      "source_text": "",
+      "origin": "unrelated question"
+    },
+    {
+      "id": "q20",
+      "type": "out_of_scope",
+      "question": "How do I program a robot to perform a specific task?",
+      "expected_behavior": "refuse",
+      "key_facts": [],
+      "expected_docs": [],
+      "source_text": "",
+      "origin": "unrelated question"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "topic_support": [
+    {
+      "topic": "Annual Leave",
+      "status": "supported",
+      "method": "code",
+      "coverage": 1.0,
+      "evidence": [
+        "leave_policy.pdf::p1::c0",
+        "leave_policy.pdf::p2::c0",
+        "travel_policy.md::p1::c0"
+      ],
+      "quote": "",
+      "reason": "all key words found together in one passage"
+    },
+    {
+      "topic": "Travel Claims",
+      "status": "supported",
+      "method": "code",
+      "coverage": 1.0,
+      "evidence": [
+        "travel_policy.md::p1::c0"
+      ],
+      "quote": "",
+      "reason": "all key words found together in one passage"
+    },
+    {
+      "topic": "Business Travel Policies",
+      "status": "supported",
+      "method": "llm",
+      "coverage": 0.667,
+      "evidence": [
+        "travel_policy.md::p1::c0"
+      ],
+      "quote": "# Travel Policy - Shore Staff",
+      "reason": "model verified, quote found in text"
+    }
+  ],
+  "warnings": [
+    "refuse topic 'Medical' appears in the documents (leave_policy.pdf::p2::c0); questions the documents answer may be wrongly refused",
+    "documents also cover keywords not in any must-answer topic: working, carried, forward, sick, public, claim, inr, during, travelling, company"
+  ]
+}

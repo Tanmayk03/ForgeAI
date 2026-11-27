@@ -1,0 +1,821 @@
+{
+  "agent_name": "sparesassistant",
+  "eval_sha256": "c93db74931bd9c163c5dd60e0b36c47334c19d9829b9850c43ed0491eb27d2f5",
+  "label": "iteration_2",
+  "passed": 13,
+  "failed": 12,
+  "errors": 0,
+  "total": 25,
+  "pass_rate": 0.52,
+  "by_type": {
+    "answerable": {
+      "pass": 6,
+      "fail": 7,
+      "error": 0
+    },
+    "multi_doc": {
+      "pass": 0,
+      "fail": 3,
+      "error": 0
+    },
+    "ambiguous": {
+      "pass": 1,
+      "fail": 1,
+      "error": 0
+    },
+    "out_of_scope": {
+      "pass": 6,
+      "fail": 1,
+      "error": 0
+    }
+  },
+  "judge_llm_calls": 6,
+  "total_seconds": 629.7,
+  "results": [
+    {
+      "id": "q01",
+      "type": "answerable",
+      "question": "What is the minimum order quantity for orders placed through the Oceanparts online portal?",
+      "expected_behavior": "answer",
+      "status": "fail",
+      "refused": false,
+      "answer": "2",
+      "sources": [
+        "oceanparts_supply_terms.pdf::p1::c0"
+      ],
+      "cited_docs": [
+        "oceanparts_supply_terms.pdf"
+      ],
+      "retrieved_docs": [
+        "marisupply_supply_terms.md",
+        "oceanparts_supply_terms.pdf",
+        "procurement_rules.md"
+      ],
+      "expected_docs": [
+        "oceanparts_supply_terms.pdf",
+        "procurement_rules.md"
+      ],
+      "facts": [
+        {
+          "fact": "USD 5,000",
+          "found": false,
+          "method": "llm-rejected"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "2",
+      "failure": "missing key fact(s): ['USD 5,000']",
+      "latency_seconds": 56.28
+    },
+    {
+      "id": "q02",
+      "type": "answerable",
+      "question": "What is the volume discount for orders above USD 15,000?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "8 percent",
+      "sources": [
+        "oceanparts_supply_terms.pdf::p1::c0"
+      ],
+      "cited_docs": [
+        "oceanparts_supply_terms.pdf"
+      ],
+      "retrieved_docs": [
+        "marisupply_supply_terms.md",
+        "oceanparts_supply_terms.pdf",
+        "procurement_rules.md"
+      ],
+      "expected_docs": [
+        "oceanparts_supply_terms.pdf"
+      ],
+      "facts": [
+        {
+          "fact": "8 percent",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "8 percent",
+      "failure": "",
+      "latency_seconds": 9.16
+    },
+    {
+      "id": "q03",
+      "type": "answerable",
+      "question": "What is the delivery lead time for urgent orders?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "Urgent delivery within 72 hours is available for stocked items at a surcharge of USD 250 per order.",
+      "sources": [
+        "oceanparts_supply_terms.pdf::p1::c0"
+      ],
+      "cited_docs": [
+        "oceanparts_supply_terms.pdf"
+      ],
+      "retrieved_docs": [
+        "marisupply_supply_terms.md",
+        "oceanparts_supply_terms.pdf",
+        "procurement_rules.md"
+      ],
+      "expected_docs": [
+        "oceanparts_supply_terms.pdf"
+      ],
+      "facts": [
+        {
+          "fact": "72 hours",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "Urgent delivery within 72 hours is available for stocked items at a surcharge of USD 250 per order.",
+      "failure": "",
+      "latency_seconds": 25.04
+    },
+    {
+      "id": "q04",
+      "type": "answerable",
+      "question": "What is the restocking fee for returned unused parts?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "10 percent",
+      "sources": [
+        "oceanparts_supply_terms.pdf::p1::c0"
+      ],
+      "cited_docs": [
+        "oceanparts_supply_terms.pdf"
+      ],
+      "retrieved_docs": [
+        "marisupply_supply_terms.md",
+        "oceanparts_supply_terms.pdf",
+        "procurement_rules.md"
+      ],
+      "expected_docs": [
+        "oceanparts_supply_terms.pdf"
+      ],
+      "facts": [
+        {
+          "fact": "10 percent",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "10 percent",
+      "failure": "",
+      "latency_seconds": 17.05
+    },
+    {
+      "id": "q05",
+      "type": "answerable",
+      "question": "What is the discount rate for orders above USD 10,000?",
+      "expected_behavior": "answer",
+      "status": "fail",
+      "refused": false,
+      "answer": "3 percent",
+      "sources": [
+        "marisupply_supply_terms.md::p1::c0"
+      ],
+      "cited_docs": [
+        "marisupply_supply_terms.md"
+      ],
+      "retrieved_docs": [
+        "marisupply_supply_terms.md",
+        "oceanparts_supply_terms.pdf",
+        "procurement_rules.md"
+      ],
+      "expected_docs": [
+        "marisupply_supply_terms.md"
+      ],
+      "facts": [
+        {
+          "fact": "3 percent discount",
+          "found": false,
+          "method": "llm-rejected"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "3 percent",
+      "failure": "missing key fact(s): ['3 percent discount']",
+      "latency_seconds": 23.43
+    },
+    {
+      "id": "q06",
+      "type": "answerable",
+      "question": "How much does air freight cost per order?",
+      "expected_behavior": "answer",
+      "status": "fail",
+      "refused": true,
+      "answer": "I can't answer that from the available documents.",
+      "sources": [],
+      "cited_docs": [],
+      "retrieved_docs": [
+        "marisupply_supply_terms.md",
+        "oceanparts_supply_terms.pdf",
+        "procurement_rules.md"
+      ],
+      "expected_docs": [
+        "marisupply_supply_terms.md"
+      ],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "refused_unsupported_number",
+      "refusal_reason": "The answer contained figures not found in the cited sources: 400.",
+      "model_answer_before_checks": "The cost of air freight per order is USD 400.",
+      "failure": "refused an answerable question (refused_unsupported_number)",
+      "latency_seconds": 70.37
+    },
+    {
+      "id": "q07",
+      "type": "answerable",
+      "question": "What is the additional lead time for sea freight orders?",
+      "expected_behavior": "answer",
+      "status": "fail",
+      "refused": false,
+      "answer": "10 days",
+      "sources": [
+        "oceanparts_supply_terms.pdf::p1::c0"
+      ],
+      "cited_docs": [
+        "oceanparts_supply_terms.pdf"
+      ],
+      "retrieved_docs": [
+        "marisupply_supply_terms.md",
+        "oceanparts_supply_terms.pdf",
+        "procurement_rules.md"
+      ],
+      "expected_docs": [
+        "marisupply_supply_terms.md"
+      ],
+      "facts": [
+        {
+          "fact": "10 days",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": false,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "10 days",
+      "failure": "cited ['oceanparts_supply_terms.pdf'], expected ['marisupply_supply_terms.md']",
+      "latency_seconds": 5.86
+    },
+    {
+      "id": "q08",
+      "type": "answerable",
+      "question": "What must be done for any order above USD 5,000?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "At least two supplier quotations must be obtained and attached to the purchase request.",
+      "sources": [
+        "procurement_rules.md::p1::c0"
+      ],
+      "cited_docs": [
+        "procurement_rules.md"
+      ],
+      "retrieved_docs": [
+        "marisupply_supply_terms.md",
+        "oceanparts_supply_terms.pdf",
+        "procurement_rules.md"
+      ],
+      "expected_docs": [
+        "procurement_rules.md"
+      ],
+      "facts": [
+        {
+          "fact": "supplier quotations",
+          "found": true,
+          "method": "exact"
+        },
+        {
+          "fact": "purchase request",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "At least two supplier quotations must be obtained and attached to the purchase request.",
+      "failure": "",
+      "latency_seconds": 41.36
+    },
+    {
+      "id": "q09",
+      "type": "answerable",
+      "question": "What is the condition for critical spares?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "Each vessel must keep at least one of every critical spare on board, and a used critical spare must be reordered within 48 hours.",
+      "sources": [
+        "procurement_rules.md::p1::c0"
+      ],
+      "cited_docs": [
+        "procurement_rules.md"
+      ],
+      "retrieved_docs": [
+        "procurement_rules.md"
+      ],
+      "expected_docs": [
+        "procurement_rules.md"
+      ],
+      "facts": [
+        {
+          "fact": "Main engine",
+          "found": true,
+          "method": "llm"
+        },
+        {
+          "fact": "Steering",
+          "found": true,
+          "method": "llm"
+        },
+        {
+          "fact": "Safety",
+          "found": true,
+          "method": "llm"
+        },
+        {
+          "fact": "vessel",
+          "found": true,
+          "method": "exact"
+        },
+        {
+          "fact": "used critical spare",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "Each vessel must keep at least one of every critical spare on board, and a used critical spare must be reordered within 48 hours.",
+      "failure": "",
+      "latency_seconds": 7.21
+    },
+    {
+      "id": "q10",
+      "type": "answerable",
+      "question": "What is the approval limit for orders above USD 10,000?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "Orders above USD 10,000 require approval from the fleet manager.",
+      "sources": [
+        "procurement_rules.md::p1::c0"
+      ],
+      "cited_docs": [
+        "procurement_rules.md"
+      ],
+      "retrieved_docs": [
+        "marisupply_supply_terms.md",
+        "oceanparts_supply_terms.pdf",
+        "procurement_rules.md"
+      ],
+      "expected_docs": [
+        "procurement_rules.md"
+      ],
+      "facts": [
+        {
+          "fact": "require approval from the fleet manager",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "Orders above USD 10,000 require approval from the fleet manager.",
+      "failure": "",
+      "latency_seconds": 39.57
+    },
+    {
+      "id": "q11",
+      "type": "multi_doc",
+      "question": "What is the discount rate for orders above USD 10,000, and what must be done for any order above USD 5,000?",
+      "expected_behavior": "answer",
+      "status": "fail",
+      "refused": true,
+      "answer": "I can't answer that from the available documents.",
+      "sources": [],
+      "cited_docs": [],
+      "retrieved_docs": [
+        "marisupply_supply_terms.md",
+        "oceanparts_supply_terms.pdf",
+        "procurement_rules.md"
+      ],
+      "expected_docs": [
+        "marisupply_supply_terms.md",
+        "procurement_rules.md"
+      ],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "refused_unsupported_number",
+      "refusal_reason": "The answer contained figures not found in the cited sources: 3.",
+      "model_answer_before_checks": "Marisupply gives a 3 percent discount on orders above USD 10,000.",
+      "failure": "refused an answerable question (refused_unsupported_number)",
+      "latency_seconds": 12.04
+    },
+    {
+      "id": "q12",
+      "type": "multi_doc",
+      "question": "What is the restocking fee for returned unused parts, and what is the additional lead time for sea freight orders?",
+      "expected_behavior": "answer",
+      "status": "fail",
+      "refused": false,
+      "answer": "Unused parts may be returned within 30 days in their original packaging, with a 10 percent restocking fee. Deliveries are made to the ports of Mumbai, Chennai and Kochi. Delivery to other ports is quoted separately.",
+      "sources": [
+        "oceanparts_supply_terms.pdf::p1::c0"
+      ],
+      "cited_docs": [
+        "oceanparts_supply_terms.pdf"
+      ],
+      "retrieved_docs": [
+        "marisupply_supply_terms.md",
+        "oceanparts_supply_terms.pdf",
+        "procurement_rules.md"
+      ],
+      "expected_docs": [
+        "marisupply_supply_terms.md",
+        "oceanparts_supply_terms.pdf"
+      ],
+      "facts": [
+        {
+          "fact": "10 percent",
+          "found": true,
+          "method": "exact"
+        },
+        {
+          "fact": "10 days",
+          "found": true,
+          "method": "fuzzy"
+        }
+      ],
+      "grounded": false,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "Unused parts may be returned within 30 days in their original packaging, with a 10 percent restocking fee. Deliveries are made to the ports of Mumbai, Chennai and Kochi. Delivery to other ports is quoted separately.",
+      "failure": "cited ['oceanparts_supply_terms.pdf'], expected ['marisupply_supply_terms.md', 'oceanparts_supply_terms.pdf']",
+      "latency_seconds": 27.38
+    },
+    {
+      "id": "q13",
+      "type": "multi_doc",
+      "question": "What is the delivery lead time for urgent orders, and what is the condition for critical spares?",
+      "expected_behavior": "answer",
+      "status": "fail",
+      "refused": true,
+      "answer": "I can't answer that from the available documents.",
+      "sources": [],
+      "cited_docs": [],
+      "retrieved_docs": [
+        "marisupply_supply_terms.md",
+        "oceanparts_supply_terms.pdf",
+        "procurement_rules.md"
+      ],
+      "expected_docs": [
+        "oceanparts_supply_terms.pdf",
+        "procurement_rules.md"
+      ],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "refused_unsupported_number",
+      "refusal_reason": "The answer contained figures not found in the cited sources: 72.",
+      "model_answer_before_checks": "Urgent orders are delivered within 72 hours, and each vessel must keep at least one of every critical spare on board, and a used critical spare must be reordered within 48 hours.",
+      "failure": "refused an answerable question (refused_unsupported_number)",
+      "latency_seconds": 9.23
+    },
+    {
+      "id": "q14",
+      "type": "answerable",
+      "question": "What is the category for SP-1019?",
+      "expected_behavior": "answer",
+      "status": "fail",
+      "refused": true,
+      "answer": "I can't answer that from the available documents.",
+      "sources": [],
+      "cited_docs": [],
+      "retrieved_docs": [],
+      "expected_docs": [
+        "spares_catalogue.csv"
+      ],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "refused_tool_limit",
+      "refusal_reason": "Stopped after 2 tool calls.",
+      "model_answer_before_checks": "",
+      "failure": "refused an answerable question (refused_tool_limit)",
+      "latency_seconds": 37.48
+    },
+    {
+      "id": "q15",
+      "type": "answerable",
+      "question": "What is the min order qty for SP-1009?",
+      "expected_behavior": "answer",
+      "status": "fail",
+      "refused": true,
+      "answer": "I can't answer that from the available documents.",
+      "sources": [],
+      "cited_docs": [],
+      "retrieved_docs": [
+        "marisupply_supply_terms.md",
+        "oceanparts_supply_terms.pdf",
+        "procurement_rules.md"
+      ],
+      "expected_docs": [
+        "spares_catalogue.csv"
+      ],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "refused_unsupported_number",
+      "refusal_reason": "The answer contained figures not found in the cited sources: 2.",
+      "model_answer_before_checks": "2",
+      "failure": "refused an answerable question (refused_unsupported_number)",
+      "latency_seconds": 39.93
+    },
+    {
+      "id": "q16",
+      "type": "answerable",
+      "question": "What is the supplier for SP-1001?",
+      "expected_behavior": "answer",
+      "status": "fail",
+      "refused": false,
+      "answer": "Marisupply Ltd",
+      "sources": [
+        "procurement_rules.md::p1::c0"
+      ],
+      "cited_docs": [
+        "procurement_rules.md"
+      ],
+      "retrieved_docs": [
+        "procurement_rules.md"
+      ],
+      "expected_docs": [
+        "spares_catalogue.csv"
+      ],
+      "facts": [
+        {
+          "fact": "Marisupply Ltd",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": false,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "Marisupply Ltd",
+      "failure": "cited ['procurement_rules.md'], expected ['spares_catalogue.csv']",
+      "latency_seconds": 14.57
+    },
+    {
+      "id": "q17",
+      "type": "ambiguous",
+      "question": "What's the discount rate for orders over $10,000?",
+      "expected_behavior": "answer",
+      "status": "fail",
+      "refused": false,
+      "answer": "3 percent",
+      "sources": [
+        "marisupply_supply_terms.md::p1::c0"
+      ],
+      "cited_docs": [
+        "marisupply_supply_terms.md"
+      ],
+      "retrieved_docs": [
+        "marisupply_supply_terms.md",
+        "oceanparts_supply_terms.pdf",
+        "procurement_rules.md"
+      ],
+      "expected_docs": [
+        "marisupply_supply_terms.md"
+      ],
+      "facts": [
+        {
+          "fact": "3 percent discount",
+          "found": false,
+          "method": "llm-rejected"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "3 percent",
+      "failure": "missing key fact(s): ['3 percent discount']",
+      "latency_seconds": 27.75
+    },
+    {
+      "id": "q18",
+      "type": "ambiguous",
+      "question": "How long does it take to deliver urgent orders?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "Urgent delivery within 72 hours is available for stocked items at a surcharge of USD 250 per order.",
+      "sources": [
+        "oceanparts_supply_terms.pdf::p1::c0"
+      ],
+      "cited_docs": [
+        "oceanparts_supply_terms.pdf"
+      ],
+      "retrieved_docs": [
+        "marisupply_supply_terms.md",
+        "oceanparts_supply_terms.pdf",
+        "procurement_rules.md"
+      ],
+      "expected_docs": [
+        "oceanparts_supply_terms.pdf"
+      ],
+      "facts": [
+        {
+          "fact": "72 hours",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "Urgent delivery within 72 hours is available for stocked items at a surcharge of USD 250 per order.",
+      "failure": "",
+      "latency_seconds": 19.23
+    },
+    {
+      "id": "q19",
+      "type": "out_of_scope",
+      "question": "Can you provide information on the legal requirements for obtaining a procurement approval for Seaview Shipping Ltd's spare parts procurement?",
+      "expected_behavior": "refuse",
+      "status": "fail",
+      "refused": false,
+      "answer": "The legal requirements for obtaining a procurement approval for Seaview Shipping Ltd's spare parts procurement are as follows: Orders up to USD 2,000 are approved by the purchasing officer. Orders above USD 2,000 and up to USD 10,000 require approval from the technical superintendent. Orders above USD 10,000 require approval from the fleet manager.",
+      "sources": [
+        "procurement_rules.md::p1::c0"
+      ],
+      "cited_docs": [
+        "procurement_rules.md"
+      ],
+      "retrieved_docs": [
+        "marisupply_supply_terms.md",
+        "oceanparts_supply_terms.pdf",
+        "procurement_rules.md"
+      ],
+      "expected_docs": [],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "The legal requirements for obtaining a procurement approval for Seaview Shipping Ltd's spare parts procurement are as follows: Orders up to USD 2,000 are approved by the purchasing officer. Orders above USD 2,000 and up to USD 10,000 require approval from the technical superintendent. Orders above USD 10,000 require approval from the fleet manager.",
+      "failure": "answered a question it should refuse",
+      "latency_seconds": 39.1
+    },
+    {
+      "id": "q20",
+      "type": "out_of_scope",
+      "question": "How do I ensure the confidentiality of the supplier's medical records when discussing procurement terms with them?",
+      "expected_behavior": "refuse",
+      "status": "pass",
+      "refused": true,
+      "answer": "I can't answer that from the available documents.",
+      "sources": [],
+      "cited_docs": [],
+      "retrieved_docs": [
+        "marisupply_supply_terms.md",
+        "oceanparts_supply_terms.pdf",
+        "procurement_rules.md"
+      ],
+      "expected_docs": [],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "refused_by_model",
+      "refusal_reason": "short reason",
+      "model_answer_before_checks": "",
+      "failure": "",
+      "latency_seconds": 4.91
+    },
+    {
+      "id": "q21",
+      "type": "out_of_scope",
+      "question": "What measures should Seaview Shipping Ltd take to protect the personal data of its suppliers when processing procurement information?",
+      "expected_behavior": "refuse",
+      "status": "pass",
+      "refused": true,
+      "answer": "I can't answer that from the available documents.",
+      "sources": [],
+      "cited_docs": [],
+      "retrieved_docs": [
+        "marisupply_supply_terms.md",
+        "oceanparts_supply_terms.pdf",
+        "procurement_rules.md"
+      ],
+      "expected_docs": [],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "refused_unsupported_number",
+      "refusal_reason": "The answer contained figures not found in the cited sources: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10.",
+      "model_answer_before_checks": "Seaview Shipping Ltd should ensure that the personal data of its suppliers is protected by implementing the following measures when processing procurement information:\n\n1. Encrypting all procurement information to prevent unauthorized access.\n2. Using secure servers and firewalls to protect the data during transmission and storage.\n3. Regularly updating and patching security software to protect against vulnerabilities.\n4. Implementing strict access controls and limiting access to procurement information to only authorized personnel.\n5. Conducting regular security audits and vulnerability assessments to identify and address potential security risks.\n6. Storing supplier data in a secure cloud-based environment with strong encryption and access controls.\n7. Using multi-factor authentication for accessing procurement information.\n8. Implementing a data retention policy to ensure that procurement information is securely stored for a limited period and then securely destroyed.\n9. Providing suppliers with clear and concise information about the security measures in place and the consequences of non-compliance.\n10. Regularly training staff on security best practices and the importance of data protection.",
+      "failure": "",
+      "latency_seconds": 32.49
+    },
+    {
+      "id": "q22",
+      "type": "out_of_scope",
+      "question": "What is the best way to prepare a gourmet meal for a large gathering?",
+      "expected_behavior": "refuse",
+      "status": "pass",
+      "refused": true,
+      "answer": "I can't answer that from the available documents.",
+      "sources": [],
+      "cited_docs": [],
+      "retrieved_docs": [],
+      "expected_docs": [],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "refused_no_citation",
+      "refusal_reason": "The answer did not cite any of the provided sources.",
+      "model_answer_before_checks": "The best way to prepare a gourmet meal for a large gathering is to choose a menu that includes a variety of dishes, ensuring that each course is balanced and complements the others. It is also important to prepare the ingredients in advance and have them ready for the event. Additionally, it is recommended to have a backup plan in case of unexpected delays or cancellations.",
+      "failure": "",
+      "latency_seconds": 8.97
+    },
+    {
+      "id": "q23",
+      "type": "out_of_scope",
+      "question": "Who is the current world champion in Formula 1?",
+      "expected_behavior": "refuse",
+      "status": "pass",
+      "refused": true,
+      "answer": "I can't answer that from the available documents.",
+      "sources": [],
+      "cited_docs": [],
+      "retrieved_docs": [
+        "marisupply_supply_terms.md",
+        "oceanparts_supply_terms.pdf"
+      ],
+      "expected_docs": [],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "refused_by_model",
+      "refusal_reason": "short reason",
+      "model_answer_before_checks": "",
+      "failure": "",
+      "latency_seconds": 19.19
+    },
+    {
+      "id": "q24",
+      "type": "out_of_scope",
+      "question": "How do I create a successful marketing campaign for a new product?",
+      "expected_behavior": "refuse",
+      "status": "pass",
+      "refused": true,
+      "answer": "I can't answer that from the available documents.",
+      "sources": [],
+      "cited_docs": [],
+      "retrieved_docs": [],
+      "expected_docs": [],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "refused_no_citation",
+      "refusal_reason": "The answer did not cite any of the provided sources.",
+      "model_answer_before_checks": "Creating a successful marketing campaign for a new product involves several key steps. First, conduct market research to understand your target audience and competitors. Next, develop a clear and compelling product message that highlights the unique features and benefits of your product. Use a mix of marketing channels, such as social media, email marketing, and traditional advertising, to reach your target audience. Create engaging content, such as videos and blog posts, to build brand awareness and drive traffic to your website. Finally, track and analyze your campaign's performance to make adjustments and optimize your strategy over time.",
+      "failure": "",
+      "latency_seconds": 10.93
+    },
+    {
+      "id": "q25",
+      "type": "out_of_scope",
+      "question": "What information is available about identify suppliers?",
+      "expected_behavior": "refuse",
+      "status": "pass",
+      "refused": true,
+      "answer": "I can't answer that from the available documents.",
+      "sources": [],
+      "cited_docs": [],
+      "retrieved_docs": [
+        "oceanparts_supply_terms.pdf"
+      ],
+      "expected_docs": [],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "refused_by_model",
+      "refusal_reason": "short reason",
+      "model_answer_before_checks": "",
+      "failure": "",
+      "latency_seconds": 7.92
+    }
+  ]
+}

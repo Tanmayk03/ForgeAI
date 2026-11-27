@@ -1,0 +1,154 @@
+[
+  {
+    "iteration": 1,
+    "failures_by_category": {
+      "prompt_defect": 3,
+      "wrong_refusal": 1
+    },
+    "failures": [
+      {
+        "id": "q06",
+        "category": "prompt_defect",
+        "subtype": "citation",
+        "evidence": "model's answer had the facts but was blocked (refused_unsupported_number)"
+      },
+      {
+        "id": "q07",
+        "category": "wrong_refusal",
+        "subtype": "gate",
+        "evidence": "evidence gate refused (refused_low_coverage) although the right document was retrieved"
+      },
+      {
+        "id": "q11",
+        "category": "prompt_defect",
+        "subtype": "citation",
+        "evidence": "model's answer had the facts but was blocked (refused_unsupported_number)"
+      },
+      {
+        "id": "q12",
+        "category": "prompt_defect",
+        "subtype": "multi_part",
+        "evidence": "missing ['INR 6,000 per night']"
+      }
+    ],
+    "target_category": "prompt_defect",
+    "target_subtype": "citation",
+    "targeted_cases": [
+      "q06",
+      "q11"
+    ],
+    "change": "add instruction: Cite every source you use. If you combine facts from two sources, cite both source numbers.",
+    "field": "system_instructions",
+    "old_value": "You are an AI assistant designed to provide information on shore staff leave and travel policies. Your tone should be formal and concise, ensuring clarity and accuracy in your responses. Your scope includes answering questions about annual leave, travel claims, and business travel policies for shore staff.",
+    "new_value": "You are an AI assistant designed to provide information on shore staff leave and travel policies. Your tone should be formal and concise, ensuring clarity and accuracy in your responses. Your scope includes answering questions about annual leave, travel claims, and business travel policies for shore staff. Cite every source you use. If you combine facts from two sources, cite both source numbers.",
+    "score_before": "16/20 (80%)",
+    "score_after": "15/20 (75%)",
+    "fixed_cases": [],
+    "broken_cases": [
+      "q10"
+    ],
+    "kept": false,
+    "note": "score dropped: change rolled back"
+  },
+  {
+    "iteration": 2,
+    "failures_by_category": {
+      "prompt_defect": 3,
+      "wrong_refusal": 1
+    },
+    "failures": [
+      {
+        "id": "q06",
+        "category": "prompt_defect",
+        "subtype": "citation",
+        "evidence": "model's answer had the facts but was blocked (refused_unsupported_number)"
+      },
+      {
+        "id": "q07",
+        "category": "wrong_refusal",
+        "subtype": "gate",
+        "evidence": "evidence gate refused (refused_low_coverage) although the right document was retrieved"
+      },
+      {
+        "id": "q11",
+        "category": "prompt_defect",
+        "subtype": "citation",
+        "evidence": "model's answer had the facts but was blocked (refused_unsupported_number)"
+      },
+      {
+        "id": "q12",
+        "category": "prompt_defect",
+        "subtype": "multi_part",
+        "evidence": "missing ['INR 6,000 per night']"
+      }
+    ],
+    "target_category": "prompt_defect",
+    "target_subtype": "multi_part",
+    "targeted_cases": [
+      "q12"
+    ],
+    "change": "add instruction: If the question asks more than one thing, answer every part, each from its own source.",
+    "field": "system_instructions",
+    "old_value": "You are an AI assistant designed to provide information on shore staff leave and travel policies. Your tone should be formal and concise, ensuring clarity and accuracy in your responses. Your scope includes answering questions about annual leave, travel claims, and business travel policies for shore staff.",
+    "new_value": "You are an AI assistant designed to provide information on shore staff leave and travel policies. Your tone should be formal and concise, ensuring clarity and accuracy in your responses. Your scope includes answering questions about annual leave, travel claims, and business travel policies for shore staff. If the question asks more than one thing, answer every part, each from its own source.",
+    "score_before": "16/20 (80%)",
+    "score_after": "16/20 (80%)",
+    "fixed_cases": [],
+    "broken_cases": [],
+    "kept": false,
+    "note": "no gain: change rolled back"
+  },
+  {
+    "iteration": 3,
+    "failures_by_category": {
+      "prompt_defect": 3,
+      "wrong_refusal": 1
+    },
+    "failures": [
+      {
+        "id": "q06",
+        "category": "prompt_defect",
+        "subtype": "citation",
+        "evidence": "model's answer had the facts but was blocked (refused_unsupported_number)"
+      },
+      {
+        "id": "q07",
+        "category": "wrong_refusal",
+        "subtype": "gate",
+        "evidence": "evidence gate refused (refused_low_coverage) although the right document was retrieved"
+      },
+      {
+        "id": "q11",
+        "category": "prompt_defect",
+        "subtype": "citation",
+        "evidence": "model's answer had the facts but was blocked (refused_unsupported_number)"
+      },
+      {
+        "id": "q12",
+        "category": "prompt_defect",
+        "subtype": "multi_part",
+        "evidence": "missing ['INR 6,000 per night']"
+      }
+    ],
+    "target_category": "wrong_refusal",
+    "target_subtype": "gate",
+    "targeted_cases": [
+      "q07"
+    ],
+    "change": "relax the evidence gate",
+    "field": "retrieval.min_query_coverage",
+    "old_value": "0.5",
+    "new_value": "0.35",
+    "score_before": "16/20 (80%)",
+    "score_after": "15/20 (75%)",
+    "fixed_cases": [
+      "q07"
+    ],
+    "broken_cases": [
+      "q15",
+      "q16"
+    ],
+    "kept": false,
+    "note": "score dropped: change rolled back"
+  }
+]

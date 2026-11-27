@@ -1,0 +1,42 @@
+{
+  "tools": [
+    {
+      "name": "csv_lookup",
+      "attached": false,
+      "reason": "no CSV files in the document folder"
+    },
+    {
+      "name": "calculator",
+      "attached": false,
+      "reason": "no need found in the requirements"
+    },
+    {
+      "name": "weather_api",
+      "attached": false,
+      "reason": "no need found in the requirements"
+    },
+    {
+      "name": "current_date",
+      "attached": false,
+      "reason": "no need found in the requirements"
+    }
+  ],
+  "retrieval": "3 text document(s), about 130 words per page -> chunks of 200 words, top_k 3 (fits 60% of a 4096-token context)",
+  "system_instructions_source": "model",
+  "in_scope_topics": [
+    "leave of all kinds",
+    "public holidays",
+    "business travel and expense claims",
+    "working hours",
+    "remote work",
+    "code of conduct"
+  ],
+  "refusal_topics_added_from_guard": [
+    "company pension scheme"
+  ],
+  "known_risks": [
+    "refuse topic 'medical' appears in the documents (leave_policy.pdf::p1::c0); questions the documents answer may be wrongly refused",
+    "documents also cover keywords not in any must-answer topic: gifts, office, compliance, team, interest, year, carried, forward, sick, annual, approval, flights, class, night, usd",
+    "UNSUPPORTED by the documents (the agent must refuse these): ['company pension scheme']"
+  ]
+}

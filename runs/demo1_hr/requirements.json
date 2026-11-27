@@ -1,0 +1,193 @@
+{
+  "agent_name": "hr_policy_assistant",
+  "purpose": "Answer HR policy questions for shore staff, including leave, public holidays, business travel, expense claims, working hours, remote work, and the company pension scheme.",
+  "scope": "The assistant will cover all HR policies related to shore-based employees, including leave, public holidays, business travel, expense claims, working hours, remote work, and the company pension scheme.",
+  "audience": "Seaview Shipping Ltd shore-based employees",
+  "tone": "formal and concise",
+  "must_answer_topics": [
+    "leave of all kinds",
+    "public holidays",
+    "business travel and expense claims",
+    "working hours",
+    "remote work",
+    "code of conduct",
+    "company pension scheme"
+  ],
+  "must_refuse_topics": [
+    "legal",
+    "medical",
+    "personal data"
+  ],
+  "schema_version": "1.0",
+  "brief": "I need an assistant that answers HR policy questions for our shore staff: leave of all kinds, public holidays, business travel and expense claims, working hours, remote work and the code of conduct. It should also answer questions about the company pension scheme.",
+  "documents_folder": "data\\demo1_hr",
+  "documents": [
+    {
+      "name": "code_of_conduct.md",
+      "file_type": "md",
+      "pages": 1,
+      "words": 186,
+      "chunked": true,
+      "preview": "# Seaview Shipping Ltd - Code of Conduct (Shore Staff) ## Working hours Standard office hours are 09:00 to 18:00, Monday to Friday, with a one-hour lunch break. Flexible start times between 08:00 and 10:00 are allowed with line manager agreement. ## Remote work Employees may work from home up",
+      "keywords": [
+        "manager",
+        "gifts",
+        "must",
+        "code",
+        "hours",
+        "office",
+        "line",
+        "work"
+      ]
+    },
+    {
+      "name": "leave_policy.pdf",
+      "file_type": "pdf",
+      "pages": 2,
+      "words": 269,
+      "chunked": true,
+      "preview": "Seaview Shipping Ltd - Leave Policy for Shore Staff (version 3, 2026) This policy applies to all permanent shore-based employees. Crew on board vessels are covered by the Seafarers Employment Agreement instead. 1. Annual leave Shore staff are entitled to 24 working days of paid annual leave per calendar year.",
+      "keywords": [
+        "leave",
+        "days",
+        "annual",
+        "paid",
+        "working",
+        "shore",
+        "staff",
+        "entitled"
+      ]
+    },
+    {
+      "name": "travel_expenses_policy.pdf",
+      "file_type": "pdf",
+      "pages": 2,
+      "words": 195,
+      "chunked": true,
+      "preview": "Seaview Shipping Ltd - Business Travel and Expenses Policy (2026) 1. Approval All business travel must be approved in advance by the line manager. International travel also requires approval from the department head. 2. Flights Employees travel in economy class. Business class is allowed only for flights longer than 8",
+      "keywords": [
+        "travel",
+        "approval",
+        "claims",
+        "business",
+        "approved",
+        "department",
+        "head",
+        "days"
+      ]
+    }
+  ],
+  "skipped_files": [],
+  "clarifications": [
+    {
+      "question": "Who will use this assistant?",
+      "answer": "Seaview Shipping Ltd shore-based employees",
+      "source": "assumed"
+    },
+    {
+      "question": "What tone should it use?",
+      "answer": "formal and concise",
+      "source": "assumed"
+    },
+    {
+      "question": "Which topics MUST it answer? (comma-separated)",
+      "answer": "leave of all kinds, public holidays, business travel and expense claims, working hours, remote work, code of conduct, company pension scheme",
+      "source": "assumed"
+    },
+    {
+      "question": "Which topics must it REFUSE? (comma-separated)",
+      "answer": "legal, medical, personal data",
+      "source": "assumed"
+    },
+    {
+      "question": "In one sentence, what is in scope and what is out of scope?",
+      "answer": "The assistant will cover all HR policies related to shore-based employees, including leave, public holidays, business travel, expense claims, working hours, remote work, and the company pension scheme.",
+      "source": "assumed"
+    }
+  ],
+  "notes": [],
+  "topic_support": [
+    {
+      "topic": "leave of all kinds",
+      "status": "supported",
+      "method": "llm",
+      "coverage": 0.667,
+      "evidence": [
+        "leave_policy.pdf::p2::c0",
+        "leave_policy.pdf::p1::c0"
+      ],
+      "quote": "Seaview Shipping Ltd - Leave Policy for Shore Staff (version 3, 2026)",
+      "reason": "model verified, quote found in text"
+    },
+    {
+      "topic": "public holidays",
+      "status": "supported",
+      "method": "code",
+      "coverage": 1.0,
+      "evidence": [
+        "leave_policy.pdf::p2::c0"
+      ],
+      "quote": "",
+      "reason": "all key words found together in one passage"
+    },
+    {
+      "topic": "business travel and expense claims",
+      "status": "supported",
+      "method": "llm",
+      "coverage": 0.75,
+      "evidence": [
+        "travel_expenses_policy.pdf::p2::c0",
+        "travel_expenses_policy.pdf::p1::c0"
+      ],
+      "quote": "Expense claims must be submitted in the HR portal within 30 days of returning from the trip, with original receipts attached.",
+      "reason": "model verified, quote found in text"
+    },
+    {
+      "topic": "working hours",
+      "status": "supported",
+      "method": "code",
+      "coverage": 1.0,
+      "evidence": [
+        "code_of_conduct.md::p1::c0"
+      ],
+      "quote": "",
+      "reason": "all key words found together in one passage"
+    },
+    {
+      "topic": "remote work",
+      "status": "supported",
+      "method": "code",
+      "coverage": 1.0,
+      "evidence": [
+        "code_of_conduct.md::p1::c0"
+      ],
+      "quote": "",
+      "reason": "all key words found together in one passage"
+    },
+    {
+      "topic": "code of conduct",
+      "status": "supported",
+      "method": "code",
+      "coverage": 1.0,
+      "evidence": [
+        "code_of_conduct.md::p1::c0"
+      ],
+      "quote": "",
+      "reason": "all key words found together in one passage"
+    },
+    {
+      "topic": "company pension scheme",
+      "status": "unsupported",
+      "method": "code",
+      "coverage": 0.0,
+      "evidence": [],
+      "quote": "",
+      "reason": "none of the topic's key words appear in any document"
+    }
+  ],
+  "guard_warnings": [
+    "refuse topic 'medical' appears in the documents (leave_policy.pdf::p1::c0); questions the documents answer may be wrongly refused",
+    "documents also cover keywords not in any must-answer topic: gifts, office, compliance, team, interest, year, carried, forward, sick, annual, approval, flights, class, night, usd",
+    "UNSUPPORTED by the documents (the agent must refuse these): ['company pension scheme']"
+  ]
+}

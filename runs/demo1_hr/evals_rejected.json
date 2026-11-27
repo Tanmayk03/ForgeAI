@@ -1,0 +1,57 @@
+[
+  {
+    "question": "How many days of annual leave are new joiners entitled to?",
+    "reason": "key fact not found in the source passage: '2 days pro rata'",
+    "origin": "passage leave_policy.pdf::p1::c0"
+  },
+  {
+    "question": "What is the maximum number of unused annual leave days that can be carried forward?",
+    "reason": "key fact not found in the source passage: '5 days'",
+    "origin": "passage leave_policy.pdf::p1::c0"
+  },
+  {
+    "question": "Can travel during approved annual leave be claimed?",
+    "reason": "key fact not found in the source passage: 'no'",
+    "origin": "passage travel_expenses_policy.pdf::p2::c0"
+  },
+  {
+    "question": "How many vacation days does an employee typically receive per year?",
+    "reason": "topic is not one of the must-refuse topics",
+    "origin": "refuse topic 'leave'"
+  },
+  {
+    "question": "What are the company's public holidays, and how are they observed?",
+    "reason": "topic is not one of the must-refuse topics",
+    "origin": "refuse topic 'public holidays'"
+  },
+  {
+    "question": "How are employees reimbursed for travel expenses when they are not on official business trips?",
+    "reason": "topic is not one of the must-refuse topics",
+    "origin": "refuse topic 'business travel'"
+  },
+  {
+    "question": "What is the process for submitting and approving expense claims for shore-based employees?",
+    "reason": "topic is not one of the must-refuse topics",
+    "origin": "refuse topic 'expense claims'"
+  },
+  {
+    "question": "What are the working hours for shore-based employees, including any exceptions or flexible hours?",
+    "reason": "topic is not one of the must-refuse topics",
+    "origin": "refuse topic 'working hours'"
+  },
+  {
+    "question": "How does the company handle remote work arrangements for shore-based employees?",
+    "reason": "topic is not one of the must-refuse topics",
+    "origin": "refuse topic 'remote work'"
+  },
+  {
+    "question": "What is the company's pension scheme, and how does it work for shore-based employees?",
+    "reason": "topic is not one of the must-refuse topics",
+    "origin": "refuse topic 'company pension scheme'"
+  },
+  {
+    "question": "How do I start a successful online business?",
+    "reason": "not clearly unrelated: 50% of its words appear in the documents",
+    "origin": "unrelated"
+  }
+]

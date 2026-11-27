@@ -1,0 +1,641 @@
+{
+  "agent_name": "leave_travel_assistant",
+  "eval_sha256": "253af9463402458a65ab65748f881d998ffe1a2f14590f75acc9c9b6795026cd",
+  "label": "iteration_0",
+  "passed": 16,
+  "failed": 4,
+  "errors": 0,
+  "total": 20,
+  "pass_rate": 0.8,
+  "by_type": {
+    "answerable": {
+      "pass": 7,
+      "fail": 2,
+      "error": 0
+    },
+    "multi_doc": {
+      "pass": 1,
+      "fail": 2,
+      "error": 0
+    },
+    "ambiguous": {
+      "pass": 2,
+      "fail": 0,
+      "error": 0
+    },
+    "out_of_scope": {
+      "pass": 6,
+      "fail": 0,
+      "error": 0
+    }
+  },
+  "judge_llm_calls": 1,
+  "total_seconds": 129.3,
+  "results": [
+    {
+      "id": "q01",
+      "type": "answerable",
+      "question": "How many days of paid sick leave does an employee receive per year?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "12 days",
+      "sources": [
+        "leave_policy.pdf::p2::c0"
+      ],
+      "cited_docs": [
+        "leave_policy.pdf"
+      ],
+      "retrieved_docs": [
+        "leave_policy.pdf",
+        "travel_policy.md"
+      ],
+      "expected_docs": [
+        "leave_policy.pdf"
+      ],
+      "facts": [
+        {
+          "fact": "12 days",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "12 days",
+      "failure": "",
+      "latency_seconds": 7.6
+    },
+    {
+      "id": "q02",
+      "type": "answerable",
+      "question": "What is required for absences longer than 2 consecutive days?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "A medical certificate is required for absences longer than 2 consecutive days.",
+      "sources": [
+        "leave_policy.pdf::p2::c0"
+      ],
+      "cited_docs": [
+        "leave_policy.pdf"
+      ],
+      "retrieved_docs": [
+        "leave_policy.pdf",
+        "travel_policy.md"
+      ],
+      "expected_docs": [
+        "leave_policy.pdf"
+      ],
+      "facts": [
+        {
+          "fact": "medical certificate",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "A medical certificate is required for absences longer than 2 consecutive days.",
+      "failure": "",
+      "latency_seconds": 7.18
+    },
+    {
+      "id": "q03",
+      "type": "answerable",
+      "question": "What happens to public holidays that fall within approved annual leave?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "Public holidays that fall within approved annual leave are not counted as leave days.",
+      "sources": [
+        "leave_policy.pdf::p2::c0"
+      ],
+      "cited_docs": [
+        "leave_policy.pdf"
+      ],
+      "retrieved_docs": [
+        "leave_policy.pdf",
+        "travel_policy.md"
+      ],
+      "expected_docs": [
+        "leave_policy.pdf"
+      ],
+      "facts": [
+        {
+          "fact": "not counted as leave days",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "Public holidays that fall within approved annual leave are not counted as leave days.",
+      "failure": "",
+      "latency_seconds": 10.02
+    },
+    {
+      "id": "q04",
+      "type": "answerable",
+      "question": "How many working days of annual leave does Shore staff get per calendar year?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "24 working days",
+      "sources": [
+        "leave_policy.pdf::p1::c0"
+      ],
+      "cited_docs": [
+        "leave_policy.pdf"
+      ],
+      "retrieved_docs": [
+        "leave_policy.pdf",
+        "travel_policy.md"
+      ],
+      "expected_docs": [
+        "leave_policy.pdf"
+      ],
+      "facts": [
+        {
+          "fact": "24 working days",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "24 working days",
+      "failure": "",
+      "latency_seconds": 5.0
+    },
+    {
+      "id": "q05",
+      "type": "answerable",
+      "question": "Can Shore staff carry forward unused leave days?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "Yes, Shore staff can carry forward unused leave days up to 5 days, which expire on 31 March.",
+      "sources": [
+        "leave_policy.pdf::p1::c0"
+      ],
+      "cited_docs": [
+        "leave_policy.pdf"
+      ],
+      "retrieved_docs": [
+        "leave_policy.pdf",
+        "travel_policy.md"
+      ],
+      "expected_docs": [
+        "leave_policy.pdf"
+      ],
+      "facts": [
+        {
+          "fact": "5 unused days",
+          "found": true,
+          "method": "fuzzy"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "Yes, Shore staff can carry forward unused leave days up to 5 days, which expire on 31 March.",
+      "failure": "",
+      "latency_seconds": 6.11
+    },
+    {
+      "id": "q06",
+      "type": "answerable",
+      "question": "How much notice is required to apply for annual leave?",
+      "expected_behavior": "answer",
+      "status": "fail",
+      "refused": true,
+      "answer": "I can't answer that from the available documents.",
+      "sources": [],
+      "cited_docs": [],
+      "retrieved_docs": [
+        "leave_policy.pdf",
+        "travel_policy.md"
+      ],
+      "expected_docs": [
+        "leave_policy.pdf"
+      ],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "refused_unsupported_number",
+      "refusal_reason": "The answer contained figures not found in the cited sources: 10.",
+      "model_answer_before_checks": "10 working days",
+      "failure": "refused an answerable question (refused_unsupported_number)",
+      "latency_seconds": 8.96
+    },
+    {
+      "id": "q07",
+      "type": "answerable",
+      "question": "What is the maximum amount allowed for hotel accommodation?",
+      "expected_behavior": "answer",
+      "status": "fail",
+      "refused": true,
+      "answer": "I can't answer that from the available documents.",
+      "sources": [],
+      "cited_docs": [],
+      "retrieved_docs": [
+        "travel_policy.md"
+      ],
+      "expected_docs": [
+        "travel_policy.md"
+      ],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "refused_low_coverage",
+      "refusal_reason": "The documents do not mention key terms of the question: maximum, amount, allowed.",
+      "model_answer_before_checks": "",
+      "failure": "refused an answerable question (refused_low_coverage)",
+      "latency_seconds": 0.0
+    },
+    {
+      "id": "q08",
+      "type": "answerable",
+      "question": "How long must claims be submitted within to be considered valid?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "30 days",
+      "sources": [
+        "travel_policy.md::p1::c0"
+      ],
+      "cited_docs": [
+        "travel_policy.md"
+      ],
+      "retrieved_docs": [
+        "leave_policy.pdf",
+        "travel_policy.md"
+      ],
+      "expected_docs": [
+        "travel_policy.md"
+      ],
+      "facts": [
+        {
+          "fact": "30 days",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "30 days",
+      "failure": "",
+      "latency_seconds": 10.41
+    },
+    {
+      "id": "q09",
+      "type": "answerable",
+      "question": "What is required for claims submitted after 30 days?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "Written approval from the department head is required.",
+      "sources": [
+        "travel_policy.md::p1::c0"
+      ],
+      "cited_docs": [
+        "travel_policy.md"
+      ],
+      "retrieved_docs": [
+        "leave_policy.pdf",
+        "travel_policy.md"
+      ],
+      "expected_docs": [
+        "travel_policy.md"
+      ],
+      "facts": [
+        {
+          "fact": "written approval from the department head",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "Written approval from the department head is required.",
+      "failure": "",
+      "latency_seconds": 8.79
+    },
+    {
+      "id": "q10",
+      "type": "multi_doc",
+      "question": "Can Shore staff carry forward unused leave days, and what is required for claims submitted after 30 days?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "Shore staff can carry forward up to 5 unused days of annual leave to the next year, but these days expire on 31 March. Claims submitted after 30 days require written approval from the department head.",
+      "sources": [
+        "travel_policy.md::p1::c0",
+        "leave_policy.pdf::p1::c0"
+      ],
+      "cited_docs": [
+        "leave_policy.pdf",
+        "travel_policy.md"
+      ],
+      "retrieved_docs": [
+        "leave_policy.pdf",
+        "travel_policy.md"
+      ],
+      "expected_docs": [
+        "leave_policy.pdf",
+        "travel_policy.md"
+      ],
+      "facts": [
+        {
+          "fact": "5 unused days",
+          "found": true,
+          "method": "exact"
+        },
+        {
+          "fact": "written approval from the department head",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "Shore staff can carry forward up to 5 unused days of annual leave to the next year, but these days expire on 31 March. Claims submitted after 30 days require written approval from the department head.",
+      "failure": "",
+      "latency_seconds": 10.34
+    },
+    {
+      "id": "q11",
+      "type": "multi_doc",
+      "question": "What is required for absences longer than 2 consecutive days, and how long must claims be submitted within to be considered valid?",
+      "expected_behavior": "answer",
+      "status": "fail",
+      "refused": true,
+      "answer": "I can't answer that from the available documents.",
+      "sources": [],
+      "cited_docs": [],
+      "retrieved_docs": [
+        "leave_policy.pdf",
+        "travel_policy.md"
+      ],
+      "expected_docs": [
+        "leave_policy.pdf",
+        "travel_policy.md"
+      ],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "refused_unsupported_number",
+      "refusal_reason": "The answer contained figures not found in the cited sources: 30.",
+      "model_answer_before_checks": "An employee must provide a medical certificate for absences longer than 2 consecutive days. Claims must be submitted within 30 days of returning to be considered valid.",
+      "failure": "refused an answerable question (refused_unsupported_number)",
+      "latency_seconds": 11.64
+    },
+    {
+      "id": "q12",
+      "type": "multi_doc",
+      "question": "How many working days of annual leave does Shore staff get per calendar year, and what is the maximum amount allowed for hotel accommodation?",
+      "expected_behavior": "answer",
+      "status": "fail",
+      "refused": false,
+      "answer": "Shore staff are entitled to 24 working days of paid annual leave per calendar year. Up to 5 unused days may be carried forward to the next year; carried-forward days expire on 31 March.",
+      "sources": [
+        "leave_policy.pdf::p1::c0"
+      ],
+      "cited_docs": [
+        "leave_policy.pdf"
+      ],
+      "retrieved_docs": [
+        "leave_policy.pdf",
+        "travel_policy.md"
+      ],
+      "expected_docs": [
+        "leave_policy.pdf",
+        "travel_policy.md"
+      ],
+      "facts": [
+        {
+          "fact": "24 working days",
+          "found": true,
+          "method": "exact"
+        },
+        {
+          "fact": "INR 6,000 per night",
+          "found": false,
+          "method": "llm-rejected"
+        }
+      ],
+      "grounded": false,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "Shore staff are entitled to 24 working days of paid annual leave per calendar year. Up to 5 unused days may be carried forward to the next year; carried-forward days expire on 31 March.",
+      "failure": "missing key fact(s): ['INR 6,000 per night']; cited ['leave_policy.pdf'], expected ['leave_policy.pdf', 'travel_policy.md']",
+      "latency_seconds": 9.44
+    },
+    {
+      "id": "q13",
+      "type": "ambiguous",
+      "question": "What's needed for claims after 30 days?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "Written approval from the department head is required.",
+      "sources": [
+        "travel_policy.md::p1::c0"
+      ],
+      "cited_docs": [
+        "travel_policy.md"
+      ],
+      "retrieved_docs": [
+        "leave_policy.pdf",
+        "travel_policy.md"
+      ],
+      "expected_docs": [
+        "travel_policy.md"
+      ],
+      "facts": [
+        {
+          "fact": "written approval from the department head",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "Written approval from the department head is required.",
+      "failure": "",
+      "latency_seconds": 5.23
+    },
+    {
+      "id": "q14",
+      "type": "ambiguous",
+      "question": "How much notice is needed for annual leave?",
+      "expected_behavior": "answer",
+      "status": "pass",
+      "refused": false,
+      "answer": "10 working days",
+      "sources": [
+        "leave_policy.pdf::p1::c0"
+      ],
+      "cited_docs": [
+        "leave_policy.pdf"
+      ],
+      "retrieved_docs": [
+        "leave_policy.pdf",
+        "travel_policy.md"
+      ],
+      "expected_docs": [
+        "leave_policy.pdf"
+      ],
+      "facts": [
+        {
+          "fact": "10 working days",
+          "found": true,
+          "method": "exact"
+        }
+      ],
+      "grounded": true,
+      "runner_decision": "answered",
+      "refusal_reason": "",
+      "model_answer_before_checks": "10 working days",
+      "failure": "",
+      "latency_seconds": 9.05
+    },
+    {
+      "id": "q15",
+      "type": "out_of_scope",
+      "question": "Can you provide information on the legal requirements for shore staff to claim travel expenses?",
+      "expected_behavior": "refuse",
+      "status": "pass",
+      "refused": true,
+      "answer": "I can't answer that from the available documents.",
+      "sources": [],
+      "cited_docs": [],
+      "retrieved_docs": [
+        "leave_policy.pdf",
+        "travel_policy.md"
+      ],
+      "expected_docs": [],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "refused_low_coverage",
+      "refusal_reason": "The documents do not mention key terms of the question: provide, information, legal, requirements, expenses.",
+      "model_answer_before_checks": "",
+      "failure": "",
+      "latency_seconds": 0.0
+    },
+    {
+      "id": "q16",
+      "type": "out_of_scope",
+      "question": "How do shore staff handle the medical emergencies during their travel, and what are the procedures in place for reporting such incidents?",
+      "expected_behavior": "refuse",
+      "status": "pass",
+      "refused": true,
+      "answer": "I can't answer that from the available documents.",
+      "sources": [],
+      "cited_docs": [],
+      "retrieved_docs": [
+        "leave_policy.pdf",
+        "travel_policy.md"
+      ],
+      "expected_docs": [],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "refused_low_coverage",
+      "refusal_reason": "The documents do not mention key terms of the question: handle, emergencies, procedures, place, reporting, such, incidents.",
+      "model_answer_before_checks": "",
+      "failure": "",
+      "latency_seconds": 0.0
+    },
+    {
+      "id": "q17",
+      "type": "out_of_scope",
+      "question": "What are the policies for shore staff regarding the storage and protection of personal data during business travel?",
+      "expected_behavior": "refuse",
+      "status": "pass",
+      "refused": true,
+      "answer": "I can't answer that from the available documents.",
+      "sources": [],
+      "cited_docs": [],
+      "retrieved_docs": [
+        "leave_policy.pdf",
+        "travel_policy.md"
+      ],
+      "expected_docs": [],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "refused_invalid_output",
+      "refusal_reason": "The model's reply could not be used (answer is empty but refused is false).",
+      "model_answer_before_checks": "",
+      "failure": "",
+      "latency_seconds": 10.55
+    },
+    {
+      "id": "q18",
+      "type": "out_of_scope",
+      "question": "What is the best way to cook a perfect steak?",
+      "expected_behavior": "refuse",
+      "status": "pass",
+      "refused": true,
+      "answer": "I can't answer that from the available documents.",
+      "sources": [],
+      "cited_docs": [],
+      "retrieved_docs": [],
+      "expected_docs": [],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "refused_no_evidence",
+      "refusal_reason": "No document passage matches this question.",
+      "model_answer_before_checks": "",
+      "failure": "",
+      "latency_seconds": 0.0
+    },
+    {
+      "id": "q19",
+      "type": "out_of_scope",
+      "question": "Who is the next big celebrity in the entertainment industry?",
+      "expected_behavior": "refuse",
+      "status": "pass",
+      "refused": true,
+      "answer": "I can't answer that from the available documents.",
+      "sources": [],
+      "cited_docs": [],
+      "retrieved_docs": [
+        "leave_policy.pdf"
+      ],
+      "expected_docs": [],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "refused_low_coverage",
+      "refusal_reason": "The documents do not mention key terms of the question: big, celebrity, entertainment, industry.",
+      "model_answer_before_checks": "",
+      "failure": "",
+      "latency_seconds": 0.0
+    },
+    {
+      "id": "q20",
+      "type": "out_of_scope",
+      "question": "How do I program a robot to perform a specific task?",
+      "expected_behavior": "refuse",
+      "status": "pass",
+      "refused": true,
+      "answer": "I can't answer that from the available documents.",
+      "sources": [],
+      "cited_docs": [],
+      "retrieved_docs": [],
+      "expected_docs": [],
+      "facts": [],
+      "grounded": false,
+      "runner_decision": "refused_no_evidence",
+      "refusal_reason": "No document passage matches this question.",
+      "model_answer_before_checks": "",
+      "failure": "",
+      "latency_seconds": 0.0
+    }
+  ]
+}

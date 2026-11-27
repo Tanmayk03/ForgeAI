@@ -1,0 +1,36 @@
+{
+  "tools": [
+    {
+      "name": "csv_lookup",
+      "attached": false,
+      "reason": "CSV file(s) present (spare_parts.csv) but unrelated to the brief"
+    },
+    {
+      "name": "calculator",
+      "attached": false,
+      "reason": "no need found in the requirements"
+    },
+    {
+      "name": "weather_api",
+      "attached": false,
+      "reason": "no need found in the requirements"
+    },
+    {
+      "name": "current_date",
+      "attached": false,
+      "reason": "no need found in the requirements"
+    }
+  ],
+  "retrieval": "2 text document(s), about 71 words per page -> chunks of 200 words, top_k 3 (fits 60% of a 4096-token context)",
+  "system_instructions_source": "model",
+  "in_scope_topics": [
+    "Annual Leave",
+    "Travel Claims",
+    "Business Travel Policies"
+  ],
+  "refusal_topics_added_from_guard": [],
+  "known_risks": [
+    "refuse topic 'Medical' appears in the documents (leave_policy.pdf::p2::c0); questions the documents answer may be wrongly refused",
+    "documents also cover keywords not in any must-answer topic: working, carried, forward, sick, public, claim, inr, during, travelling, company"
+  ]
+}

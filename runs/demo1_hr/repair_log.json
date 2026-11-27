@@ -1,0 +1,144 @@
+[
+  {
+    "iteration": 1,
+    "failures_by_category": {
+      "prompt_defect": 4
+    },
+    "failures": [
+      {
+        "id": "q03",
+        "category": "prompt_defect",
+        "subtype": "incomplete",
+        "evidence": "missing ['USD 180']"
+      },
+      {
+        "id": "q13",
+        "category": "prompt_defect",
+        "subtype": "citation",
+        "evidence": "model's answer had the facts but was blocked (refused_unsupported_number)"
+      },
+      {
+        "id": "q14",
+        "category": "prompt_defect",
+        "subtype": "multi_part",
+        "evidence": "missing ['2 days per week']"
+      },
+      {
+        "id": "q15",
+        "category": "prompt_defect",
+        "subtype": "citation",
+        "evidence": "model's answer had the facts but was blocked (refused_unsupported_number)"
+      }
+    ],
+    "target_category": "prompt_defect",
+    "target_subtype": "citation",
+    "targeted_cases": [
+      "q13",
+      "q15"
+    ],
+    "change": "add instruction: Cite every source you use. If you combine facts from two sources, cite both source numbers.",
+    "field": "system_instructions",
+    "old_value": "You are an AI assistant designed to provide HR policy answers for Seaview Shipping Ltd shore-based employees, including leave, public holidays, business travel, expense claims, working hours, remote work, and the company pension scheme.",
+    "new_value": "You are an AI assistant designed to provide HR policy answers for Seaview Shipping Ltd shore-based employees, including leave, public holidays, business travel, expense claims, working hours, remote work, and the company pension scheme. Cite every source you use. If you combine facts from two sources, cite both source numbers.",
+    "score_before": "18/22 (82%)",
+    "score_after": "18/22 (82%)",
+    "fixed_cases": [],
+    "broken_cases": [],
+    "kept": false,
+    "note": "no gain: change rolled back"
+  },
+  {
+    "iteration": 2,
+    "failures_by_category": {
+      "prompt_defect": 4
+    },
+    "failures": [
+      {
+        "id": "q03",
+        "category": "prompt_defect",
+        "subtype": "incomplete",
+        "evidence": "missing ['USD 180']"
+      },
+      {
+        "id": "q13",
+        "category": "prompt_defect",
+        "subtype": "citation",
+        "evidence": "model's answer had the facts but was blocked (refused_unsupported_number)"
+      },
+      {
+        "id": "q14",
+        "category": "prompt_defect",
+        "subtype": "multi_part",
+        "evidence": "missing ['2 days per week']"
+      },
+      {
+        "id": "q15",
+        "category": "prompt_defect",
+        "subtype": "citation",
+        "evidence": "model's answer had the facts but was blocked (refused_unsupported_number)"
+      }
+    ],
+    "target_category": "prompt_defect",
+    "target_subtype": "incomplete",
+    "targeted_cases": [
+      "q03"
+    ],
+    "change": "add instruction: Always include the exact figures, units and conditions from the SOURCES in your answer.",
+    "field": "system_instructions",
+    "old_value": "You are an AI assistant designed to provide HR policy answers for Seaview Shipping Ltd shore-based employees, including leave, public holidays, business travel, expense claims, working hours, remote work, and the company pension scheme.",
+    "new_value": "You are an AI assistant designed to provide HR policy answers for Seaview Shipping Ltd shore-based employees, including leave, public holidays, business travel, expense claims, working hours, remote work, and the company pension scheme. Always include the exact figures, units and conditions from the SOURCES in your answer.",
+    "score_before": "18/22 (82%)",
+    "score_after": "18/22 (82%)",
+    "fixed_cases": [],
+    "broken_cases": [],
+    "kept": false,
+    "note": "no gain: change rolled back"
+  },
+  {
+    "iteration": 3,
+    "failures_by_category": {
+      "prompt_defect": 4
+    },
+    "failures": [
+      {
+        "id": "q03",
+        "category": "prompt_defect",
+        "subtype": "incomplete",
+        "evidence": "missing ['USD 180']"
+      },
+      {
+        "id": "q13",
+        "category": "prompt_defect",
+        "subtype": "citation",
+        "evidence": "model's answer had the facts but was blocked (refused_unsupported_number)"
+      },
+      {
+        "id": "q14",
+        "category": "prompt_defect",
+        "subtype": "multi_part",
+        "evidence": "missing ['2 days per week']"
+      },
+      {
+        "id": "q15",
+        "category": "prompt_defect",
+        "subtype": "citation",
+        "evidence": "model's answer had the facts but was blocked (refused_unsupported_number)"
+      }
+    ],
+    "target_category": "prompt_defect",
+    "target_subtype": "multi_part",
+    "targeted_cases": [
+      "q14"
+    ],
+    "change": "add instruction: If the question asks more than one thing, answer every part, each from its own source.",
+    "field": "system_instructions",
+    "old_value": "You are an AI assistant designed to provide HR policy answers for Seaview Shipping Ltd shore-based employees, including leave, public holidays, business travel, expense claims, working hours, remote work, and the company pension scheme.",
+    "new_value": "You are an AI assistant designed to provide HR policy answers for Seaview Shipping Ltd shore-based employees, including leave, public holidays, business travel, expense claims, working hours, remote work, and the company pension scheme. If the question asks more than one thing, answer every part, each from its own source.",
+    "score_before": "18/22 (82%)",
+    "score_after": "18/22 (82%)",
+    "fixed_cases": [],
+    "broken_cases": [],
+    "kept": false,
+    "note": "no gain: change rolled back"
+  }
+]

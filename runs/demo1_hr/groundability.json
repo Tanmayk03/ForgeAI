@@ -1,0 +1,86 @@
+{
+  "topic_support": [
+    {
+      "topic": "leave of all kinds",
+      "status": "supported",
+      "method": "llm",
+      "coverage": 0.667,
+      "evidence": [
+        "leave_policy.pdf::p2::c0",
+        "leave_policy.pdf::p1::c0"
+      ],
+      "quote": "Seaview Shipping Ltd - Leave Policy for Shore Staff (version 3, 2026)",
+      "reason": "model verified, quote found in text"
+    },
+    {
+      "topic": "public holidays",
+      "status": "supported",
+      "method": "code",
+      "coverage": 1.0,
+      "evidence": [
+        "leave_policy.pdf::p2::c0"
+      ],
+      "quote": "",
+      "reason": "all key words found together in one passage"
+    },
+    {
+      "topic": "business travel and expense claims",
+      "status": "supported",
+      "method": "llm",
+      "coverage": 0.75,
+      "evidence": [
+        "travel_expenses_policy.pdf::p2::c0",
+        "travel_expenses_policy.pdf::p1::c0"
+      ],
+      "quote": "Expense claims must be submitted in the HR portal within 30 days of returning from the trip, with original receipts attached.",
+      "reason": "model verified, quote found in text"
+    },
+    {
+      "topic": "working hours",
+      "status": "supported",
+      "method": "code",
+      "coverage": 1.0,
+      "evidence": [
+        "code_of_conduct.md::p1::c0"
+      ],
+      "quote": "",
+      "reason": "all key words found together in one passage"
+    },
+    {
+      "topic": "remote work",
+      "status": "supported",
+      "method": "code",
+      "coverage": 1.0,
+      "evidence": [
+        "code_of_conduct.md::p1::c0"
+      ],
+      "quote": "",
+      "reason": "all key words found together in one passage"
+    },
+    {
+      "topic": "code of conduct",
+      "status": "supported",
+      "method": "code",
+      "coverage": 1.0,
+      "evidence": [
+        "code_of_conduct.md::p1::c0"
+      ],
+      "quote": "",
+      "reason": "all key words found together in one passage"
+    },
+    {
+      "topic": "company pension scheme",
+      "status": "unsupported",
+      "method": "code",
+      "coverage": 0.0,
+      "evidence": [],
+      "quote": "",
+      "reason": "none of the topic's key words appear in any document"
+    }
+  ],
+  "warnings": [
+    "refuse topic 'medical' appears in the documents (leave_policy.pdf::p1::c0); questions the documents answer may be wrongly refused",
+    "documents also cover keywords not in any must-answer topic: gifts, office, compliance, team, interest, year, carried, forward, sick, annual, approval, flights, class, night, usd",
+    "UNSUPPORTED by the documents (the agent must refuse these): ['company pension scheme']"
+  ]
+}

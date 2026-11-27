@@ -1,0 +1,213 @@
+{
+  "agent_name": "sparesassistant",
+  "purpose": "Provides answers to questions about spare parts procurement, including finding parts, calculating prices, suppliers, lead times, and minimum order quantities, and explaining supplier terms and procurement approval rules.",
+  "scope": "The assistant will cover the procurement of spare parts for Seaview Shipping Ltd, including finding parts by part number or description, calculating prices and suppliers, lead times, and minimum order quantities, and explaining supplier terms and procurement approval rules.",
+  "audience": "Ship-spares procurement team members",
+  "tone": "Formal and concise",
+  "must_answer_topics": [
+    "find parts by part number or description",
+    "calculate prices",
+    "identify suppliers",
+    "determine lead times",
+    "calculate minimum order quantities",
+    "explain supplier terms",
+    "explain procurement approval rules"
+  ],
+  "must_refuse_topics": [
+    "legal issues",
+    "medical information",
+    "personal data protection"
+  ],
+  "schema_version": "1.0",
+  "brief": "I need an assistant for our ship-spares procurement team. It should find spare parts by part number or description, give prices, suppliers, lead times and minimum order quantities, calculate order totals and discounts, and explain supplier terms and our procurement approval rules.",
+  "documents_folder": "data\\demo2_spares",
+  "documents": [
+    {
+      "name": "marisupply_supply_terms.md",
+      "file_type": "md",
+      "pages": 1,
+      "words": 141,
+      "chunked": true,
+      "preview": "# Marisupply Ltd - Supply Terms for Seaview Shipping Ltd (2026) ## Ordering Orders are placed by purchase order sent to po@marisupply.example. Each order line must meet the minimum order quantity listed in the catalogue. ## Prices and discounts Prices are in US dollars, ex works Singapore. Marisupply gives a",
+      "keywords": [
+        "order",
+        "marisupply",
+        "usd",
+        "per",
+        "month",
+        "warranty",
+        "ltd",
+        "orders"
+      ]
+    },
+    {
+      "name": "oceanparts_supply_terms.pdf",
+      "file_type": "pdf",
+      "pages": 1,
+      "words": 160,
+      "chunked": true,
+      "preview": "Oceanparts Co - Supply Terms for Seaview Shipping Ltd (2026) 1. Ordering Orders are placed through the Oceanparts online portal or by email to orders@oceanparts.example. Orders below the minimum order quantity shown in the catalogue are not accepted. 2. Prices and discounts Prices are in US dollars and exclude delivery.",
+      "keywords": [
+        "delivery",
+        "order",
+        "oceanparts",
+        "orders",
+        "percent",
+        "usd",
+        "within",
+        "catalogue"
+      ]
+    },
+    {
+      "name": "procurement_rules.md",
+      "file_type": "md",
+      "pages": 1,
+      "words": 137,
+      "chunked": true,
+      "preview": "# Seaview Shipping Ltd - Spare Parts Procurement Rules ## Approval limits - Orders up to USD 2,000: approved by the purchasing officer. - Orders above USD 2,000 and up to USD 10,000: require approval from the technical superintendent. - Orders above USD 10,000: require approval from the fleet manager.",
+      "keywords": [
+        "usd",
+        "orders",
+        "must",
+        "critical",
+        "spare",
+        "approval",
+        "above",
+        "parts"
+      ]
+    },
+    {
+      "name": "spares_catalogue.csv",
+      "file_type": "csv",
+      "pages": 1,
+      "words": 16,
+      "chunked": false,
+      "preview": "CSV columns: part_no,description,category,unit_price_usd,supplier,lead_time_days,min_order_qty; 25 rows",
+      "keywords": [
+        "main",
+        "engine",
+        "marisupply",
+        "ltd",
+        "part",
+        "description",
+        "category",
+        "unit"
+      ]
+    }
+  ],
+  "skipped_files": [],
+  "clarifications": [
+    {
+      "question": "Who will use this assistant?",
+      "answer": "Ship-spares procurement team members",
+      "source": "assumed"
+    },
+    {
+      "question": "What tone should it use?",
+      "answer": "Formal and concise",
+      "source": "assumed"
+    },
+    {
+      "question": "Which topics MUST it answer? (comma-separated)",
+      "answer": "find parts by part number or description, calculate prices, identify suppliers, determine lead times, calculate minimum order quantities, explain supplier terms, explain procurement approval rules",
+      "source": "assumed"
+    },
+    {
+      "question": "Which topics must it REFUSE? (comma-separated)",
+      "answer": "legal issues, medical information, personal data protection",
+      "source": "assumed"
+    },
+    {
+      "question": "In one sentence, what is in scope and what is out of scope?",
+      "answer": "The assistant will cover the procurement of spare parts for Seaview Shipping Ltd, including finding parts by part number or description, calculating prices and suppliers, lead times, and minimum order quantities, and explaining supplier terms and procurement approval rules.",
+      "source": "assumed"
+    }
+  ],
+  "notes": [],
+  "topic_support": [
+    {
+      "topic": "find parts by part number or description",
+      "status": "supported",
+      "method": "llm",
+      "coverage": 0.2,
+      "evidence": [
+        "procurement_rules.md::p1::c0",
+        "marisupply_supply_terms.md::p1::c0"
+      ],
+      "quote": "Parts in the Main engine, Steering and Safety categories are critical spares.",
+      "reason": "model verified, quote found in text"
+    },
+    {
+      "topic": "calculate prices",
+      "status": "supported",
+      "method": "llm",
+      "coverage": 0.5,
+      "evidence": [
+        "marisupply_supply_terms.md::p1::c0",
+        "oceanparts_supply_terms.pdf::p1::c0"
+      ],
+      "quote": "Prices are in US dollars, ex works Singapore.",
+      "reason": "model verified, quote found in text"
+    },
+    {
+      "topic": "identify suppliers",
+      "status": "unsupported",
+      "method": "code",
+      "coverage": 0.0,
+      "evidence": [],
+      "quote": "",
+      "reason": "none of the topic's key words appear in any document"
+    },
+    {
+      "topic": "determine lead times",
+      "status": "supported",
+      "method": "llm",
+      "coverage": 0.667,
+      "evidence": [
+        "marisupply_supply_terms.md::p1::c0",
+        "oceanparts_supply_terms.pdf::p1::c0"
+      ],
+      "quote": "Delivery Lead times in the catalogue start from receipt of the purchase order.",
+      "reason": "model verified, quote found in text"
+    },
+    {
+      "topic": "calculate minimum order quantities",
+      "status": "supported",
+      "method": "llm",
+      "coverage": 0.5,
+      "evidence": [
+        "marisupply_supply_terms.md::p1::c0",
+        "oceanparts_supply_terms.pdf::p1::c0"
+      ],
+      "quote": "Orders below the minimum order quantity shown in the catalogue are not accepted.",
+      "reason": "model verified, quote found in text"
+    },
+    {
+      "topic": "explain supplier terms",
+      "status": "supported",
+      "method": "llm",
+      "coverage": 0.333,
+      "evidence": [
+        "procurement_rules.md::p1::c0",
+        "marisupply_supply_terms.md::p1::c0"
+      ],
+      "quote": "Orders above USD 10,000: require approval from the fleet manager.",
+      "reason": "model verified, quote found in text"
+    },
+    {
+      "topic": "explain procurement approval rules",
+      "status": "supported",
+      "method": "llm",
+      "coverage": 0.75,
+      "evidence": [
+        "procurement_rules.md::p1::c0"
+      ],
+      "quote": "Orders above USD 10,000: require approval from the fleet manager.",
+      "reason": "model verified, quote found in text"
+    }
+  ],
+  "guard_warnings": [
+    "documents also cover keywords not in any must-answer topic: marisupply, freight, costs, per, month, oceanparts, ports, percent, through, online, critical, spare, require, quotations, least",
+    "UNSUPPORTED by the documents (the agent must refuse these): ['identify suppliers']"
+  ]
+}

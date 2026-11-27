@@ -1,0 +1,148 @@
+{
+  "agent_name": "leave_travel_assistant",
+  "purpose": "Answer leave and travel policy questions for shore staff.",
+  "scope": "Provides information on shore staff leave and travel policies, including annual leave, travel claims, and business travel policies.",
+  "audience": "Shore staff",
+  "tone": "Formal and concise",
+  "must_answer_topics": [
+    "Annual Leave",
+    "Travel Claims",
+    "Business Travel Policies"
+  ],
+  "must_refuse_topics": [
+    "Legal",
+    "Medical",
+    "Personal Data"
+  ],
+  "schema_version": "1.0",
+  "brief": "I need an assistant that answers leave and travel policy questions for shore staff",
+  "documents_folder": "data\\sample_docs",
+  "documents": [
+    {
+      "name": "leave_policy.pdf",
+      "file_type": "pdf",
+      "pages": 2,
+      "words": 118,
+      "chunked": true,
+      "preview": "Leave Policy - Shore Staff 1. Annual leave. Shore staff are entitled to 24 working days of paid annual leave per calendar year. Leave accrues at 2 days per completed month of service. Up to 5 unused days may be carried forward to the next year; carried-forward days expire on",
+      "keywords": [
+        "leave",
+        "days",
+        "annual",
+        "per",
+        "year",
+        "shore",
+        "staff",
+        "working"
+      ]
+    },
+    {
+      "name": "spare_parts.csv",
+      "file_type": "csv",
+      "pages": 1,
+      "words": 9,
+      "chunked": false,
+      "preview": "CSV columns: part_no,description,unit_price_usd,supplier; 2 rows",
+      "keywords": [
+        "part",
+        "description",
+        "unit",
+        "price",
+        "usd",
+        "supplier",
+        "fuel",
+        "injector"
+      ]
+    },
+    {
+      "name": "travel_policy.md",
+      "file_type": "md",
+      "pages": 1,
+      "words": 96,
+      "chunked": true,
+      "preview": "# Travel Policy - Shore Staff ## Business travel claims Employees travelling on approved company business may claim economy-class airfare, hotel accommodation up to INR 6,000 per night, and a daily meal allowance of INR 1,200. ## Submitting a claim Claims must be submitted in the HR portal within 30",
+      "keywords": [
+        "travel",
+        "claims",
+        "business",
+        "approved",
+        "claim",
+        "inr",
+        "submitted",
+        "days"
+      ]
+    }
+  ],
+  "skipped_files": [
+    "old_memo.docx: unsupported file type '.docx'"
+  ],
+  "clarifications": [
+    {
+      "question": "Who will use this assistant?",
+      "answer": "Shore staff",
+      "source": "assumed"
+    },
+    {
+      "question": "What tone should it use?",
+      "answer": "Formal and concise",
+      "source": "assumed"
+    },
+    {
+      "question": "Which topics MUST it answer? (comma-separated)",
+      "answer": "Annual Leave, Travel Claims, Business Travel Policies",
+      "source": "assumed"
+    },
+    {
+      "question": "Which topics must it REFUSE? (comma-separated)",
+      "answer": "Legal, Medical, Personal Data",
+      "source": "assumed"
+    },
+    {
+      "question": "In one sentence, what is in scope and what is out of scope?",
+      "answer": "Provides information on shore staff leave and travel policies, including annual leave, travel claims, and business travel policies.",
+      "source": "assumed"
+    }
+  ],
+  "notes": [],
+  "topic_support": [
+    {
+      "topic": "Annual Leave",
+      "status": "supported",
+      "method": "code",
+      "coverage": 1.0,
+      "evidence": [
+        "leave_policy.pdf::p1::c0",
+        "leave_policy.pdf::p2::c0",
+        "travel_policy.md::p1::c0"
+      ],
+      "quote": "",
+      "reason": "all key words found together in one passage"
+    },
+    {
+      "topic": "Travel Claims",
+      "status": "supported",
+      "method": "code",
+      "coverage": 1.0,
+      "evidence": [
+        "travel_policy.md::p1::c0"
+      ],
+      "quote": "",
+      "reason": "all key words found together in one passage"
+    },
+    {
+      "topic": "Business Travel Policies",
+      "status": "supported",
+      "method": "llm",
+      "coverage": 0.667,
+      "evidence": [
+        "travel_policy.md::p1::c0"
+      ],
+      "quote": "# Travel Policy - Shore Staff",
+      "reason": "model verified, quote found in text"
+    }
+  ],
+  "guard_warnings": [
+    "refuse topic 'Medical' appears in the documents (leave_policy.pdf::p2::c0); questions the documents answer may be wrongly refused",
+    "documents also cover keywords not in any must-answer topic: working, carried, forward, sick, public, claim, inr, during, travelling, company"
+  ]
+}
