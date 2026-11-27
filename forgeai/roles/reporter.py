@@ -32,6 +32,8 @@ LIMITATIONS = [
     "Key facts are short phrases; a correct answer that states a fact in different words (e.g. spelled-out "
     "numbers) can be scored as missing.",
     "Repair tunes the agent on the same eval set it is scored on, so the final score may be optimistic.",
+    "The guard counts a topic as supported when at least half of its key words appear in a CSV, so a "
+    "two-word topic can pass on one word.",
 ]
 
 
