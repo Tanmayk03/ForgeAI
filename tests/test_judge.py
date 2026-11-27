@@ -52,6 +52,21 @@ class TestFactChecks(unittest.TestCase):
                                             "you need written approval of the department head"), "fuzzy")
         self.assertEqual(check_fact_by_code("24 working days", "Staff get 20 working days."), "")
 
+    def test_context_words_from_the_question(self):
+        # Real false failures (now pass): the missing words were already in the question.
+        self.assertEqual(check_fact_by_code("3 percent discount", "3 percent",
+                                            "What is the discount rate for orders above USD 10,000?"), "context")
+        self.assertEqual(check_fact_by_code("USD 400 per order", "USD 400",
+                                            "How much does air freight cost per order?"), "context")
+        # Real true failures (must still fail): wrong answers the quote check had caught.
+        self.assertEqual(check_fact_by_code("USD 5,000", "default order quantity",
+                                            "What is the minimum order quantity for orders placed online?"), "")
+        self.assertEqual(check_fact_by_code("USD 180", "The maximum is INR 6,000 per night.",
+                                            "What is the hotel limit per night abroad?"), "")
+        # The numbers must always match, and a fact fully contained in the question proves nothing.
+        self.assertEqual(check_fact_by_code("3 percent discount", "5 percent", "What is the discount rate?"), "")
+        self.assertEqual(check_fact_by_code("annual leave", "Yes.", "Is there annual leave?"), "")
+
 
 class TestJudge(unittest.TestCase):
     def test_pass_and_fact_missing(self):
@@ -128,3 +143,21 @@ class TestJudge(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestRejudge(unittest.TestCase):
+    def test_rejudge_fixes_context_false_failure_without_model(self):
+        from forgeai.roles.judge import CaseResult, FactCheck, Scorecard, rejudge
+        res = CaseResult(id="q5", type="answerable", question="What is the discount rate for orders above USD 10,000?",
+                         expected_behavior="answer", status="fail", answer="3 percent", grounded=True,
+                         expected_docs=["terms.md"], cited_docs=["terms.md"],
+                         facts=[FactCheck(fact="3 percent discount", found=False, method="llm-rejected")],
+                         failure="missing key fact(s): ['3 percent discount']")
+        old = Scorecard(agent_name="a", eval_sha256="x", label="iteration_0", passed=0, failed=1, errors=0, total=1,
+                        pass_rate=0.0, by_type={"answerable": {"pass": 0, "fail": 1, "error": 0}},
+                        judge_llm_calls=1, total_seconds=1.0, results=[res])
+        new = rejudge(old)
+        self.assertEqual(new.results[0].status, "pass")
+        self.assertEqual(new.results[0].facts[0].method, "context")
+        self.assertEqual((new.passed, new.pass_rate, new.label), (1, 1.0, "iteration_0_rejudged"))
+        self.assertEqual(old.results[0].status, "fail")          # original scorecard untouched

@@ -57,6 +57,7 @@ def load_run(name: str) -> dict:
         "timings": read_json(run / "timings.json") or {},
         "scorecards": scorecards,
         "report": report.read_text(encoding="utf-8") if report.is_file() else "",
+        "labels": read_json(run / "human_labels.json") or [],
     }
 
 
@@ -261,6 +262,11 @@ with tabs[3]:
         card = data["scorecards"][label]
         st.markdown(f"**{score_text(card)}** passed, {card['errors']} error(s), "
                     f"{card['judge_llm_calls']} LLM judge call(s), {card['total_seconds']:.0f} s")
+        labels = [l for l in data["labels"] if l["scorecard"] == card["label"]]
+        if labels:
+            agree = sum((l["judge"] == "pass") == l["human_ok"] for l in labels)
+            st.success(f"Judge checked by a human: agrees on {agree}/{len(labels)} labelled answers "
+                       f"({agree / len(labels):.0%}).")
         by_type = pd.DataFrame(card["by_type"]).T[["pass", "fail"]]
         st.markdown("**Passed and failed questions by type**")
         st.bar_chart(by_type, color=["#639922", "#E24B4A"], horizontal=True)

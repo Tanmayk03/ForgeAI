@@ -257,7 +257,9 @@ Each frozen case is run through the runner and scored **code-first**:
 
 * **Should answer** → pass iff *not refused* ∧ *every key fact present* ∧ *grounded*.
   * Fact matching: (1) exact normalised phrase; (2) fuzzy — ≥ 80 % of the fact's words present and
-    **every number exact**; (3) only then an LLM check.
+    **every number exact**; (3) *context* — words of the fact that the question already contains need
+    not be repeated ("What is the discount rate?" → "3 percent" states "3 percent discount"), the
+    remaining words and every number must be present; (4) only then an LLM check.
   * Grounded: cited documents intersect the expected documents (multi-document cases: **all**
     expected documents must be cited). `tool:csv_lookup` sources map to the CSV files.
 * **Should refuse** → pass iff refused.
@@ -273,6 +275,20 @@ The LLM is consulted only for facts code could not find, one fact at a time, wit
 | **Position bias** | never compares two answers; pointwise only |
 | **Verbosity bias** | never asked about quality or length; one binary fact per call |
 | **Self-preference** (same model family) | code decides most facts; an LLM "yes" counts only with a **quote that code verifies inside the answer** and that contains the fact's numbers |
+
+### Auditing the judge itself
+
+* **Quote verification works — and was too strict.** In the saved demo answers the LLM judge said
+  "yes" seven times where code then rejected its quote. Three were genuinely wrong answers (e.g. INR
+  6,000 given for a USD 180 limit): the defence caught them. Four were correct short answers whose
+  missing words were already in the question ("3 percent" for "the discount rate"). The *context*
+  rule fixes those four and still fails the three wrong ones (tests use these exact cases).
+* `scripts/rejudge.py` re-scores **saved answers** with the current judge — no agent, no model, instant —
+  so a judge change can be shown on identical answers (demo2 baseline 42 % → 54 %, rehearsal baseline
+  64 % → 68 %, demo1 unchanged).
+* `scripts/label_judge.py` measures **judge–human agreement**: a person labels a sample of saved
+  answers (all judge failures first), and the tool reports agreement plus every case where the judge
+  was too lenient or too strict. The result is shown in the report and the viewer.
 
 In the demos the judge needed **3 LLM calls for 22 cases** (demo1) and **8 for 25** (demo2); everything else was decided by code.
 

@@ -6,7 +6,11 @@ Checks per case, code first:
   should ANSWER  passed = not refused AND every key fact present AND grounded
     facts     1. code: exact phrase match (after normalising "6,000" -> "6000")
               2. code: >= 80% of the fact's words present and every number exact
-              3. LLM, only if 1-2 fail: one yes/no question per fact, and the
+              3. code ("context"): words of the fact that the QUESTION already
+                 contains are context, not answer ("What is the discount rate?" ->
+                 "3 percent" states "3 percent discount"); the rest of the fact's
+                 words and every number must be in the answer
+              4. LLM, only if 1-3 fail: one yes/no question per fact, and the
                  model must quote the part of the answer that states it; code
                  checks the quote is really in the answer and has the fact's numbers
     grounded  the cited sources come from the expected documents
@@ -104,8 +108,8 @@ def _doc_of(source_id: str, csv_docs: list[str]) -> list[str]:
     return [source_id.split("::")[0]]
 
 
-def check_fact_by_code(fact: str, answer: str) -> str:
-    """'exact', 'fuzzy' or '' (not found)."""
+def check_fact_by_code(fact: str, answer: str, question: str = "") -> str:
+    """'exact', 'fuzzy', 'context' or '' (not found)."""
     if fact_in_text(fact, answer):
         return "exact"
     words = tokenize(fact)
@@ -113,6 +117,11 @@ def check_fact_by_code(fact: str, answer: str) -> str:
     if words and sum(w in answer_words for w in words) / len(words) >= FUZZY_SHARE \
             and _numbers(fact) <= _numbers(answer):
         return "fuzzy"
+    # Context: the question's own words need not be repeated in the answer.
+    # Real false failures: "3 percent" for "What is the discount rate ...?" (key "3 percent discount").
+    core = [w for w in words if w not in set(tokenize(question))]
+    if question and core and all(w in answer_words for w in core) and _numbers(fact) <= _numbers(answer):
+        return "context"
     return ""
 
 
@@ -123,8 +132,8 @@ class Judge:
         self.llm_calls = 0
         self.template = Template((config.PROMPTS_DIR / "judge_fact.txt").read_text(encoding="utf-8"))
 
-    def check_fact(self, fact: str, answer: str) -> FactCheck:
-        method = check_fact_by_code(fact, answer)
+    def check_fact(self, fact: str, answer: str, question: str = "") -> FactCheck:
+        method = check_fact_by_code(fact, answer, question)
         if method:
             return FactCheck(fact=fact, found=True, method=method)
         self.llm_calls += 1
@@ -163,7 +172,7 @@ class Judge:
         if r.refused:
             result.failure = f"refused an answerable question ({r.trace.decision})"
             return result
-        result.facts = [self.check_fact(f, r.answer) for f in case.key_facts]
+        result.facts = [self.check_fact(f, r.answer, case.question) for f in case.key_facts]
         need = set(case.expected_docs)
         result.grounded = need <= set(cited) if case.type == "multi_doc" else bool(need & set(cited))
         missing = [f.fact for f in result.facts if not f.found]
@@ -205,6 +214,43 @@ def run_evals(evals: EvalSet, runner: AgentRunner, label: str = "iteration_0",
         pass_rate=round(passed / scored, 3) if scored else 0.0, by_type=by_type,
         judge_llm_calls=judge.llm_calls, total_seconds=round(time.perf_counter() - started, 1), results=results,
     )
+
+
+def rejudge(card: Scorecard, label: str | None = None) -> Scorecard:
+    """
+    Re-score saved answers with the CURRENT code-only fact checks - no agent and
+    no model calls, so it is instant and repeatable. A fact already found stays
+    found; a missing fact is re-checked in code. Grounding, refusals and errors
+    are unchanged. Used to show the effect of a judge change on the same answers.
+    """
+    results = []
+    for res in card.results:
+        res = res.model_copy(deep=True)
+        if res.status != "error" and res.expected_behavior == "answer" and not res.refused:
+            for fc in res.facts:
+                if not fc.found:
+                    method = check_fact_by_code(fc.fact, res.answer, res.question)
+                    if method:
+                        fc.found, fc.method = True, method
+            missing = [f.fact for f in res.facts if not f.found]
+            res.status = "pass" if not missing and res.grounded else "fail"
+            problems = []
+            if missing:
+                problems.append(f"missing key fact(s): {missing}")
+            if not res.grounded:
+                problems.append(f"cited {res.cited_docs or 'nothing'}, expected {sorted(res.expected_docs)}")
+            res.failure = "; ".join(problems)
+        results.append(res)
+    by_type: dict[str, dict[str, int]] = {}
+    for res in results:
+        by_type.setdefault(res.type, {"pass": 0, "fail": 0, "error": 0})[res.status] += 1
+    passed = sum(r.status == "pass" for r in results)
+    failed = sum(r.status == "fail" for r in results)
+    return card.model_copy(update={
+        "label": label or f"{card.label}_rejudged", "passed": passed, "failed": failed,
+        "pass_rate": round(passed / (passed + failed), 3) if passed + failed else 0.0,
+        "by_type": by_type, "results": results,
+    })
 
 
 def save_scorecard(card: Scorecard, run_dir: str | Path) -> Path:

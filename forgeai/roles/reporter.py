@@ -108,8 +108,22 @@ def write_report(run_dir: str | Path) -> Path:
                      f"{'kept' if log['kept'] else log.get('note', 'rolled back')} |")
         elif log.get("note"):
             L.append(f"| {log['iteration']} | - | - | | | {log['note']} |")
+    for path in sorted(run.glob("scorecard_*_rejudged.json")):
+        rc = _card(path)
+        source = rc.label.replace("_rejudged", "")
+        L.append(f"| {source} re-judged | same answers, current judge (code checks only) | "
+                 f"{rc.passed}/{rc.passed + rc.failed} ({rc.pass_rate:.0%}) | | | see judge note |")
     L += ["", "By case type (final): " + "; ".join(
         f"{t} {row['pass']}/{row['pass'] + row['fail']}" for t, row in final.by_type.items()), ""]
+
+    from forgeai.roles.judge_agreement import agreement, load_labels
+    labels = load_labels(run)
+    if labels:
+        a = agreement(labels)
+        L += ["### Is the judge trustworthy?", "",
+              f"A human labelled {a.labelled} saved answers. The judge agreed on **{a.agree}/{a.labelled} "
+              f"({a.rate:.0%})**. Judge too lenient (passed, human said wrong): {', '.join(a.false_pass) or 'none'}. "
+              f"Judge too strict (failed, human said fine): {', '.join(a.false_fail) or 'none'}.", ""]
 
     failures = classify_all(final, evals)
     L += ["## 6. What still fails, and why", ""]
