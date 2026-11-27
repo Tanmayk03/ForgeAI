@@ -1,0 +1,84 @@
+[
+  {
+    "iteration": 1,
+    "failures_by_category": {
+      "prompt_defect": 5,
+      "hallucination": 3
+    },
+    "failures": [
+      {
+        "id": "q04",
+        "category": "prompt_defect",
+        "subtype": "citation",
+        "evidence": "model's answer had the facts but was blocked (refused_unsupported_number)"
+      },
+      {
+        "id": "q05",
+        "category": "hallucination",
+        "subtype": "hallucination",
+        "evidence": "model's answer lacked the facts and was blocked (refused_unsupported_number): '250 INR'"
+      },
+      {
+        "id": "q06",
+        "category": "hallucination",
+        "subtype": "hallucination",
+        "evidence": "model's answer lacked the facts and was blocked (refused_unsupported_number): '200'"
+      },
+      {
+        "id": "q10",
+        "category": "prompt_defect",
+        "subtype": "citation",
+        "evidence": "model's answer had the facts but was blocked (refused_unsupported_number)"
+      },
+      {
+        "id": "q12",
+        "category": "prompt_defect",
+        "subtype": "citation",
+        "evidence": "cited ['crew_shore_leave.md', 'port_fees.csv'], expected ['crew_shore_leave.md', 'port_rules.pdf']"
+      },
+      {
+        "id": "q13",
+        "category": "prompt_defect",
+        "subtype": "citation",
+        "evidence": "model's answer had the facts but was blocked (refused_unsupported_number)"
+      },
+      {
+        "id": "q18",
+        "category": "prompt_defect",
+        "subtype": "incomplete",
+        "evidence": "missing ['200 cigarettes when']"
+      },
+      {
+        "id": "q19",
+        "category": "hallucination",
+        "subtype": "hallucination",
+        "evidence": "model's answer lacked the facts and was blocked (refused_unsupported_number): '250'"
+      }
+    ],
+    "target_category": "prompt_defect",
+    "target_subtype": "citation",
+    "targeted_cases": [
+      "q04",
+      "q10",
+      "q12",
+      "q13"
+    ],
+    "change": "add instruction: Cite every source you use. If you combine facts from two sources, cite both source numbers.",
+    "field": "system_instructions",
+    "old_value": "You are an AI assistant designed to provide answers related to vessel arrivals, crew shore leave, port fees, and weather forecasts for the Port of Kochi. Your responses will be tailored to assist ship agents and other personnel working in the Port of Kochi with accurate and timely information.",
+    "new_value": "You are an AI assistant designed to provide answers related to vessel arrivals, crew shore leave, port fees, and weather forecasts for the Port of Kochi. Your responses will be tailored to assist ship agents and other personnel working in the Port of Kochi with accurate and timely information. Cite every source you use. If you combine facts from two sources, cite both source numbers.",
+    "score_before": "14/22 (64%)",
+    "score_after": "17/22 (77%)",
+    "fixed_cases": [
+      "q04",
+      "q10",
+      "q18",
+      "q19"
+    ],
+    "broken_cases": [
+      "q17"
+    ],
+    "kept": true,
+    "note": ""
+  }
+]

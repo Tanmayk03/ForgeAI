@@ -1,0 +1,75 @@
+{
+  "topic_support": [
+    {
+      "topic": "arrival notice deadlines",
+      "status": "supported",
+      "method": "llm",
+      "coverage": 0.667,
+      "evidence": [
+        "port_rules.pdf::p1::c0",
+        "crew_shore_leave.md::p1::c0"
+      ],
+      "quote": "Arrival notice Ship agents must send the pre-arrival notice to the Harbour Master at least 72 hours before the vessel's expected arrival.",
+      "reason": "model verified, quote found in text"
+    },
+    {
+      "topic": "pilotage and berthing rules",
+      "status": "supported",
+      "method": "code",
+      "coverage": 1.0,
+      "evidence": [
+        "port_rules.pdf::p1::c0"
+      ],
+      "quote": "",
+      "reason": "all key words found together in one passage"
+    },
+    {
+      "topic": "safety permits",
+      "status": "supported",
+      "method": "code",
+      "coverage": 1.0,
+      "evidence": [
+        "port_rules.pdf::p2::c0",
+        "csv:port_fees.csv"
+      ],
+      "quote": "",
+      "reason": "all key words found together in one passage"
+    },
+    {
+      "topic": "port fees",
+      "status": "supported",
+      "method": "code",
+      "coverage": 0.5,
+      "evidence": [
+        "csv:port_fees.csv"
+      ],
+      "quote": "",
+      "reason": "most key words found in CSV data"
+    },
+    {
+      "topic": "days until notice deadline",
+      "status": "supported",
+      "method": "llm",
+      "coverage": 0.25,
+      "evidence": [
+        "port_rules.pdf::p1::c0"
+      ],
+      "quote": "Vessels carrying dangerous goods must send the dangerous goods declaration at least 48 hours before arrival.",
+      "reason": "model verified, quote found in text"
+    },
+    {
+      "topic": "current weather forecast",
+      "status": "supported",
+      "method": "llm",
+      "coverage": 0.333,
+      "evidence": [
+        "port_rules.pdf::p2::c0"
+      ],
+      "quote": "Cargo operations with cranes stop when the wind speed exceeds 50 km/h.",
+      "reason": "model verified, quote found in text"
+    }
+  ],
+  "warnings": [
+    "documents also cover keywords not in any must-answer topic: crew, shore, pass, leave, ashore, send, dangerous, good, time, berth"
+  ]
+}

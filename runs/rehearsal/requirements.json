@@ -1,0 +1,183 @@
+{
+  "agent_name": "kochi_agent_assistant",
+  "purpose": "Provides answers to questions related to vessel arrivals, crew shore leave, port fees, and weather forecasts for the Port of Kochi.",
+  "scope": "The assistant will cover arrival notice deadlines, pilotage and berthing rules, safety permits, port fees, and current weather forecasts for the Port of Kochi.",
+  "audience": "Ship agents and other personnel working in the Port of Kochi.",
+  "tone": "Formal and concise",
+  "must_answer_topics": [
+    "arrival notice deadlines",
+    "pilotage and berthing rules",
+    "safety permits",
+    "port fees",
+    "days until notice deadline",
+    "current weather forecast"
+  ],
+  "must_refuse_topics": [
+    "legal",
+    "medical",
+    "personal data"
+  ],
+  "schema_version": "1.0",
+  "brief": "I need an assistant for ship agents bringing vessels into the Port of Kochi. It should explain arrival notice deadlines, pilotage and berthing rules, safety permits and crew shore leave, look up port fees and calculate the total cost of a port call, tell agents how many days are left until a notice deadline from today, and give the current weather forecast at the port.",
+  "documents_folder": "data\\rehearsal_port",
+  "documents": [
+    {
+      "name": "crew_shore_leave.md",
+      "file_type": "md",
+      "pages": 1,
+      "words": 160,
+      "chunked": true,
+      "preview": "# Port of Kochi - Crew Shore Leave (fictional training document) ## Shore passes Crew members may go ashore with a shore pass issued by the immigration office at the port gate. The ship agent must submit the crew list to immigration at least 24 hours before arrival. Shore passes",
+      "keywords": [
+        "crew",
+        "shore",
+        "kochi",
+        "pass",
+        "must",
+        "hour",
+        "vessel",
+        "centre"
+      ]
+    },
+    {
+      "name": "port_fees.csv",
+      "file_type": "csv",
+      "pages": 1,
+      "words": 19,
+      "chunked": false,
+      "preview": "CSV columns: fee_code,fee_item,unit,amount_inr; 10 rows",
+      "keywords": [
+        "per",
+        "fee",
+        "tug",
+        "code",
+        "item",
+        "unit",
+        "amount",
+        "inr"
+      ]
+    },
+    {
+      "name": "port_rules.pdf",
+      "file_type": "pdf",
+      "pages": 2,
+      "words": 208,
+      "chunked": true,
+      "preview": "Port of Kochi - Rules for Visiting Vessels (2026, fictional training document) 1. Arrival notice Ship agents must send the pre-arrival notice to the Harbour Master at least 72 hours before the vessel's expected arrival. Vessels carrying dangerous goods must send the dangerous goods declaration at least 48 hours before",
+      "keywords": [
+        "vessel",
+        "hour",
+        "arrival",
+        "least",
+        "port",
+        "must",
+        "harbour",
+        "before"
+      ]
+    }
+  ],
+  "skipped_files": [
+    "old_notice.docx: unsupported file type '.docx'"
+  ],
+  "clarifications": [
+    {
+      "question": "Who will use this assistant?",
+      "answer": "Ship agents and other personnel working in the Port of Kochi.",
+      "source": "assumed"
+    },
+    {
+      "question": "What tone should it use?",
+      "answer": "Formal and concise",
+      "source": "assumed"
+    },
+    {
+      "question": "Which topics MUST it answer? (comma-separated)",
+      "answer": "arrival notice deadlines, pilotage and berthing rules, safety permits, port fees, days until notice deadline, current weather forecast",
+      "source": "assumed"
+    },
+    {
+      "question": "Which topics must it REFUSE? (comma-separated)",
+      "answer": "legal, medical, personal data",
+      "source": "assumed"
+    },
+    {
+      "question": "In one sentence, what is in scope and what is out of scope?",
+      "answer": "The assistant will cover arrival notice deadlines, pilotage and berthing rules, safety permits, port fees, and current weather forecasts for the Port of Kochi.",
+      "source": "assumed"
+    }
+  ],
+  "notes": [],
+  "topic_support": [
+    {
+      "topic": "arrival notice deadlines",
+      "status": "supported",
+      "method": "llm",
+      "coverage": 0.667,
+      "evidence": [
+        "port_rules.pdf::p1::c0",
+        "crew_shore_leave.md::p1::c0"
+      ],
+      "quote": "Arrival notice Ship agents must send the pre-arrival notice to the Harbour Master at least 72 hours before the vessel's expected arrival.",
+      "reason": "model verified, quote found in text"
+    },
+    {
+      "topic": "pilotage and berthing rules",
+      "status": "supported",
+      "method": "code",
+      "coverage": 1.0,
+      "evidence": [
+        "port_rules.pdf::p1::c0"
+      ],
+      "quote": "",
+      "reason": "all key words found together in one passage"
+    },
+    {
+      "topic": "safety permits",
+      "status": "supported",
+      "method": "code",
+      "coverage": 1.0,
+      "evidence": [
+        "port_rules.pdf::p2::c0",
+        "csv:port_fees.csv"
+      ],
+      "quote": "",
+      "reason": "all key words found together in one passage"
+    },
+    {
+      "topic": "port fees",
+      "status": "supported",
+      "method": "code",
+      "coverage": 0.5,
+      "evidence": [
+        "csv:port_fees.csv"
+      ],
+      "quote": "",
+      "reason": "most key words found in CSV data"
+    },
+    {
+      "topic": "days until notice deadline",
+      "status": "supported",
+      "method": "llm",
+      "coverage": 0.25,
+      "evidence": [
+        "port_rules.pdf::p1::c0"
+      ],
+      "quote": "Vessels carrying dangerous goods must send the dangerous goods declaration at least 48 hours before arrival.",
+      "reason": "model verified, quote found in text"
+    },
+    {
+      "topic": "current weather forecast",
+      "status": "supported",
+      "method": "llm",
+      "coverage": 0.333,
+      "evidence": [
+        "port_rules.pdf::p2::c0"
+      ],
+      "quote": "Cargo operations with cranes stop when the wind speed exceeds 50 km/h.",
+      "reason": "model verified, quote found in text"
+    }
+  ],
+  "guard_warnings": [
+    "documents also cover keywords not in any must-answer topic: crew, shore, pass, leave, ashore, send, dangerous, good, time, berth"
+  ]
+}

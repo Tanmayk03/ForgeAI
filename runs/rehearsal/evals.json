@@ -1,0 +1,319 @@
+{
+  "schema_version": "1.0",
+  "created_at": "2026-11-27T07:17:41",
+  "model": "qwen2.5:1.5b",
+  "sha256": "ba88fc6a7284afde595f0ba80cc2dad3d238607c4822b8e4f4325805a056c81e",
+  "counts": {
+    "answerable": 14,
+    "multi_doc": 3,
+    "ambiguous": 2,
+    "out_of_scope": 3,
+    "total": 22,
+    "rejected": 18
+  },
+  "notes": [],
+  "cases": [
+    {
+      "id": "q01",
+      "type": "answerable",
+      "question": "What is the minimum notice required for a pre-arrival notice?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "72 hours"
+      ],
+      "expected_docs": [
+        "port_rules.pdf"
+      ],
+      "source_text": "Port of Kochi - Rules for Visiting Vessels (2026, fictional training document) 1. Arrival notice Ship agents must send the pre-arrival notice to the Harbour Master at least 72 hours before the vessel's expected arrival. Vessels carrying dangerous goods must send the dangerous goods declaration at least 48 hours before arrival. 2. Pilotage Pilotage is compulsory for all vessels longer than 50 metres. Pilot requests must be made at least 6 hours before the required boarding time. Night pilotage between 22:00 and 05:00 is available only for vessels with a draught below 10 metres. 3. Berthing Berths are allocated by the Port Operations Centre on a first-come, first-served basis, except for passenger ships, which have priority at the Cruise Terminal. A berth not used within 2 hours of the allocated time may be given to another vessel.",
+      "origin": "passage port_rules.pdf::p1::c0"
+    },
+    {
+      "id": "q02",
+      "type": "answerable",
+      "question": "How far in advance must a dangerous goods declaration be sent?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "48 hours"
+      ],
+      "expected_docs": [
+        "port_rules.pdf"
+      ],
+      "source_text": "Port of Kochi - Rules for Visiting Vessels (2026, fictional training document) 1. Arrival notice Ship agents must send the pre-arrival notice to the Harbour Master at least 72 hours before the vessel's expected arrival. Vessels carrying dangerous goods must send the dangerous goods declaration at least 48 hours before arrival. 2. Pilotage Pilotage is compulsory for all vessels longer than 50 metres. Pilot requests must be made at least 6 hours before the required boarding time. Night pilotage between 22:00 and 05:00 is available only for vessels with a draught below 10 metres. 3. Berthing Berths are allocated by the Port Operations Centre on a first-come, first-served basis, except for passenger ships, which have priority at the Cruise Terminal. A berth not used within 2 hours of the allocated time may be given to another vessel.",
+      "origin": "passage port_rules.pdf::p1::c0"
+    },
+    {
+      "id": "q03",
+      "type": "answerable",
+      "question": "What is the minimum time before boarding for a pilot request?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "6 hours"
+      ],
+      "expected_docs": [
+        "port_rules.pdf"
+      ],
+      "source_text": "Port of Kochi - Rules for Visiting Vessels (2026, fictional training document) 1. Arrival notice Ship agents must send the pre-arrival notice to the Harbour Master at least 72 hours before the vessel's expected arrival. Vessels carrying dangerous goods must send the dangerous goods declaration at least 48 hours before arrival. 2. Pilotage Pilotage is compulsory for all vessels longer than 50 metres. Pilot requests must be made at least 6 hours before the required boarding time. Night pilotage between 22:00 and 05:00 is available only for vessels with a draught below 10 metres. 3. Berthing Berths are allocated by the Port Operations Centre on a first-come, first-served basis, except for passenger ships, which have priority at the Cruise Terminal. A berth not used within 2 hours of the allocated time may be given to another vessel.",
+      "origin": "passage port_rules.pdf::p1::c0"
+    },
+    {
+      "id": "q04",
+      "type": "answerable",
+      "question": "What is the condition for night pilotage?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "draught below 10 metres"
+      ],
+      "expected_docs": [
+        "port_rules.pdf"
+      ],
+      "source_text": "Port of Kochi - Rules for Visiting Vessels (2026, fictional training document) 1. Arrival notice Ship agents must send the pre-arrival notice to the Harbour Master at least 72 hours before the vessel's expected arrival. Vessels carrying dangerous goods must send the dangerous goods declaration at least 48 hours before arrival. 2. Pilotage Pilotage is compulsory for all vessels longer than 50 metres. Pilot requests must be made at least 6 hours before the required boarding time. Night pilotage between 22:00 and 05:00 is available only for vessels with a draught below 10 metres. 3. Berthing Berths are allocated by the Port Operations Centre on a first-come, first-served basis, except for passenger ships, which have priority at the Cruise Terminal. A berth not used within 2 hours of the allocated time may be given to another vessel.",
+      "origin": "passage port_rules.pdf::p1::c0"
+    },
+    {
+      "id": "q05",
+      "type": "answerable",
+      "question": "What is the maximum amount of alcohol allowed on a shore leave?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "2 litres"
+      ],
+      "expected_docs": [
+        "crew_shore_leave.md"
+      ],
+      "source_text": "# Port of Kochi - Crew Shore Leave (fictional training document) ## Shore passes Crew members may go ashore with a shore pass issued by the immigration office at the port gate. The ship agent must submit the crew list to immigration at least 24 hours before arrival. Shore passes are valid only within the city limits of Kochi. ## Hours Shore leave is allowed between 06:00 and 23:00. Crew must be back on board before 23:00; late return must be reported to the Harbour Master by the master of the vessel. ## Restrictions Crew of vessels in quarantine, or of vessels without a valid crew list, are not allowed ashore. Crew may not carry more than 2 litres of alcohol or 200 cigarettes when returning on board. ## Seafarers' centre The Kochi Seafarers' Centre near Gate 2 is open daily from 09:00 to 21:00 and offers free Wi-Fi, a small shop and transport to the city centre every hour.",
+      "origin": "passage crew_shore_leave.md::p1::c0"
+    },
+    {
+      "id": "q06",
+      "type": "answerable",
+      "question": "What is the maximum number of cigarettes allowed on a shore leave?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "200 cigarettes when"
+      ],
+      "expected_docs": [
+        "crew_shore_leave.md"
+      ],
+      "source_text": "# Port of Kochi - Crew Shore Leave (fictional training document) ## Shore passes Crew members may go ashore with a shore pass issued by the immigration office at the port gate. The ship agent must submit the crew list to immigration at least 24 hours before arrival. Shore passes are valid only within the city limits of Kochi. ## Hours Shore leave is allowed between 06:00 and 23:00. Crew must be back on board before 23:00; late return must be reported to the Harbour Master by the master of the vessel. ## Restrictions Crew of vessels in quarantine, or of vessels without a valid crew list, are not allowed ashore. Crew may not carry more than 2 litres of alcohol or 200 cigarettes when returning on board. ## Seafarers' centre The Kochi Seafarers' Centre near Gate 2 is open daily from 09:00 to 21:00 and offers free Wi-Fi, a small shop and transport to the city centre every hour.",
+      "origin": "passage crew_shore_leave.md::p1::c0"
+    },
+    {
+      "id": "q07",
+      "type": "answerable",
+      "question": "What is the address of the Kochi Seafarers' Centre?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "Gate 2"
+      ],
+      "expected_docs": [
+        "crew_shore_leave.md"
+      ],
+      "source_text": "# Port of Kochi - Crew Shore Leave (fictional training document) ## Shore passes Crew members may go ashore with a shore pass issued by the immigration office at the port gate. The ship agent must submit the crew list to immigration at least 24 hours before arrival. Shore passes are valid only within the city limits of Kochi. ## Hours Shore leave is allowed between 06:00 and 23:00. Crew must be back on board before 23:00; late return must be reported to the Harbour Master by the master of the vessel. ## Restrictions Crew of vessels in quarantine, or of vessels without a valid crew list, are not allowed ashore. Crew may not carry more than 2 litres of alcohol or 200 cigarettes when returning on board. ## Seafarers' centre The Kochi Seafarers' Centre near Gate 2 is open daily from 09:00 to 21:00 and offers free Wi-Fi, a small shop and transport to the city centre every hour.",
+      "origin": "passage crew_shore_leave.md::p1::c0"
+    },
+    {
+      "id": "q08",
+      "type": "answerable",
+      "question": "What is required for bunkering?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "written permit"
+      ],
+      "expected_docs": [
+        "port_rules.pdf"
+      ],
+      "source_text": "4. Safety and environment Bunkering requires a written permit from the Harbour Master. Discharge of oily water, garbage or sewage inside port limits is prohibited. Hot work on board (welding, cutting) needs a hot work permit issued at least 24 hours in advance. 5. Weather restrictions Cargo operations with cranes stop when the wind speed exceeds 50 km/h. Vessel movements inside the harbour are suspended when visibility is below 500 metres.",
+      "origin": "passage port_rules.pdf::p2::c0"
+    },
+    {
+      "id": "q09",
+      "type": "answerable",
+      "question": "What is prohibited inside port limits?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "discharge of oily water, garbage, or sewage"
+      ],
+      "expected_docs": [
+        "port_rules.pdf"
+      ],
+      "source_text": "4. Safety and environment Bunkering requires a written permit from the Harbour Master. Discharge of oily water, garbage or sewage inside port limits is prohibited. Hot work on board (welding, cutting) needs a hot work permit issued at least 24 hours in advance. 5. Weather restrictions Cargo operations with cranes stop when the wind speed exceeds 50 km/h. Vessel movements inside the harbour are suspended when visibility is below 500 metres.",
+      "origin": "passage port_rules.pdf::p2::c0"
+    },
+    {
+      "id": "q10",
+      "type": "answerable",
+      "question": "What is needed for hot work on board?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "hot work permit"
+      ],
+      "expected_docs": [
+        "port_rules.pdf"
+      ],
+      "source_text": "4. Safety and environment Bunkering requires a written permit from the Harbour Master. Discharge of oily water, garbage or sewage inside port limits is prohibited. Hot work on board (welding, cutting) needs a hot work permit issued at least 24 hours in advance. 5. Weather restrictions Cargo operations with cranes stop when the wind speed exceeds 50 km/h. Vessel movements inside the harbour are suspended when visibility is below 500 metres.",
+      "origin": "passage port_rules.pdf::p2::c0"
+    },
+    {
+      "id": "q11",
+      "type": "answerable",
+      "question": "What stops cargo operations with cranes?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "wind speed exceeds 50 km/h"
+      ],
+      "expected_docs": [
+        "port_rules.pdf"
+      ],
+      "source_text": "4. Safety and environment Bunkering requires a written permit from the Harbour Master. Discharge of oily water, garbage or sewage inside port limits is prohibited. Hot work on board (welding, cutting) needs a hot work permit issued at least 24 hours in advance. 5. Weather restrictions Cargo operations with cranes stop when the wind speed exceeds 50 km/h. Vessel movements inside the harbour are suspended when visibility is below 500 metres.",
+      "origin": "passage port_rules.pdf::p2::c0"
+    },
+    {
+      "id": "q12",
+      "type": "multi_doc",
+      "question": "What is the maximum number of cigarettes allowed on a shore leave, and what is required for bunkering?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "200 cigarettes when",
+        "written permit"
+      ],
+      "expected_docs": [
+        "crew_shore_leave.md",
+        "port_rules.pdf"
+      ],
+      "source_text": "# Port of Kochi - Crew Shore Leave (fictional training document) ## Shore passes Crew members may go ashore with a shore pass issued by the immigration office at the port gate. The ship agent must submit the crew list to immigration at least 24 hours before arrival. Shore passes are valid only within the city limits of Kochi. ## Hours Shore leave is allowed between 06:00 and 23:00. Crew must be back on board before 23:00; late return must be reported to the Harbour Master by the master of the vessel. ## Restrictions Crew of vessels in quarantine, or of vessels without a valid crew list, are not allowed ashore. Crew may not carry more than 2 litres of alcohol or 200 cigarettes when returning on board. ## Seafarers' centre The Kochi Seafarers' Centre near Gate 2 is open daily from 09:00 to 21:00 and offers free Wi-Fi, a small shop and transport to the city centre every hour.\n\n4. Safety and environment Bunkering requires a written permit from the Harbour Master. Discharge of oily water, garbage or sewage inside port limits is prohibited. Hot work on board (welding, cutting) needs a hot work permit issued at least 24 hours in advance. 5. Weather restrictions Cargo operations with cranes stop when the wind speed exceeds 50 km/h. Vessel movements inside the harbour are suspended when visibility is below 500 metres.",
+      "origin": "combined q06 + q08"
+    },
+    {
+      "id": "q13",
+      "type": "multi_doc",
+      "question": "What is the condition for night pilotage, and what is the maximum amount of alcohol allowed on a shore leave?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "draught below 10 metres",
+        "2 litres"
+      ],
+      "expected_docs": [
+        "crew_shore_leave.md",
+        "port_rules.pdf"
+      ],
+      "source_text": "Port of Kochi - Rules for Visiting Vessels (2026, fictional training document) 1. Arrival notice Ship agents must send the pre-arrival notice to the Harbour Master at least 72 hours before the vessel's expected arrival. Vessels carrying dangerous goods must send the dangerous goods declaration at least 48 hours before arrival. 2. Pilotage Pilotage is compulsory for all vessels longer than 50 metres. Pilot requests must be made at least 6 hours before the required boarding time. Night pilotage between 22:00 and 05:00 is available only for vessels with a draught below 10 metres. 3. Berthing Berths are allocated by the Port Operations Centre on a first-come, first-served basis, except for passenger ships, which have priority at the Cruise Terminal. A berth not used within 2 hours of the allocated time may be given to another vessel.\n\n# Port of Kochi - Crew Shore Leave (fictional training document) ## Shore passes Crew members may go ashore with a shore pass issued by the immigration office at the port gate. The ship agent must submit the crew list to immigration at least 24 hours before arrival. Shore passes are valid only within the city limits of Kochi. ## Hours Shore leave is allowed between 06:00 and 23:00. Crew must be back on board before 23:00; late return must be reported to the Harbour Master by the master of the vessel. ## Restrictions Crew of vessels in quarantine, or of vessels without a valid crew list, are not allowed ashore. Crew may not carry more than 2 litres of alcohol or 200 cigarettes when returning on board. ## Seafarers' centre The Kochi Seafarers' Centre near Gate 2 is open daily from 09:00 to 21:00 and offers free Wi-Fi, a small shop and transport to the city centre every hour.",
+      "origin": "combined q04 + q05"
+    },
+    {
+      "id": "q14",
+      "type": "multi_doc",
+      "question": "How far in advance must a dangerous goods declaration be sent, and what is the address of the Kochi Seafarers' Centre?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "48 hours",
+        "Gate 2"
+      ],
+      "expected_docs": [
+        "crew_shore_leave.md",
+        "port_rules.pdf"
+      ],
+      "source_text": "Port of Kochi - Rules for Visiting Vessels (2026, fictional training document) 1. Arrival notice Ship agents must send the pre-arrival notice to the Harbour Master at least 72 hours before the vessel's expected arrival. Vessels carrying dangerous goods must send the dangerous goods declaration at least 48 hours before arrival. 2. Pilotage Pilotage is compulsory for all vessels longer than 50 metres. Pilot requests must be made at least 6 hours before the required boarding time. Night pilotage between 22:00 and 05:00 is available only for vessels with a draught below 10 metres. 3. Berthing Berths are allocated by the Port Operations Centre on a first-come, first-served basis, except for passenger ships, which have priority at the Cruise Terminal. A berth not used within 2 hours of the allocated time may be given to another vessel.\n\n# Port of Kochi - Crew Shore Leave (fictional training document) ## Shore passes Crew members may go ashore with a shore pass issued by the immigration office at the port gate. The ship agent must submit the crew list to immigration at least 24 hours before arrival. Shore passes are valid only within the city limits of Kochi. ## Hours Shore leave is allowed between 06:00 and 23:00. Crew must be back on board before 23:00; late return must be reported to the Harbour Master by the master of the vessel. ## Restrictions Crew of vessels in quarantine, or of vessels without a valid crew list, are not allowed ashore. Crew may not carry more than 2 litres of alcohol or 200 cigarettes when returning on board. ## Seafarers' centre The Kochi Seafarers' Centre near Gate 2 is open daily from 09:00 to 21:00 and offers free Wi-Fi, a small shop and transport to the city centre every hour.",
+      "origin": "combined q02 + q07"
+    },
+    {
+      "id": "q15",
+      "type": "answerable",
+      "question": "What is the fee item for PF-10?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "Shore pass"
+      ],
+      "expected_docs": [
+        "port_fees.csv"
+      ],
+      "source_text": "port_fees.csv: fee_code=PF-10; fee_item=Shore pass; unit=per crew member; amount_inr=250",
+      "origin": "csv row port_fees.csv fee_code=PF-10"
+    },
+    {
+      "id": "q16",
+      "type": "answerable",
+      "question": "What is the amount inr for PF-05?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "95"
+      ],
+      "expected_docs": [
+        "port_fees.csv"
+      ],
+      "source_text": "port_fees.csv: fee_code=PF-05; fee_item=Fresh water supply; unit=per tonne; amount_inr=95",
+      "origin": "csv row port_fees.csv fee_code=PF-05"
+    },
+    {
+      "id": "q17",
+      "type": "answerable",
+      "question": "What is the unit for PF-01?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "per GT per call"
+      ],
+      "expected_docs": [
+        "port_fees.csv"
+      ],
+      "source_text": "port_fees.csv: fee_code=PF-01; fee_item=Port dues per gross tonne; unit=per GT per call; amount_inr=3.20",
+      "origin": "csv row port_fees.csv fee_code=PF-01"
+    },
+    {
+      "id": "q18",
+      "type": "ambiguous",
+      "question": "What's the max number of cigarettes allowed on shore leave?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "200 cigarettes when"
+      ],
+      "expected_docs": [
+        "crew_shore_leave.md"
+      ],
+      "source_text": "# Port of Kochi - Crew Shore Leave (fictional training document) ## Shore passes Crew members may go ashore with a shore pass issued by the immigration office at the port gate. The ship agent must submit the crew list to immigration at least 24 hours before arrival. Shore passes are valid only within the city limits of Kochi. ## Hours Shore leave is allowed between 06:00 and 23:00. Crew must be back on board before 23:00; late return must be reported to the Harbour Master by the master of the vessel. ## Restrictions Crew of vessels in quarantine, or of vessels without a valid crew list, are not allowed ashore. Crew may not carry more than 2 litres of alcohol or 200 cigarettes when returning on board. ## Seafarers' centre The Kochi Seafarers' Centre near Gate 2 is open daily from 09:00 to 21:00 and offers free Wi-Fi, a small shop and transport to the city centre every hour.",
+      "origin": "rephrase of q06"
+    },
+    {
+      "id": "q19",
+      "type": "ambiguous",
+      "question": "What's the max amount of alcohol allowed on shore leave?",
+      "expected_behavior": "answer",
+      "key_facts": [
+        "2 litres"
+      ],
+      "expected_docs": [
+        "crew_shore_leave.md"
+      ],
+      "source_text": "# Port of Kochi - Crew Shore Leave (fictional training document) ## Shore passes Crew members may go ashore with a shore pass issued by the immigration office at the port gate. The ship agent must submit the crew list to immigration at least 24 hours before arrival. Shore passes are valid only within the city limits of Kochi. ## Hours Shore leave is allowed between 06:00 and 23:00. Crew must be back on board before 23:00; late return must be reported to the Harbour Master by the master of the vessel. ## Restrictions Crew of vessels in quarantine, or of vessels without a valid crew list, are not allowed ashore. Crew may not carry more than 2 litres of alcohol or 200 cigarettes when returning on board. ## Seafarers' centre The Kochi Seafarers' Centre near Gate 2 is open daily from 09:00 to 21:00 and offers free Wi-Fi, a small shop and transport to the city centre every hour.",
+      "origin": "rephrase of q05"
+    },
+    {
+      "id": "q20",
+      "type": "out_of_scope",
+      "question": "What is the best way to prepare for a marathon?",
+      "expected_behavior": "refuse",
+      "key_facts": [],
+      "expected_docs": [],
+      "source_text": "",
+      "origin": "unrelated question"
+    },
+    {
+      "id": "q21",
+      "type": "out_of_scope",
+      "question": "How do I make the perfect chocolate cake?",
+      "expected_behavior": "refuse",
+      "key_facts": [],
+      "expected_docs": [],
+      "source_text": "",
+      "origin": "unrelated question"
+    },
+    {
+      "id": "q22",
+      "type": "out_of_scope",
+      "question": "Who is the current president of the United States?",
+      "expected_behavior": "refuse",
+      "key_facts": [],
+      "expected_docs": [],
+      "source_text": "",
+      "origin": "unrelated question"
+    }
+  ]
+}

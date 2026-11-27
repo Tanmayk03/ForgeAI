@@ -1,0 +1,38 @@
+{
+  "tools": [
+    {
+      "name": "csv_lookup",
+      "attached": true,
+      "reason": "CSV data related to the brief: port_fees.csv (shared words: call, crew, day, fee, permit)"
+    },
+    {
+      "name": "calculator",
+      "attached": true,
+      "reason": "requirements mention: calculate, cost, total"
+    },
+    {
+      "name": "weather_api",
+      "attached": true,
+      "reason": "requirements mention: forecast, weather"
+    },
+    {
+      "name": "current_date",
+      "attached": true,
+      "reason": "requirements mention: deadline, today"
+    }
+  ],
+  "retrieval": "2 text document(s), about 123 words per page -> chunks of 200 words, top_k 3 (fits 60% of a 4096-token context)",
+  "system_instructions_source": "model",
+  "in_scope_topics": [
+    "arrival notice deadlines",
+    "pilotage and berthing rules",
+    "safety permits",
+    "port fees",
+    "days until notice deadline",
+    "current weather forecast"
+  ],
+  "refusal_topics_added_from_guard": [],
+  "known_risks": [
+    "documents also cover keywords not in any must-answer topic: crew, shore, pass, leave, ashore, send, dangerous, good, time, berth"
+  ]
+}

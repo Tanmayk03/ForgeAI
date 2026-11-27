@@ -1,0 +1,92 @@
+[
+  {
+    "question": "What is the time range for shore leave?",
+    "reason": "key fact not found in the source passage: '06:00 - 23:00'",
+    "origin": "passage crew_shore_leave.md::p1::c0"
+  },
+  {
+    "question": "What is the minimum notice required for a pre-arrival notice?",
+    "reason": "near-duplicate of an existing question",
+    "origin": "passage port_rules.pdf::p1::c0"
+  },
+  {
+    "question": "How far in advance must a dangerous goods declaration be sent?",
+    "reason": "near-duplicate of an existing question",
+    "origin": "passage port_rules.pdf::p1::c0"
+  },
+  {
+    "question": "What is the minimum time before boarding for a pilot request?",
+    "reason": "near-duplicate of an existing question",
+    "origin": "passage port_rules.pdf::p1::c0"
+  },
+  {
+    "question": "What is the condition for night pilotage?",
+    "reason": "near-duplicate of an existing question",
+    "origin": "passage port_rules.pdf::p1::c0"
+  },
+  {
+    "question": "What is the maximum amount of alcohol allowed on a shore leave?",
+    "reason": "near-duplicate of an existing question",
+    "origin": "passage crew_shore_leave.md::p1::c0"
+  },
+  {
+    "question": "What is the maximum number of cigarettes allowed on a shore leave?",
+    "reason": "near-duplicate of an existing question",
+    "origin": "passage crew_shore_leave.md::p1::c0"
+  },
+  {
+    "question": "What is the address of the Kochi Seafarers' Centre?",
+    "reason": "near-duplicate of an existing question",
+    "origin": "passage crew_shore_leave.md::p1::c0"
+  },
+  {
+    "question": "What is required for bunkering?",
+    "reason": "near-duplicate of an existing question",
+    "origin": "passage port_rules.pdf::p2::c0"
+  },
+  {
+    "question": "What is prohibited inside port limits?",
+    "reason": "near-duplicate of an existing question",
+    "origin": "passage port_rules.pdf::p2::c0"
+  },
+  {
+    "question": "What is needed for hot work on board?",
+    "reason": "near-duplicate of an existing question",
+    "origin": "passage port_rules.pdf::p2::c0"
+  },
+  {
+    "question": "What stops cargo operations with cranes?",
+    "reason": "near-duplicate of an existing question",
+    "origin": "passage port_rules.pdf::p2::c0"
+  },
+  {
+    "question": "What suspends vessel movements inside the harbour?",
+    "reason": "key fact not found in the source passage: 'Visibility below 500 metres'",
+    "origin": "passage port_rules.pdf::p2::c0"
+  },
+  {
+    "question": "What's the minimum time before boarding for a pilot request?",
+    "reason": "rewrite too similar to the original",
+    "origin": "rephrase of q03"
+  },
+  {
+    "question": "What are the specific pilotage and berthing rules for arriving at the Port of Kochi, and how often do I need to inform the authorities about my arrival?",
+    "reason": "topic is not one of the must-refuse topics",
+    "origin": "refuse topic 'pilotage and berthing rules'"
+  },
+  {
+    "question": "What are the necessary safety permits required for operating a vessel in the Port of Kochi, and how can I obtain them?",
+    "reason": "topic is not one of the must-refuse topics",
+    "origin": "refuse topic 'safety permits'"
+  },
+  {
+    "question": "What are the current port fees for berthing a vessel in the Port of Kochi, and how can I calculate the total cost for my upcoming voyage?",
+    "reason": "topic is not one of the must-refuse topics",
+    "origin": "refuse topic 'port fees'"
+  },
+  {
+    "question": "What is the expected weather forecast for the Port of Kochi for the next 7 days, and what are the conditions for safe navigation?",
+    "reason": "topic is not one of the must-refuse topics",
+    "origin": "refuse topic 'current weather forecasts'"
+  }
+]

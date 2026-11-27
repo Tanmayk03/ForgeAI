@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "name": "kochi_agent_assistant",
+  "description": "Provides answers to questions related to vessel arrivals, crew shore leave, port fees, and weather forecasts for the Port of Kochi.",
+  "system_instructions": "You are an AI assistant designed to provide answers related to vessel arrivals, crew shore leave, port fees, and weather forecasts for the Port of Kochi. Your responses will be tailored to assist ship agents and other personnel working in the Port of Kochi with accurate and timely information.",
+  "scope": {
+    "in_scope_topics": [
+      "arrival notice deadlines",
+      "pilotage and berthing rules",
+      "safety permits",
+      "port fees",
+      "days until notice deadline",
+      "current weather forecast"
+    ],
+    "refusal_topics": [
+      "legal",
+      "medical",
+      "personal data"
+    ],
+    "refusal_message": "I can't answer that from the available documents."
+  },
+  "documents": {
+    "folder": "data/rehearsal_port"
+  },
+  "retrieval": {
+    "chunk_size_words": 200,
+    "chunk_overlap_words": 33,
+    "top_k": 3,
+    "min_bm25_score": 0.0,
+    "min_query_coverage": 0.5
+  },
+  "tools": [
+    "csv_lookup",
+    "calculator",
+    "weather_api",
+    "current_date"
+  ],
+  "output_contract": {
+    "max_answer_words": 80,
+    "require_citations": true,
+    "block_unsupported_numbers": true
+  }
+}
