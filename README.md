@@ -18,7 +18,7 @@ retrieval, evaluation and repair logic are plain, tested Python.
 
 ## Contents
 
-1. [Quick start](#1-quick-start)
+1. [Quick start](#1-quick-start) (and the [results viewer](#results-viewer-deployed))
 2. [Architecture](#2-architecture)
 3. [The roles in detail](#3-the-roles-in-detail)
 4. [The agent runtime](#4-the-agent-runtime)
@@ -360,6 +360,19 @@ combined questions. These are capability limits of a 1.5B model; the code
 checks prevent them from being reported as successes.
 
 ---
+
+### Results viewer (deployed)
+
+`streamlit_app.py` is a **read-only web viewer** of the committed runs: requirements and interview,
+groundability verdicts, tool decisions, the agent definition, the frozen eval set and rejected
+candidates, per-case results for every iteration, the repair log and the report. It reads the JSON
+artifacts only — no model, no Ollama — so it runs on free hosting (Streamlit Community Cloud).
+Building new agents needs the local model and runs on the laptop (`scripts/forge.py`).
+
+```powershell
+python -m pip install streamlit
+streamlit run streamlit_app.py
+```
 
 ## 9. Design decisions and the evidence behind them
 

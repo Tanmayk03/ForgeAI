@@ -10,3 +10,6 @@ rank-bm25>=0.2.2      # BM25 keyword retrieval over document chunks
 pypdf>=4.0            # PDF text extraction (pure Python, works well on Windows)
 # PyMuPDF>=1.24       # alternative PDF parser: better text layout, larger install.
                       # Uncomment only if we decide to switch from pypdf.
+
+# --- Results viewer (streamlit_app.py); not needed to run the factory ---
+streamlit>=1.50
