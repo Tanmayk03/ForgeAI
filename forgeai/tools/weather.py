@@ -43,16 +43,31 @@ def _get_json(context: ToolContext, url: str, params: dict) -> dict:
         raise ToolError("weather service returned invalid data") from exc
 
 
+def choose_place(results: list[dict], name: str) -> dict:
+    """
+    Several places share a name ("Kochi" is in India and in Japan). Prefer exact
+    name matches, then the largest population - a better guess than the
+    geocoder's first result, though still a guess; the tool output names the
+    country so the answer shows which place was used.
+    """
+    exact = [r for r in results if str(r.get("name", "")).lower() == name.lower()] or results
+    return max(exact, key=lambda r: r.get("population") or 0)
+
+
 def weather_api(tool_input: str, context: ToolContext) -> str:
     place = tool_input.strip()
     if not place:
         raise ToolError("give a place name, e.g. 'Mumbai'")
 
+    # "Kochi, India" -> name "Kochi", country "India"
+    country = place.split(",", 1)[1].strip().lower() if "," in place else ""
     loc = None
-    for candidate in place_candidates(place):
-        found = _get_json(context, GEOCODE_URL, {"name": candidate, "count": 1}).get("results") or []
+    for candidate in place_candidates(place.split(",", 1)[0].strip()):
+        found = _get_json(context, GEOCODE_URL, {"name": candidate, "count": 10}).get("results") or []
+        if country:
+            found = [r for r in found if country in str(r.get("country", "")).lower()] or found
         if found:
-            loc = found[0]
+            loc = choose_place(found, candidate)
             break
     if loc is None:
         raise ToolError(f"place not found: {place}")

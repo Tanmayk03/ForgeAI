@@ -173,15 +173,19 @@ class AgentRunner:
         if "current_date" in self.agent.tools:
             self._add_tool_result("current_date", "", "runner", sources, trace)
 
-    def _run_planner(self, question, sources, trace) -> None:
+    def _run_planner(self, question, sources, trace, retry: bool = False) -> None:
         """Short model call: which of calculator / weather_api (or none) is needed?"""
         planned = [t for t in self.agent.tools if t in PLANNED_TOOLS and tool_hinted(t, question)]
         if not planned:
             return  # no hint of a calculation or weather question: skip the extra model call
         trace.model_called = True
         trace.model_attempts += 1
+        prompt = build_planner_prompt(question, sources, planned)
+        if retry:
+            prompt += ("\n\nYour previous tool_input was a single number, not a calculation. Write an "
+                       "arithmetic expression with an operator (+ - * /) using the numbers from the SOURCES.")
         raw = self.llm_fn(
-            prompt=build_planner_prompt(question, sources, planned),
+            prompt=prompt,
             system="You choose tools. Reply with JSON only.",
             json_schema=planner_schema(planned),
         )
@@ -192,6 +196,10 @@ class AgentRunner:
         except (ValueError, KeyError, TypeError):
             trace.warnings.append("tool planner reply unusable; continuing without a planned tool")
             return
+        if name == "calculator" and not ARITHMETIC.search(tool_input) and not retry:
+            # e.g. '12000': a number, not a calculation. Ask once more for an expression.
+            trace.warnings.append(f"planner chose calculator with no calculation ({tool_input!r}); asked again")
+            return self._run_planner(question, sources, trace, retry=True)
         if name == "calculator" and not ARITHMETIC.search(tool_input):
             trace.warnings.append(f"planner chose calculator with no calculation ({tool_input!r}); skipped")
             return

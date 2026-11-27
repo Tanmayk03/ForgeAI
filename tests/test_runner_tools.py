@@ -164,12 +164,21 @@ class TestAutoCsvLookup(unittest.TestCase):
 
 class TestToolSpeedFixes(unittest.TestCase):
     def test_planner_calculator_without_operator_is_skipped(self):
-        # Real Qwen planned calculator("145.00") for a simple lookup.
-        fake = FakeLLM(plan("calculator", "145.00"), answer("The unit price is 145.00 USD.", [1]))
+        # Real Qwen planned calculator("145.00") for a simple lookup; asked again, still no calculation.
+        fake = FakeLLM(plan("calculator", "145.00"), plan("calculator", "145"), answer("The unit price is 145.00 USD.", [1]))
         response = runner(fake, ["csv_lookup", "calculator"]).ask("What is the total unit price of the fuel injector nozzle?")
         self.assertEqual([c.name for c in response.trace.tool_calls], ["csv_lookup"])
-        self.assertTrue(any("no calculation" in w for w in response.trace.warnings))
+        self.assertTrue(any("asked again" in w for w in response.trace.warnings))
+        self.assertTrue(any("skipped" in w for w in response.trace.warnings))
         self.assertFalse(response.refused, response.refusal_reason)
+
+    def test_planner_retry_can_produce_the_calculation(self):
+        # Real chat: planner wrote '12000' instead of '48000 + 12000'.
+        fake = FakeLLM(plan("calculator", "12000"), plan("calculator", "48000 + 12000"), answer("INR 60000 in total.", [1, 2]))
+        response = runner(fake, ["calculator"]).ask("What is the total of 2 fees, 48000 and 12000?")
+        calc = [c for c in response.trace.tool_calls if c.name == "calculator"]
+        self.assertEqual(calc[0].output, "48000 + 12000 = 60000")
+        self.assertIn("not a calculation", fake.calls[1]["prompt"])
 
     def test_repeated_tool_call_is_not_rerun(self):
         q = "What is the unit price of the fuel injector nozzle?"

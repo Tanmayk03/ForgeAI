@@ -14,7 +14,7 @@ from forgeai.tools.calculator import calculator
 from forgeai.tools.csv_lookup import csv_lookup
 from forgeai.tools.current_date import current_date
 from forgeai.tools.registry import TOOL_NAMES, run_tool
-from forgeai.tools.weather import place_candidates, weather_api
+from forgeai.tools.weather import choose_place, place_candidates, weather_api
 
 CSV = config.DATA_DIR / "sample_docs" / "spare_parts.csv"
 
@@ -48,6 +48,20 @@ class TestCsvLookup(unittest.TestCase):
             csv_lookup("x", ToolContext())
         with self.assertRaises(ToolError):
             csv_lookup("the", ToolContext(csv_paths=[CSV]))
+
+    def test_strong_partial_matches_are_included(self):
+        # Real chat: the pilotage row (2 matching words) was hidden behind the surcharge row (4).
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp, "fees.csv")
+            path.write_text("code,item,unit,amount\nPF-02,Pilotage inward or outward,per movement,48000\n"
+                            "PF-07,Night pilotage surcharge,per movement,12000\nPF-05,Fresh water supply,per tonne,95\n",
+                            encoding="utf-8")
+            out = csv_lookup("How much does a pilotage movement plus a night surcharge cost in total?",
+                             ToolContext(csv_paths=[path]))
+            self.assertIn("48000", out)
+            self.assertIn("12000", out)
+            self.assertNotIn("Fresh water", out)
+            self.assertLess(out.index("12000"), out.index("48000"))   # best match first
 
     def test_windows_encoded_csv(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -91,6 +105,17 @@ class TestWeather(unittest.TestCase):
         self.assertEqual(place_candidates("Port of Kochi"), ["Port of Kochi", "Kochi"])
         self.assertEqual(place_candidates("Mumbai"), ["Mumbai"])
         self.assertEqual(place_candidates("Kochi port, India"), ["Kochi port, India", "Kochi India", "Kochi"])
+
+    def test_same_name_places_prefer_largest_population(self):
+        results = [{"name": "Kochi", "country": "Japan", "population": 330000},
+                   {"name": "Kochi", "country": "India", "population": 2100000}]
+        self.assertEqual(choose_place(results, "Kochi")["country"], "India")
+
+    def test_country_after_comma_filters_results(self):
+        geo = {"results": [{"name": "Kochi", "country": "Japan", "population": 9000000, "latitude": 33.5, "longitude": 133.5},
+                           {"name": "Kochi", "country": "India", "population": 1, "latitude": 9.9, "longitude": 76.3}]}
+        out = weather_api("Kochi, India", ToolContext(http_get=fake_get([geo, FORECAST])))
+        self.assertIn("Weather for Kochi, India", out)
 
     def test_port_of_kochi_found_on_second_try(self):
         # Real chat: "Port of Kochi" is not a geocoder name; "Kochi" is.

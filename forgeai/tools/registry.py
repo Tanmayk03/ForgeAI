@@ -20,7 +20,7 @@ TOOLS: dict[str, Tool] = {
         Tool("calculator", "Does exact arithmetic. Use it instead of calculating yourself.",
              "an arithmetic expression, e.g. 24 * 2 + 5", calculator),
         Tool("weather_api", "Gets current weather and a 3-day forecast for a place (open-meteo.com).",
-             "a place name, e.g. Mumbai", weather_api),
+             "a city name with its country, e.g. Mumbai, India", weather_api),
         Tool("current_date", "Gives today's date, weekday and local time.",
              "nothing (leave empty)", current_date),
     ]
