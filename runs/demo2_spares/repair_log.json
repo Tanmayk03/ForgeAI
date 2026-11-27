@@ -2,7 +2,7 @@
   {
     "iteration": 1,
     "failures_by_category": {
-      "prompt_defect": 8,
+      "prompt_defect": 11,
       "hallucination": 1,
       "retrieval_miss": 2
     },
@@ -20,10 +20,28 @@
         "evidence": "missing ['3 percent discount']"
       },
       {
+        "id": "q06",
+        "category": "prompt_defect",
+        "subtype": "incomplete",
+        "evidence": "missing ['USD 400 per order']"
+      },
+      {
         "id": "q07",
         "category": "prompt_defect",
         "subtype": "citation",
         "evidence": "cited ['oceanparts_supply_terms.pdf'], expected ['marisupply_supply_terms.md']"
+      },
+      {
+        "id": "q09",
+        "category": "hallucination",
+        "subtype": "hallucination",
+        "evidence": "model's answer lacked the facts and was blocked (refused_unsupported_number): '1'"
+      },
+      {
+        "id": "q10",
+        "category": "prompt_defect",
+        "subtype": "citation",
+        "evidence": "cited ['oceanparts_supply_terms.pdf'], expected ['procurement_rules.md']"
       },
       {
         "id": "q11",
@@ -39,15 +57,15 @@
       },
       {
         "id": "q13",
-        "category": "hallucination",
-        "subtype": "hallucination",
-        "evidence": "model's answer lacked the facts and was blocked (refused_unsupported_number): 'Urgent orders are delivered within 72 hours, and each vessel must keep at least '"
+        "category": "prompt_defect",
+        "subtype": "citation",
+        "evidence": "cited ['oceanparts_supply_terms.pdf'], expected ['oceanparts_supply_terms.pdf', 'procurement_rules.md']"
       },
       {
         "id": "q14",
         "category": "retrieval_miss",
         "subtype": "retrieval",
-        "evidence": "expected ['spares_catalogue.csv'], retrieved []"
+        "evidence": "expected ['spares_catalogue.csv'], retrieved ['procurement_rules.md']"
       },
       {
         "id": "q15",
@@ -68,7 +86,7 @@
         "evidence": "missing ['3 percent discount']"
       },
       {
-        "id": "q19",
+        "id": "q20",
         "category": "prompt_defect",
         "subtype": "refusal_rule",
         "evidence": "answered a question that should be refused"
@@ -78,29 +96,33 @@
     "target_subtype": "citation",
     "targeted_cases": [
       "q07",
+      "q10",
       "q11",
       "q12",
+      "q13",
       "q15"
     ],
     "change": "add instruction: Cite every source you use. If you combine facts from two sources, cite both source numbers.",
     "field": "system_instructions",
-    "old_value": "You are an AI assistant designed to provide answers to questions about spare parts procurement for Seaview Shipping Ltd. Your responses will cover finding parts by part number or description, calculating prices and suppliers, lead times, and minimum order quantities, and explaining supplier terms and procurement approval rules.",
-    "new_value": "You are an AI assistant designed to provide answers to questions about spare parts procurement for Seaview Shipping Ltd. Your responses will cover finding parts by part number or description, calculating prices and suppliers, lead times, and minimum order quantities, and explaining supplier terms and procurement approval rules. Cite every source you use. If you combine facts from two sources, cite both source numbers.",
-    "score_before": "14/25 (56%)",
-    "score_after": "15/25 (60%)",
+    "old_value": "You are an AI assistant designed to answer procurement questions about spare parts for Seaview Shipping Ltd. Your responses will help the ship-spares procurement team members find parts by part number or description, calculate prices and lead times, and provide explanations of supplier terms and procurement approval rules.",
+    "new_value": "You are an AI assistant designed to answer procurement questions about spare parts for Seaview Shipping Ltd. Your responses will help the ship-spares procurement team members find parts by part number or description, calculate prices and lead times, and provide explanations of supplier terms and procurement approval rules. Cite every source you use. If you combine facts from two sources, cite both source numbers.",
+    "score_before": "10/24 (42%)",
+    "score_after": "10/24 (42%)",
     "fixed_cases": [
-      "q16"
+      "q10"
     ],
-    "broken_cases": [],
-    "kept": true,
-    "note": ""
+    "broken_cases": [
+      "q19"
+    ],
+    "kept": false,
+    "note": "no gain: change rolled back"
   },
   {
     "iteration": 2,
     "failures_by_category": {
-      "prompt_defect": 7,
-      "hallucination": 2,
-      "retrieval_miss": 1
+      "prompt_defect": 11,
+      "hallucination": 1,
+      "retrieval_miss": 2
     },
     "failures": [
       {
@@ -116,16 +138,34 @@
         "evidence": "missing ['3 percent discount']"
       },
       {
+        "id": "q06",
+        "category": "prompt_defect",
+        "subtype": "incomplete",
+        "evidence": "missing ['USD 400 per order']"
+      },
+      {
         "id": "q07",
         "category": "prompt_defect",
         "subtype": "citation",
         "evidence": "cited ['oceanparts_supply_terms.pdf'], expected ['marisupply_supply_terms.md']"
       },
       {
-        "id": "q11",
+        "id": "q09",
         "category": "hallucination",
         "subtype": "hallucination",
-        "evidence": "model's answer lacked the facts and was blocked (refused_unsupported_number): 'Marisupply Ltd gives a 3 percent discount on orders above USD 10,000.'"
+        "evidence": "model's answer lacked the facts and was blocked (refused_unsupported_number): '1'"
+      },
+      {
+        "id": "q10",
+        "category": "prompt_defect",
+        "subtype": "citation",
+        "evidence": "cited ['oceanparts_supply_terms.pdf'], expected ['procurement_rules.md']"
+      },
+      {
+        "id": "q11",
+        "category": "prompt_defect",
+        "subtype": "citation",
+        "evidence": "cited ['marisupply_supply_terms.md'], expected ['marisupply_supply_terms.md', 'procurement_rules.md']"
       },
       {
         "id": "q12",
@@ -135,15 +175,15 @@
       },
       {
         "id": "q13",
-        "category": "hallucination",
-        "subtype": "hallucination",
-        "evidence": "model's answer lacked the facts and was blocked (refused_unsupported_number): 'Urgent orders are delivered within 72 hours, and each vessel must keep at least '"
+        "category": "prompt_defect",
+        "subtype": "citation",
+        "evidence": "cited ['oceanparts_supply_terms.pdf'], expected ['oceanparts_supply_terms.pdf', 'procurement_rules.md']"
       },
       {
         "id": "q14",
         "category": "retrieval_miss",
         "subtype": "retrieval",
-        "evidence": "expected ['spares_catalogue.csv'], retrieved []"
+        "evidence": "expected ['spares_catalogue.csv'], retrieved ['procurement_rules.md']"
       },
       {
         "id": "q15",
@@ -152,13 +192,19 @@
         "evidence": "model's answer had the facts but was blocked (refused_unsupported_number)"
       },
       {
+        "id": "q16",
+        "category": "retrieval_miss",
+        "subtype": "retrieval",
+        "evidence": "expected ['spares_catalogue.csv'], retrieved ['procurement_rules.md']"
+      },
+      {
         "id": "q17",
         "category": "prompt_defect",
         "subtype": "incomplete",
         "evidence": "missing ['3 percent discount']"
       },
       {
-        "id": "q19",
+        "id": "q20",
         "category": "prompt_defect",
         "subtype": "refusal_rule",
         "evidence": "answered a question that should be refused"
@@ -169,18 +215,18 @@
     "targeted_cases": [
       "q01",
       "q05",
+      "q06",
       "q17"
     ],
     "change": "add instruction: Always include the exact figures, units and conditions from the SOURCES in your answer.",
     "field": "system_instructions",
-    "old_value": "You are an AI assistant designed to provide answers to questions about spare parts procurement for Seaview Shipping Ltd. Your responses will cover finding parts by part number or description, calculating prices and suppliers, lead times, and minimum order quantities, and explaining supplier terms and procurement approval rules. Cite every source you use. If you combine facts from two sources, cite both source numbers.",
-    "new_value": "You are an AI assistant designed to provide answers to questions about spare parts procurement for Seaview Shipping Ltd. Your responses will cover finding parts by part number or description, calculating prices and suppliers, lead times, and minimum order quantities, and explaining supplier terms and procurement approval rules. Cite every source you use. If you combine facts from two sources, cite both source numbers. Always include the exact figures, units and conditions from the SOURCES in your answer.",
-    "score_before": "15/25 (60%)",
-    "score_after": "13/25 (52%)",
+    "old_value": "You are an AI assistant designed to answer procurement questions about spare parts for Seaview Shipping Ltd. Your responses will help the ship-spares procurement team members find parts by part number or description, calculate prices and lead times, and provide explanations of supplier terms and procurement approval rules.",
+    "new_value": "You are an AI assistant designed to answer procurement questions about spare parts for Seaview Shipping Ltd. Your responses will help the ship-spares procurement team members find parts by part number or description, calculate prices and lead times, and provide explanations of supplier terms and procurement approval rules. Always include the exact figures, units and conditions from the SOURCES in your answer.",
+    "score_before": "10/24 (42%)",
+    "score_after": "9/24 (38%)",
     "fixed_cases": [],
     "broken_cases": [
-      "q06",
-      "q16"
+      "q19"
     ],
     "kept": false,
     "note": "score dropped: change rolled back"
@@ -188,9 +234,9 @@
   {
     "iteration": 3,
     "failures_by_category": {
-      "prompt_defect": 7,
-      "hallucination": 2,
-      "retrieval_miss": 1
+      "prompt_defect": 11,
+      "hallucination": 1,
+      "retrieval_miss": 2
     },
     "failures": [
       {
@@ -206,16 +252,34 @@
         "evidence": "missing ['3 percent discount']"
       },
       {
+        "id": "q06",
+        "category": "prompt_defect",
+        "subtype": "incomplete",
+        "evidence": "missing ['USD 400 per order']"
+      },
+      {
         "id": "q07",
         "category": "prompt_defect",
         "subtype": "citation",
         "evidence": "cited ['oceanparts_supply_terms.pdf'], expected ['marisupply_supply_terms.md']"
       },
       {
-        "id": "q11",
+        "id": "q09",
         "category": "hallucination",
         "subtype": "hallucination",
-        "evidence": "model's answer lacked the facts and was blocked (refused_unsupported_number): 'Marisupply Ltd gives a 3 percent discount on orders above USD 10,000.'"
+        "evidence": "model's answer lacked the facts and was blocked (refused_unsupported_number): '1'"
+      },
+      {
+        "id": "q10",
+        "category": "prompt_defect",
+        "subtype": "citation",
+        "evidence": "cited ['oceanparts_supply_terms.pdf'], expected ['procurement_rules.md']"
+      },
+      {
+        "id": "q11",
+        "category": "prompt_defect",
+        "subtype": "citation",
+        "evidence": "cited ['marisupply_supply_terms.md'], expected ['marisupply_supply_terms.md', 'procurement_rules.md']"
       },
       {
         "id": "q12",
@@ -225,15 +289,15 @@
       },
       {
         "id": "q13",
-        "category": "hallucination",
-        "subtype": "hallucination",
-        "evidence": "model's answer lacked the facts and was blocked (refused_unsupported_number): 'Urgent orders are delivered within 72 hours, and each vessel must keep at least '"
+        "category": "prompt_defect",
+        "subtype": "citation",
+        "evidence": "cited ['oceanparts_supply_terms.pdf'], expected ['oceanparts_supply_terms.pdf', 'procurement_rules.md']"
       },
       {
         "id": "q14",
         "category": "retrieval_miss",
         "subtype": "retrieval",
-        "evidence": "expected ['spares_catalogue.csv'], retrieved []"
+        "evidence": "expected ['spares_catalogue.csv'], retrieved ['procurement_rules.md']"
       },
       {
         "id": "q15",
@@ -242,13 +306,19 @@
         "evidence": "model's answer had the facts but was blocked (refused_unsupported_number)"
       },
       {
+        "id": "q16",
+        "category": "retrieval_miss",
+        "subtype": "retrieval",
+        "evidence": "expected ['spares_catalogue.csv'], retrieved ['procurement_rules.md']"
+      },
+      {
         "id": "q17",
         "category": "prompt_defect",
         "subtype": "incomplete",
         "evidence": "missing ['3 percent discount']"
       },
       {
-        "id": "q19",
+        "id": "q20",
         "category": "prompt_defect",
         "subtype": "refusal_rule",
         "evidence": "answered a question that should be refused"
@@ -257,20 +327,21 @@
     "target_category": "prompt_defect",
     "target_subtype": "refusal_rule",
     "targeted_cases": [
-      "q19"
+      "q20"
     ],
     "change": "add instruction: Refuse questions about the refusal topics even when the SOURCES mention related words.",
     "field": "system_instructions",
-    "old_value": "You are an AI assistant designed to provide answers to questions about spare parts procurement for Seaview Shipping Ltd. Your responses will cover finding parts by part number or description, calculating prices and suppliers, lead times, and minimum order quantities, and explaining supplier terms and procurement approval rules. Cite every source you use. If you combine facts from two sources, cite both source numbers.",
-    "new_value": "You are an AI assistant designed to provide answers to questions about spare parts procurement for Seaview Shipping Ltd. Your responses will cover finding parts by part number or description, calculating prices and suppliers, lead times, and minimum order quantities, and explaining supplier terms and procurement approval rules. Cite every source you use. If you combine facts from two sources, cite both source numbers. Refuse questions about the refusal topics even when the SOURCES mention related words.",
-    "score_before": "15/25 (60%)",
-    "score_after": "13/25 (52%)",
-    "fixed_cases": [],
+    "old_value": "You are an AI assistant designed to answer procurement questions about spare parts for Seaview Shipping Ltd. Your responses will help the ship-spares procurement team members find parts by part number or description, calculate prices and lead times, and provide explanations of supplier terms and procurement approval rules.",
+    "new_value": "You are an AI assistant designed to answer procurement questions about spare parts for Seaview Shipping Ltd. Your responses will help the ship-spares procurement team members find parts by part number or description, calculate prices and lead times, and provide explanations of supplier terms and procurement approval rules. Refuse questions about the refusal topics even when the SOURCES mention related words.",
+    "score_before": "10/24 (42%)",
+    "score_after": "10/24 (42%)",
+    "fixed_cases": [
+      "q15"
+    ],
     "broken_cases": [
-      "q16",
-      "q21"
+      "q19"
     ],
     "kept": false,
-    "note": "score dropped: change rolled back"
+    "note": "no gain: change rolled back"
   }
 ]

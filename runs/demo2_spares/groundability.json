@@ -1,88 +1,78 @@
 {
   "topic_support": [
     {
-      "topic": "find parts by part number or description",
+      "topic": "Part number or description",
       "status": "supported",
-      "method": "llm",
-      "coverage": 0.2,
-      "evidence": [
-        "procurement_rules.md::p1::c0",
-        "marisupply_supply_terms.md::p1::c0"
-      ],
-      "quote": "Parts in the Main engine, Steering and Safety categories are critical spares.",
-      "reason": "model verified, quote found in text"
-    },
-    {
-      "topic": "calculate prices",
-      "status": "supported",
-      "method": "llm",
-      "coverage": 0.5,
-      "evidence": [
-        "marisupply_supply_terms.md::p1::c0",
-        "oceanparts_supply_terms.pdf::p1::c0"
-      ],
-      "quote": "Prices are in US dollars, ex works Singapore.",
-      "reason": "model verified, quote found in text"
-    },
-    {
-      "topic": "identify suppliers",
-      "status": "unsupported",
       "method": "code",
-      "coverage": 0.0,
-      "evidence": [],
-      "quote": "",
-      "reason": "none of the topic's key words appear in any document"
-    },
-    {
-      "topic": "determine lead times",
-      "status": "supported",
-      "method": "llm",
-      "coverage": 0.667,
-      "evidence": [
-        "marisupply_supply_terms.md::p1::c0",
-        "oceanparts_supply_terms.pdf::p1::c0"
-      ],
-      "quote": "Delivery Lead times in the catalogue start from receipt of the purchase order.",
-      "reason": "model verified, quote found in text"
-    },
-    {
-      "topic": "calculate minimum order quantities",
-      "status": "supported",
-      "method": "llm",
       "coverage": 0.5,
       "evidence": [
+        "csv:spares_catalogue.csv"
+      ],
+      "quote": "",
+      "reason": "most key words found in CSV data"
+    },
+    {
+      "topic": "Price",
+      "status": "supported",
+      "method": "code",
+      "coverage": 1.0,
+      "evidence": [
+        "marisupply_supply_terms.md::p1::c0",
+        "oceanparts_supply_terms.pdf::p1::c0",
+        "csv:spares_catalogue.csv"
+      ],
+      "quote": "",
+      "reason": "all key words found together in one passage"
+    },
+    {
+      "topic": "Lead time",
+      "status": "supported",
+      "method": "code",
+      "coverage": 1.0,
+      "evidence": [
+        "marisupply_supply_terms.md::p1::c0",
+        "oceanparts_supply_terms.pdf::p1::c0",
+        "csv:spares_catalogue.csv"
+      ],
+      "quote": "",
+      "reason": "all key words found together in one passage"
+    },
+    {
+      "topic": "Minimum order quantity",
+      "status": "supported",
+      "method": "code",
+      "coverage": 1.0,
+      "evidence": [
         "marisupply_supply_terms.md::p1::c0",
         "oceanparts_supply_terms.pdf::p1::c0"
       ],
-      "quote": "Orders below the minimum order quantity shown in the catalogue are not accepted.",
-      "reason": "model verified, quote found in text"
+      "quote": "",
+      "reason": "all key words found together in one passage"
     },
     {
-      "topic": "explain supplier terms",
+      "topic": "Supplier terms",
       "status": "supported",
-      "method": "llm",
-      "coverage": 0.333,
+      "method": "code",
+      "coverage": 0.5,
       "evidence": [
-        "procurement_rules.md::p1::c0",
-        "marisupply_supply_terms.md::p1::c0"
+        "csv:spares_catalogue.csv"
       ],
-      "quote": "Orders above USD 10,000: require approval from the fleet manager.",
-      "reason": "model verified, quote found in text"
+      "quote": "",
+      "reason": "most key words found in CSV data"
     },
     {
-      "topic": "explain procurement approval rules",
+      "topic": "Procurement approval rules",
       "status": "supported",
-      "method": "llm",
-      "coverage": 0.75,
+      "method": "code",
+      "coverage": 1.0,
       "evidence": [
         "procurement_rules.md::p1::c0"
       ],
-      "quote": "Orders above USD 10,000: require approval from the fleet manager.",
-      "reason": "model verified, quote found in text"
+      "quote": "",
+      "reason": "all key words found together in one passage"
     }
   ],
   "warnings": [
-    "documents also cover keywords not in any must-answer topic: marisupply, freight, costs, per, month, oceanparts, ports, percent, through, online, critical, spare, require, quotations, least",
-    "UNSUPPORTED by the documents (the agent must refuse these): ['identify suppliers']"
+    "documents also cover keywords not in any must-answer topic: marisupply, freight, cost, discount, per, oceanpart, percent, through, online, portal, spare, critical, require, quotation, least"
   ]
 }

@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0",
-  "created_at": "2026-11-27T05:03:55",
+  "created_at": "2026-11-27T06:15:43",
   "model": "qwen2.5:1.5b",
-  "sha256": "c93db74931bd9c163c5dd60e0b36c47334c19d9829b9850c43ed0491eb27d2f5",
+  "sha256": "e4bb028f3266e33adc801e03295bdb7a9cc4187d0cebe6eee73a8dc97afe748a",
   "counts": {
     "answerable": 13,
     "multi_doc": 3,
     "ambiguous": 2,
-    "out_of_scope": 7,
-    "total": 25,
+    "out_of_scope": 6,
+    "total": 24,
     "rejected": 12
   },
   "notes": [],
@@ -90,7 +90,7 @@
       "question": "How much does air freight cost per order?",
       "expected_behavior": "answer",
       "key_facts": [
-        "USD 400"
+        "USD 400 per order"
       ],
       "expected_docs": [
         "marisupply_supply_terms.md"
@@ -101,7 +101,7 @@
     {
       "id": "q07",
       "type": "answerable",
-      "question": "What is the additional lead time for sea freight orders?",
+      "question": "How many days does sea freight add to the lead time?",
       "expected_behavior": "answer",
       "key_facts": [
         "10 days"
@@ -118,8 +118,7 @@
       "question": "What must be done for any order above USD 5,000?",
       "expected_behavior": "answer",
       "key_facts": [
-        "supplier quotations",
-        "purchase request"
+        "supplier quotations"
       ],
       "expected_docs": [
         "procurement_rules.md"
@@ -130,14 +129,10 @@
     {
       "id": "q09",
       "type": "answerable",
-      "question": "What is the condition for critical spares?",
+      "question": "What is the minimum number of critical spares required on board?",
       "expected_behavior": "answer",
       "key_facts": [
-        "Main engine",
-        "Steering",
-        "Safety",
-        "vessel",
-        "used critical spare"
+        "one"
       ],
       "expected_docs": [
         "procurement_rules.md"
@@ -148,10 +143,10 @@
     {
       "id": "q10",
       "type": "answerable",
-      "question": "What is the approval limit for orders above USD 10,000?",
+      "question": "When can urgent delivery charges be used?",
       "expected_behavior": "answer",
       "key_facts": [
-        "require approval from the fleet manager"
+        "when a vessel would otherwise be delayed"
       ],
       "expected_docs": [
         "procurement_rules.md"
@@ -166,8 +161,7 @@
       "expected_behavior": "answer",
       "key_facts": [
         "3 percent discount",
-        "supplier quotations",
-        "purchase request"
+        "supplier quotations"
       ],
       "expected_docs": [
         "marisupply_supply_terms.md",
@@ -179,7 +173,7 @@
     {
       "id": "q12",
       "type": "multi_doc",
-      "question": "What is the restocking fee for returned unused parts, and what is the additional lead time for sea freight orders?",
+      "question": "What is the restocking fee for returned unused parts, and how many days does sea freight add to the lead time?",
       "expected_behavior": "answer",
       "key_facts": [
         "10 percent",
@@ -195,15 +189,11 @@
     {
       "id": "q13",
       "type": "multi_doc",
-      "question": "What is the delivery lead time for urgent orders, and what is the condition for critical spares?",
+      "question": "What is the delivery lead time for urgent orders, and what is the minimum number of critical spares required on board?",
       "expected_behavior": "answer",
       "key_facts": [
         "72 hours",
-        "Main engine",
-        "Steering",
-        "Safety",
-        "vessel",
-        "used critical spare"
+        "one"
       ],
       "expected_docs": [
         "oceanparts_supply_terms.pdf",
@@ -285,37 +275,37 @@
     {
       "id": "q19",
       "type": "out_of_scope",
-      "question": "Can you provide information on the legal requirements for obtaining a procurement approval for Seaview Shipping Ltd's spare parts procurement?",
+      "question": "Could you explain the legal requirements for obtaining a procurement approval for Seaview Shipping Ltd's spare parts procurement?",
       "expected_behavior": "refuse",
       "key_facts": [],
       "expected_docs": [],
       "source_text": "",
-      "origin": "refuse topic 'legal issues'"
+      "origin": "refuse topic 'Legal'"
     },
     {
       "id": "q20",
       "type": "out_of_scope",
-      "question": "How do I ensure the confidentiality of the supplier's medical records when discussing procurement terms with them?",
+      "question": "How do you calculate the lead time for procuring a spare part that requires a medical examination before approval?",
       "expected_behavior": "refuse",
       "key_facts": [],
       "expected_docs": [],
       "source_text": "",
-      "origin": "refuse topic 'medical information'"
+      "origin": "refuse topic 'Medical'"
     },
     {
       "id": "q21",
       "type": "out_of_scope",
-      "question": "What measures should Seaview Shipping Ltd take to protect the personal data of its suppliers when processing procurement information?",
+      "question": "Can you provide an example of how Seaview Shipping Ltd's procurement approval rules handle the protection of personal data in the procurement process?",
       "expected_behavior": "refuse",
       "key_facts": [],
       "expected_docs": [],
       "source_text": "",
-      "origin": "refuse topic 'personal data protection'"
+      "origin": "refuse topic 'Personal Data'"
     },
     {
       "id": "q22",
       "type": "out_of_scope",
-      "question": "What is the best way to prepare a gourmet meal for a large gathering?",
+      "question": "What is the best way to prepare a seafood dish for a seafood festival?",
       "expected_behavior": "refuse",
       "key_facts": [],
       "expected_docs": [],
@@ -335,22 +325,12 @@
     {
       "id": "q24",
       "type": "out_of_scope",
-      "question": "How do I create a successful marketing campaign for a new product?",
+      "question": "How do you code a simple calculator in JavaScript?",
       "expected_behavior": "refuse",
       "key_facts": [],
       "expected_docs": [],
       "source_text": "",
       "origin": "unrelated question"
-    },
-    {
-      "id": "q25",
-      "type": "out_of_scope",
-      "question": "What information is available about identify suppliers?",
-      "expected_behavior": "refuse",
-      "key_facts": [],
-      "expected_docs": [],
-      "source_text": "",
-      "origin": "guard: unsupported topic 'identify suppliers'"
     }
   ]
 }
