@@ -39,3 +39,19 @@ class TestBM25Index(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestSingular(unittest.TestCase):
+    def test_plural_endings(self):
+        from forgeai.retrieval.bm25_index import singular
+        cases = {"policies": "policy", "suppliers": "supplier", "days": "day", "boxes": "box",
+                 "approvals": "approval", "process": "process", "status": "status", "basis": "basis",
+                 "gas": "gas", "6000": "6000"}
+        for word, expected in cases.items():
+            self.assertEqual(singular(word), expected, word)
+
+    def test_real_failures_now_match(self):
+        from forgeai.retrieval.bm25_index import tokenize
+        # demo_test: "policies" vs "policy"; demo2: "suppliers" vs "supplier"
+        self.assertEqual(tokenize("Business Travel Policies"), tokenize("business travel policy"))
+        self.assertIn("supplier", tokenize("identify suppliers"))

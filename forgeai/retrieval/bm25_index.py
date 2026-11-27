@@ -33,14 +33,36 @@ TOKEN_PATTERN = re.compile(r"[a-z0-9]+")
 DIGIT_COMMA = re.compile(r"(?<=\d),(?=\d)")
 
 
+def singular(word: str) -> str:
+    """
+    Light plural handling, so "suppliers" matches "supplier" and "policies" matches
+    "policy". Deliberately simple (no full stemming): only plural endings are removed,
+    and short words, numbers and words ending in -ss / -us / -is are left alone.
+        policies -> policy   suppliers -> supplier   boxes -> box   days -> day
+        process  -> process  status    -> status     basis -> basis
+    Applied to documents and questions alike, so both sides always match.
+    """
+    if len(word) <= 3 or word.isdigit():
+        return word
+    if word.endswith("ies") and len(word) > 4:
+        return word[:-3] + "y"
+    if word.endswith(("ches", "shes", "sses", "xes", "zes")):
+        return word[:-2]
+    if word.endswith(("ss", "us", "is")):
+        return word
+    if word.endswith("s"):
+        return word[:-1]
+    return word
+
+
 def tokenize(text: str) -> list[str]:
     """
     Lowercase the text, join numbers written with commas, keep only letters
-    and digits, and drop stopwords.
-    Example: "What is the Annual-Leave limit? INR 6,000" -> ["annual", "leave", "limit", "inr", "6000"]
+    and digits, drop stopwords, and remove plural endings.
+    Example: "What are the Annual-Leave limits? INR 6,000" -> ["annual", "leave", "limit", "inr", "6000"]
     """
     text = DIGIT_COMMA.sub("", text.lower())
-    return [token for token in TOKEN_PATTERN.findall(text) if token not in STOPWORDS]
+    return [singular(token) for token in TOKEN_PATTERN.findall(text) if token not in STOPWORDS]
 
 
 class _PositiveIdfBM25(BM25Okapi):
