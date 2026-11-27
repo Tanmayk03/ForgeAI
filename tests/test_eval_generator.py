@@ -97,6 +97,11 @@ class TestStrengthenFact(unittest.TestCase):
         self.assertEqual(strengthen_fact("3. Sick leave. Employees receive 12 days of paid sick leave per year.",
                                          self.P), "12 days")          # list marker "3." ignored
 
+    def test_trailing_function_word_trimmed(self):
+        # Rehearsal run produced the key fact "200 cigarettes when".
+        p = "Crew may not carry more than 2 litres of alcohol or 200 cigarettes when returning on board."
+        self.assertEqual(strengthen_fact("200", p), "200 cigarettes")
+
     def test_normal_fact_unchanged(self):
         self.assertEqual(strengthen_fact("medical certificate", self.P), "medical certificate")
 

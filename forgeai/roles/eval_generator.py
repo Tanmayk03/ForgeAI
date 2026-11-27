@@ -124,7 +124,10 @@ def fact_in_text(fact: str, text: str) -> bool:
     return bool(f) and f" {f} " in f" {normalise(text)} "
 
 
-FACT_STOPWORDS = {"of", "the", "a", "an", "and", "or", "per", "to", "in", "for", "on", "at", "is", "are"}
+# Words that never end a key fact: "200 cigarettes when" -> "200 cigarettes".
+FACT_STOPWORDS = {"of", "the", "a", "an", "and", "or", "per", "to", "in", "for", "on", "at", "is", "are",
+                  "when", "while", "if", "before", "after", "within", "by", "with", "from", "must", "may",
+                  "can", "will", "be", "was", "were", "as", "that", "which", "who", "than", "into"}
 # A number followed by 1-2 words, ignoring list markers such as "3." at a sentence start.
 NUMBER_PHRASE = re.compile(r"(?<![\w.])(\d+(?:[.,]\d+)?)(?!\.(?:\s|$))\s+([A-Za-z]+)(?:\s+([A-Za-z]+))?")
 
