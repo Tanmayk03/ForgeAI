@@ -1,0 +1,1 @@
+I need an assistant for ship agents bringing vessels into the Port of Kochi. It should explain arrival notice deadlines, pilotage and berthing rules, safety permits and crew shore leave, look up port fees and calculate the total cost of a port call, tell agents how many days are left until a notice deadline from today, and give the current weather forecast at the port.

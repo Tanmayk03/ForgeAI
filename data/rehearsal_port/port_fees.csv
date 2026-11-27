@@ -1,0 +1,11 @@
+fee_code,fee_item,unit,amount_inr
+PF-01,Port dues per gross tonne,per GT per call,3.20
+PF-02,Pilotage inward or outward,per movement,48000
+PF-03,Tug assistance,per tug per hour,36500
+PF-04,Berth hire,per metre of length per day,410
+PF-05,Fresh water supply,per tonne,95
+PF-06,Garbage collection,per collection,7500
+PF-07,Night pilotage surcharge,per movement,12000
+PF-08,Hot work permit,per permit,4200
+PF-09,Bunkering permit,per permit,6500
+PF-10,Shore pass,per crew member,250

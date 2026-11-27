@@ -29,3 +29,13 @@ the groundability guard (requirement 2).
 
 This set needs data look-ups and arithmetic (csv_lookup + calculator) but no weather or date tool,
 so it tests that the Builder attaches only the tools the brief needs.
+
+## Rehearsal - port agent assistant (`data/rehearsal_port/`, brief: `data/briefs/rehearsal_port.txt`)
+
+Made for an unseen-brief rehearsal: a new domain, a mix of PDF, Markdown, CSV and an unsupported
+`.docx`, and a brief that asks for weather and date-based answers (tools the two demos did not need).
+
+> Write short, fictional training documents for the Port of Kochi: (1) rules for visiting vessels
+> covering arrival notice deadlines, pilotage, berthing, safety permits and weather restrictions;
+> (2) crew shore leave rules covering shore passes, hours, restrictions and the seafarers' centre;
+> (3) a CSV of 10 port fees with fee_code, fee_item, unit and amount_inr. Use specific numbers.
