@@ -57,8 +57,19 @@ Time per stage: manager 45 s, guard 27 s, builder 9 s, eval generation 97 s, eva
 | 1 | add instruction: Cite every source you use. If you combine facts from two sources, cite both source numbers. | 18/22 (82%) | - | - | no gain: change rolled back |
 | 2 | add instruction: Always include the exact figures, units and conditions from the SOURCES in your answer. | 18/22 (82%) | - | - | no gain: change rolled back |
 | 3 | add instruction: If the question asks more than one thing, answer every part, each from its own source. | 18/22 (82%) | - | - | no gain: change rolled back |
+| handwritten re-judged | same answers, current judge (code checks only) | 18/22 (82%) | | | see judge note |
+| iteration_0 re-judged | same answers, current judge (code checks only) | 17/22 (77%) | | | see judge note |
 
 By case type (final): answerable 11/12; multi_doc 0/3; ambiguous 3/3; out_of_scope 4/4
+
+### Factory agent vs hand-written agent (same frozen exam, same judge)
+
+| Agent | Passed |
+|---|---|
+| Factory (iteration_0_rejudged) | 17/22 (77%) |
+| Hand-written baseline (handwritten_rejudged) | 18/22 (82%) |
+
+Only the factory agent passed: none. Only the hand-written agent passed: q09. Both passed: 17; both failed: 4.
 
 ## 6. What still fails, and why
 
@@ -78,6 +89,7 @@ By case type (final): answerable 11/12; multi_doc 0/3; ambiguous 3/3; out_of_sco
 - Multi-document cases join two questions from different documents; they test answers that span two documents, not reasoning across them.
 - Key facts are short phrases; a correct answer that states a fact in different words (e.g. spelled-out numbers) can be scored as missing.
 - Repair tunes the agent on the same eval set it is scored on, so the final score may be optimistic.
+- The guard counts a topic as supported when at least half of its key words appear in a CSV, so a two-word topic can pass on one word.
 
 ## 8. Files
 
