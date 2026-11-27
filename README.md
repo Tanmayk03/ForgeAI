@@ -1,5 +1,7 @@
 # ForgeAI — an agent factory that builds, audits and repairs document-grounded agents
 
+**Live results viewer:** https://tanmayk03-forgeai-streamlit-app-7k64by.streamlit.app/ (read-only view of the committed runs; agents are built locally, see [Quick start](#1-quick-start))
+
 ForgeAI takes a **one-paragraph brief** and a **folder of documents** (PDF, Markdown, text, CSV) and,
 unattended, produces a working question-answering agent together with **evidence of how good it is**:
 a structured requirements specification, a groundability analysis, a declarative agent definition,
